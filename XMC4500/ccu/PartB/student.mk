@@ -2,11 +2,11 @@
 # Change this file to match your requirements
 
 # Name of your project
-LD_NAME = PartA
+LD_NAME = PartB
 
 # Add lists of space separated source files
 # Own sources, e.g. main.c
-SRCS = PartA.c
+SRCS = PartB.c
 # Library sources, e.g. xmc_gpio.c
 LIBSRCS = xmc_gpio.c xmc4_gpio.c
 # Precompiled libraries, e.g. -lm for math functions

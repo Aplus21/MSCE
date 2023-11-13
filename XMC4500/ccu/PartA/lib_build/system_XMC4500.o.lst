@@ -1,40 +1,39 @@
    1              		.cpu cortex-m4
-   2              		.arch armv7e-m
-   3              		.fpu fpv4-sp-d16
-   4              		.eabi_attribute 27, 1
-   5              		.eabi_attribute 20, 1
-   6              		.eabi_attribute 21, 1
-   7              		.eabi_attribute 23, 3
-   8              		.eabi_attribute 24, 1
-   9              		.eabi_attribute 25, 1
-  10              		.eabi_attribute 26, 1
-  11              		.eabi_attribute 30, 6
-  12              		.eabi_attribute 34, 1
-  13              		.eabi_attribute 18, 4
-  14              		.file	"system_XMC4500.c"
-  15              		.text
-  16              	.Ltext0:
-  17              		.cfi_sections	.debug_frame
-  18              		.global	SystemCoreClock
-  19              		.section	.no_init,"aw"
-  20              		.align	2
-  23              	SystemCoreClock:
-  24 0000 00000000 		.space	4
-  25              		.global	g_chipid
-  26              		.align	2
-  29              	g_chipid:
-  30 0004 00000000 		.space	16
-  30      00000000 
-  30      00000000 
-  30      00000000 
-  31              		.section	.text.delay,"ax",%progbits
-  32              		.align	1
-  33              		.syntax unified
-  34              		.thumb
-  35              		.thumb_func
-  37              	delay:
-  38              	.LFB123:
-  39              		.file 1 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XM
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"system_XMC4500.c"
+  13              		.text
+  14              	.Ltext0:
+  15              		.cfi_sections	.debug_frame
+  16              		.global	SystemCoreClock
+  17              		.section	.no_init,"aw",%progbits
+  18              		.align	2
+  21              	SystemCoreClock:
+  22 0000 00000000 		.space	4
+  23              		.global	g_chipid
+  24              		.align	2
+  27              	g_chipid:
+  28 0004 00000000 		.space	16
+  28      00000000 
+  28      00000000 
+  28      00000000 
+  29              		.section	.text.delay,"ax",%progbits
+  30              		.align	1
+  31              		.syntax unified
+  32              		.thumb
+  33              		.thumb_func
+  34              		.fpu fpv4-sp-d16
+  36              	delay:
+  37              	.LFB123:
+  38              		.file 1 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XM
    1:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** /**************************************************************************************************
    2:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****  * @file     system_XMC4500.c
    3:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****  * @brief    CMSIS Cortex-M4 Device Peripheral Access Layer Header File for the Infineon XMC4500 De
@@ -344,81 +343,78 @@
  307:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****  *******************************************************************************/
  308:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** static void delay(uint32_t cycles)
  309:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** {
-  40              		.loc 1 309 1
-  41              		.cfi_startproc
-  42              		@ args = 0, pretend = 0, frame = 16
-  43              		@ frame_needed = 1, uses_anonymous_args = 0
-  44              		@ link register save eliminated.
-  45 0000 80B4     		push	{r7}
-  46              	.LCFI0:
-  47              		.cfi_def_cfa_offset 4
-  48              		.cfi_offset 7, -4
-  49 0002 85B0     		sub	sp, sp, #20
-  50              	.LCFI1:
-  51              		.cfi_def_cfa_offset 24
-  52 0004 00AF     		add	r7, sp, #0
-  53              	.LCFI2:
-  54              		.cfi_def_cfa_register 7
-  55 0006 7860     		str	r0, [r7, #4]
+  39              		.loc 1 309 0
+  40              		.cfi_startproc
+  41              		@ args = 0, pretend = 0, frame = 16
+  42              		@ frame_needed = 1, uses_anonymous_args = 0
+  43              		@ link register save eliminated.
+  44 0000 80B4     		push	{r7}
+  45              	.LCFI0:
+  46              		.cfi_def_cfa_offset 4
+  47              		.cfi_offset 7, -4
+  48 0002 85B0     		sub	sp, sp, #20
+  49              	.LCFI1:
+  50              		.cfi_def_cfa_offset 24
+  51 0004 00AF     		add	r7, sp, #0
+  52              	.LCFI2:
+  53              		.cfi_def_cfa_register 7
+  54 0006 7860     		str	r0, [r7, #4]
  310:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   volatile uint32_t i;
  311:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  312:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   for(i = 0UL; i < cycles ;++i)
-  56              		.loc 1 312 9
-  57 0008 0023     		movs	r3, #0
-  58 000a FB60     		str	r3, [r7, #12]
-  59              		.loc 1 312 3
-  60 000c 03E0     		b	.L2
-  61              	.L3:
+  55              		.loc 1 312 0
+  56 0008 0023     		movs	r3, #0
+  57 000a FB60     		str	r3, [r7, #12]
+  58 000c 03E0     		b	.L2
+  59              	.L3:
  313:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
  314:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     __NOP();
-  62              		.loc 1 314 5 discriminator 3
-  63              		.syntax unified
-  64              	@ 314 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC45
-  65 000e 00BF     		nop
-  66              	@ 0 "" 2
+  60              		.loc 1 314 0 discriminator 3
+  61              		.syntax unified
+  62              	@ 314 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC45
+  63 000e 00BF     		nop
+  64              	@ 0 "" 2
  312:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
-  67              		.loc 1 312 28 discriminator 3
-  68              		.thumb
-  69              		.syntax unified
-  70 0010 FB68     		ldr	r3, [r7, #12]
-  71 0012 0133     		adds	r3, r3, #1
-  72 0014 FB60     		str	r3, [r7, #12]
-  73              	.L2:
+  65              		.loc 1 312 0 discriminator 3
+  66              		.thumb
+  67              		.syntax unified
+  68 0010 FB68     		ldr	r3, [r7, #12]
+  69 0012 0133     		adds	r3, r3, #1
+  70 0014 FB60     		str	r3, [r7, #12]
+  71              	.L2:
  312:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
-  74              		.loc 1 312 18 discriminator 1
-  75 0016 FB68     		ldr	r3, [r7, #12]
- 312:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
-  76              		.loc 1 312 3 discriminator 1
-  77 0018 7A68     		ldr	r2, [r7, #4]
-  78 001a 9A42     		cmp	r2, r3
-  79 001c F7D8     		bhi	.L3
+  72              		.loc 1 312 0 is_stmt 0 discriminator 1
+  73 0016 FB68     		ldr	r3, [r7, #12]
+  74 0018 7A68     		ldr	r2, [r7, #4]
+  75 001a 9A42     		cmp	r2, r3
+  76 001c F7D8     		bhi	.L3
  315:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   }
  316:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** }
-  80              		.loc 1 316 1
-  81 001e 00BF     		nop
-  82 0020 00BF     		nop
-  83 0022 1437     		adds	r7, r7, #20
-  84              	.LCFI3:
-  85              		.cfi_def_cfa_offset 4
-  86 0024 BD46     		mov	sp, r7
-  87              	.LCFI4:
-  88              		.cfi_def_cfa_register 13
-  89              		@ sp needed
-  90 0026 5DF8047B 		ldr	r7, [sp], #4
-  91              	.LCFI5:
-  92              		.cfi_restore 7
-  93              		.cfi_def_cfa_offset 0
-  94 002a 7047     		bx	lr
-  95              		.cfi_endproc
-  96              	.LFE123:
-  98              		.section	.text.SystemInit,"ax",%progbits
-  99              		.align	1
- 100              		.weak	SystemInit
- 101              		.syntax unified
- 102              		.thumb
- 103              		.thumb_func
- 105              	SystemInit:
- 106              	.LFB124:
+  77              		.loc 1 316 0 is_stmt 1
+  78 001e 00BF     		nop
+  79 0020 1437     		adds	r7, r7, #20
+  80              	.LCFI3:
+  81              		.cfi_def_cfa_offset 4
+  82 0022 BD46     		mov	sp, r7
+  83              	.LCFI4:
+  84              		.cfi_def_cfa_register 13
+  85              		@ sp needed
+  86 0024 5DF8047B 		ldr	r7, [sp], #4
+  87              	.LCFI5:
+  88              		.cfi_restore 7
+  89              		.cfi_def_cfa_offset 0
+  90 0028 7047     		bx	lr
+  91              		.cfi_endproc
+  92              	.LFE123:
+  94              		.section	.text.SystemInit,"ax",%progbits
+  95              		.align	1
+  96              		.weak	SystemInit
+  97              		.syntax unified
+  98              		.thumb
+  99              		.thumb_func
+ 100              		.fpu fpv4-sp-d16
+ 102              	SystemInit:
+ 103              	.LFB124:
  317:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  318:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** /*******************************************************************************
  319:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****  * API IMPLEMENTATION
@@ -426,73 +422,74 @@
  321:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  322:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** __WEAK void SystemInit(void)
  323:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** {
- 107              		.loc 1 323 1
- 108              		.cfi_startproc
- 109              		@ args = 0, pretend = 0, frame = 0
- 110              		@ frame_needed = 1, uses_anonymous_args = 0
- 111 0000 98B5     		push	{r3, r4, r7, lr}
- 112              	.LCFI6:
- 113              		.cfi_def_cfa_offset 16
- 114              		.cfi_offset 3, -16
- 115              		.cfi_offset 4, -12
- 116              		.cfi_offset 7, -8
- 117              		.cfi_offset 14, -4
- 118 0002 00AF     		add	r7, sp, #0
- 119              	.LCFI7:
- 120              		.cfi_def_cfa_register 7
+ 104              		.loc 1 323 0
+ 105              		.cfi_startproc
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 1, uses_anonymous_args = 0
+ 108 0000 98B5     		push	{r3, r4, r7, lr}
+ 109              	.LCFI6:
+ 110              		.cfi_def_cfa_offset 16
+ 111              		.cfi_offset 3, -16
+ 112              		.cfi_offset 4, -12
+ 113              		.cfi_offset 7, -8
+ 114              		.cfi_offset 14, -4
+ 115 0002 00AF     		add	r7, sp, #0
+ 116              	.LCFI7:
+ 117              		.cfi_def_cfa_register 7
  324:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   memcpy(g_chipid, CHIPID_LOC, 16);
- 121              		.loc 1 324 3
- 122 0004 064A     		ldr	r2, .L5
- 123 0006 4FF00053 		mov	r3, #536870912
- 124 000a 1446     		mov	r4, r2
- 125 000c 0FCB     		ldm	r3, {r0, r1, r2, r3}
- 126 000e 84E80F00 		stm	r4, {r0, r1, r2, r3}
+ 118              		.loc 1 324 0
+ 119 0004 064A     		ldr	r2, .L5
+ 120 0006 4FF00053 		mov	r3, #536870912
+ 121 000a 1446     		mov	r4, r2
+ 122 000c 0FCB     		ldm	r3, {r0, r1, r2, r3}
+ 123 000e 84E80F00 		stm	r4, {r0, r1, r2, r3}
  325:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  326:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SystemCoreSetup();
- 127              		.loc 1 326 3
- 128 0012 FFF7FEFF 		bl	SystemCoreSetup
+ 124              		.loc 1 326 0
+ 125 0012 FFF7FEFF 		bl	SystemCoreSetup
  327:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SystemCoreClockSetup(); 
- 129              		.loc 1 327 3
- 130 0016 FFF7FEFF 		bl	SystemCoreClockSetup
+ 126              		.loc 1 327 0
+ 127 0016 FFF7FEFF 		bl	SystemCoreClockSetup
  328:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** }
- 131              		.loc 1 328 1
- 132 001a 00BF     		nop
- 133 001c 98BD     		pop	{r3, r4, r7, pc}
- 134              	.L6:
- 135 001e 00BF     		.align	2
- 136              	.L5:
- 137 0020 00000000 		.word	g_chipid
- 138              		.cfi_endproc
- 139              	.LFE124:
- 141              		.section	.text.SystemCoreSetup,"ax",%progbits
- 142              		.align	1
- 143              		.weak	SystemCoreSetup
- 144              		.syntax unified
- 145              		.thumb
- 146              		.thumb_func
- 148              	SystemCoreSetup:
- 149              	.LFB125:
+ 128              		.loc 1 328 0
+ 129 001a 00BF     		nop
+ 130 001c 98BD     		pop	{r3, r4, r7, pc}
+ 131              	.L6:
+ 132 001e 00BF     		.align	2
+ 133              	.L5:
+ 134 0020 00000000 		.word	g_chipid
+ 135              		.cfi_endproc
+ 136              	.LFE124:
+ 138              		.section	.text.SystemCoreSetup,"ax",%progbits
+ 139              		.align	1
+ 140              		.weak	SystemCoreSetup
+ 141              		.syntax unified
+ 142              		.thumb
+ 143              		.thumb_func
+ 144              		.fpu fpv4-sp-d16
+ 146              	SystemCoreSetup:
+ 147              	.LFB125:
  329:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  330:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** __WEAK void SystemCoreSetup(void)
  331:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** {
- 150              		.loc 1 331 1
- 151              		.cfi_startproc
- 152              		@ args = 0, pretend = 0, frame = 8
- 153              		@ frame_needed = 1, uses_anonymous_args = 0
- 154              		@ link register save eliminated.
- 155 0000 80B4     		push	{r7}
- 156              	.LCFI8:
- 157              		.cfi_def_cfa_offset 4
- 158              		.cfi_offset 7, -4
- 159 0002 83B0     		sub	sp, sp, #12
- 160              	.LCFI9:
- 161              		.cfi_def_cfa_offset 16
- 162 0004 00AF     		add	r7, sp, #0
- 163              	.LCFI10:
- 164              		.cfi_def_cfa_register 7
- 165              	.LBB8:
- 166              	.LBB9:
- 167              		.file 2 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h"
+ 148              		.loc 1 331 0
+ 149              		.cfi_startproc
+ 150              		@ args = 0, pretend = 0, frame = 8
+ 151              		@ frame_needed = 1, uses_anonymous_args = 0
+ 152              		@ link register save eliminated.
+ 153 0000 80B4     		push	{r7}
+ 154              	.LCFI8:
+ 155              		.cfi_def_cfa_offset 4
+ 156              		.cfi_offset 7, -4
+ 157 0002 83B0     		sub	sp, sp, #12
+ 158              	.LCFI9:
+ 159              		.cfi_def_cfa_offset 16
+ 160 0004 00AF     		add	r7, sp, #0
+ 161              	.LCFI10:
+ 162              		.cfi_def_cfa_register 7
+ 163              	.LBB8:
+ 164              	.LBB9:
+ 165              		.file 2 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h"
    1:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
    2:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
    3:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
@@ -589,31 +586,27 @@
   94:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __disable_irq(void)
   95:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h **** {
   96:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
- 168              		.loc 2 96 3
- 169              		.syntax unified
- 170              	@ 96 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h" 1
- 171 0006 72B6     		cpsid i
- 172              	@ 0 "" 2
-  97:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h **** }
- 173              		.loc 2 97 1
- 174              		.thumb
- 175              		.syntax unified
- 176 0008 00BF     		nop
- 177              	.LBE9:
- 178              	.LBE8:
+ 166              		.loc 2 96 0
+ 167              		.syntax unified
+ 168              	@ 96 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h" 1
+ 169 0006 72B6     		cpsid i
+ 170              	@ 0 "" 2
+ 171              		.thumb
+ 172              		.syntax unified
+ 173              	.LBE9:
+ 174              	.LBE8:
  332:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   uint32_t temp;
  333:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 	
  334:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* relocate vector table */
  335:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   __disable_irq();
  336:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCB->VTOR = (uint32_t)(&__Vectors);
- 179              		.loc 1 336 6
- 180 000a 174B     		ldr	r3, .L8
- 181              		.loc 1 336 15
- 182 000c 174A     		ldr	r2, .L8+4
- 183              		.loc 1 336 13
- 184 000e 9A60     		str	r2, [r3, #8]
- 185              	.LBB10:
- 186              	.LBB11:
+ 175              		.loc 1 336 0
+ 176 0008 164B     		ldr	r3, .L8
+ 177 000a 174A     		ldr	r2, .L8+4
+ 178 000c 9A60     		str	r2, [r3, #8]
+ 179              	.LBB10:
+ 180              	.LBB11:
+  97:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h **** }
   98:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h **** 
   99:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h **** 
  100:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h **** /**
@@ -1270,127 +1263,121 @@
  751:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __DSB(void)
  752:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h **** {
  753:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("dsb 0xF":::"memory");
- 187              		.loc 2 753 3
- 188              		.syntax unified
- 189              	@ 753 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h" 1
- 190 0010 BFF34F8F 		dsb 0xF
- 191              	@ 0 "" 2
- 754:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h **** }
- 192              		.loc 2 754 1
- 193              		.thumb
- 194              		.syntax unified
- 195 0014 00BF     		nop
- 196              	.LBE11:
- 197              	.LBE10:
- 198              	.LBB12:
- 199              	.LBB13:
+ 181              		.loc 2 753 0
+ 182              		.syntax unified
+ 183              	@ 753 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h" 1
+ 184 000e BFF34F8F 		dsb 0xF
+ 185              	@ 0 "" 2
+ 186              		.thumb
+ 187              		.syntax unified
+ 188              	.LBE11:
+ 189              	.LBE10:
+ 190              	.LBB12:
+ 191              	.LBB13:
   85:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h **** }
- 200              		.loc 2 85 3
- 201              		.syntax unified
- 202              	@ 85 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h" 1
- 203 0016 62B6     		cpsie i
- 204              	@ 0 "" 2
-  86:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h **** 
- 205              		.loc 2 86 1
- 206              		.thumb
- 207              		.syntax unified
- 208 0018 00BF     		nop
- 209              	.LBE13:
- 210              	.LBE12:
+ 192              		.loc 2 85 0
+ 193              		.syntax unified
+ 194              	@ 85 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/cmsis_gcc.h" 1
+ 195 0012 62B6     		cpsie i
+ 196              	@ 0 "" 2
+ 197              		.thumb
+ 198              		.syntax unified
+ 199              	.LBE13:
+ 200              	.LBE12:
  337:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   __DSB();
  338:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   __enable_irq();
  339:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     
  340:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #if ((__FPU_PRESENT == 1) && (__FPU_USED == 1))
  341:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCB->CPACR |= ((3UL << 10*2) |                 /* set CP10 Full Access */
- 211              		.loc 1 341 14
- 212 001a 134B     		ldr	r3, .L8
- 213 001c D3F88830 		ldr	r3, [r3, #136]
- 214 0020 114A     		ldr	r2, .L8
- 215 0022 43F47003 		orr	r3, r3, #15728640
- 216 0026 C2F88830 		str	r3, [r2, #136]
+ 201              		.loc 1 341 0
+ 202 0014 134B     		ldr	r3, .L8
+ 203 0016 D3F88830 		ldr	r3, [r3, #136]
+ 204 001a 124A     		ldr	r2, .L8
+ 205 001c 43F47003 		orr	r3, r3, #15728640
+ 206 0020 C2F88830 		str	r3, [r2, #136]
  342:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****                  (3UL << 11*2)  );               /* set CP11 Full Access */
  343:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #endif
  344:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  345:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Enable unaligned memory access - SCB_CCR.UNALIGN_TRP = 0 */
  346:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCB->CCR &= ~(SCB_CCR_UNALIGN_TRP_Msk);
- 217              		.loc 1 346 12
- 218 002a 0F4B     		ldr	r3, .L8
- 219 002c 5B69     		ldr	r3, [r3, #20]
- 220 002e 0E4A     		ldr	r2, .L8
- 221 0030 23F00803 		bic	r3, r3, #8
- 222 0034 5361     		str	r3, [r2, #20]
+ 207              		.loc 1 346 0
+ 208 0024 0F4B     		ldr	r3, .L8
+ 209 0026 5B69     		ldr	r3, [r3, #20]
+ 210 0028 0E4A     		ldr	r2, .L8
+ 211 002a 23F00803 		bic	r3, r3, #8
+ 212 002e 5361     		str	r3, [r2, #20]
  347:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  348:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   temp = FLASH0->FCON;
- 223              		.loc 1 348 16
- 224 0036 0E4B     		ldr	r3, .L8+8
- 225              		.loc 1 348 8
- 226 0038 03F58053 		add	r3, r3, #4096
- 227 003c 5B69     		ldr	r3, [r3, #20]
- 228 003e 7B60     		str	r3, [r7, #4]
+ 213              		.loc 1 348 0
+ 214 0030 0E4B     		ldr	r3, .L8+8
+ 215 0032 03F58053 		add	r3, r3, #4096
+ 216 0036 1433     		adds	r3, r3, #20
+ 217 0038 1B68     		ldr	r3, [r3]
+ 218 003a 7B60     		str	r3, [r7, #4]
  349:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   temp &= ~FLASH_FCON_WSPFLASH_Msk;
- 229              		.loc 1 349 8
- 230 0040 7B68     		ldr	r3, [r7, #4]
- 231 0042 23F00F03 		bic	r3, r3, #15
- 232 0046 7B60     		str	r3, [r7, #4]
+ 219              		.loc 1 349 0
+ 220 003c 7B68     		ldr	r3, [r7, #4]
+ 221 003e 23F00F03 		bic	r3, r3, #15
+ 222 0042 7B60     		str	r3, [r7, #4]
  350:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   temp |= PMU_FLASH_WS;
- 233              		.loc 1 350 8
- 234 0048 7B68     		ldr	r3, [r7, #4]
- 235 004a 43F00303 		orr	r3, r3, #3
- 236 004e 7B60     		str	r3, [r7, #4]
+ 223              		.loc 1 350 0
+ 224 0044 7B68     		ldr	r3, [r7, #4]
+ 225 0046 43F00303 		orr	r3, r3, #3
+ 226 004a 7B60     		str	r3, [r7, #4]
  351:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   FLASH0->FCON = temp;
- 237              		.loc 1 351 9
- 238 0050 074B     		ldr	r3, .L8+8
- 239              		.loc 1 351 16
- 240 0052 03F58053 		add	r3, r3, #4096
- 241 0056 1A46     		mov	r2, r3
- 242 0058 7B68     		ldr	r3, [r7, #4]
- 243 005a 5361     		str	r3, [r2, #20]
+ 227              		.loc 1 351 0
+ 228 004c 074B     		ldr	r3, .L8+8
+ 229 004e 03F58053 		add	r3, r3, #4096
+ 230 0052 1433     		adds	r3, r3, #20
+ 231 0054 7A68     		ldr	r2, [r7, #4]
+ 232 0056 1A60     		str	r2, [r3]
  352:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** }
- 244              		.loc 1 352 1
- 245 005c 00BF     		nop
- 246 005e 0C37     		adds	r7, r7, #12
- 247              	.LCFI11:
- 248              		.cfi_def_cfa_offset 4
- 249 0060 BD46     		mov	sp, r7
- 250              	.LCFI12:
- 251              		.cfi_def_cfa_register 13
- 252              		@ sp needed
- 253 0062 5DF8047B 		ldr	r7, [sp], #4
- 254              	.LCFI13:
- 255              		.cfi_restore 7
- 256              		.cfi_def_cfa_offset 0
- 257 0066 7047     		bx	lr
- 258              	.L9:
- 259              		.align	2
- 260              	.L8:
- 261 0068 00ED00E0 		.word	-536810240
- 262 006c 00000000 		.word	__Vectors
- 263 0070 00100058 		.word	1476399104
- 264              		.cfi_endproc
- 265              	.LFE125:
- 267              		.section	.text.SystemCoreClockSetup,"ax",%progbits
- 268              		.align	1
- 269              		.weak	SystemCoreClockSetup
- 270              		.syntax unified
- 271              		.thumb
- 272              		.thumb_func
- 274              	SystemCoreClockSetup:
- 275              	.LFB126:
+ 233              		.loc 1 352 0
+ 234 0058 00BF     		nop
+ 235 005a 0C37     		adds	r7, r7, #12
+ 236              	.LCFI11:
+ 237              		.cfi_def_cfa_offset 4
+ 238 005c BD46     		mov	sp, r7
+ 239              	.LCFI12:
+ 240              		.cfi_def_cfa_register 13
+ 241              		@ sp needed
+ 242 005e 5DF8047B 		ldr	r7, [sp], #4
+ 243              	.LCFI13:
+ 244              		.cfi_restore 7
+ 245              		.cfi_def_cfa_offset 0
+ 246 0062 7047     		bx	lr
+ 247              	.L9:
+ 248              		.align	2
+ 249              	.L8:
+ 250 0064 00ED00E0 		.word	-536810240
+ 251 0068 00000000 		.word	__Vectors
+ 252 006c 00100058 		.word	1476399104
+ 253              		.cfi_endproc
+ 254              	.LFE125:
+ 256              		.section	.text.SystemCoreClockSetup,"ax",%progbits
+ 257              		.align	1
+ 258              		.weak	SystemCoreClockSetup
+ 259              		.syntax unified
+ 260              		.thumb
+ 261              		.thumb_func
+ 262              		.fpu fpv4-sp-d16
+ 264              	SystemCoreClockSetup:
+ 265              	.LFB126:
  353:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  354:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** __WEAK void SystemCoreClockSetup(void)
  355:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** {
- 276              		.loc 1 355 1
- 277              		.cfi_startproc
- 278              		@ args = 0, pretend = 0, frame = 0
- 279              		@ frame_needed = 1, uses_anonymous_args = 0
- 280 0000 80B5     		push	{r7, lr}
- 281              	.LCFI14:
- 282              		.cfi_def_cfa_offset 8
- 283              		.cfi_offset 7, -8
- 284              		.cfi_offset 14, -4
- 285 0002 00AF     		add	r7, sp, #0
- 286              	.LCFI15:
- 287              		.cfi_def_cfa_register 7
+ 266              		.loc 1 355 0
+ 267              		.cfi_startproc
+ 268              		@ args = 0, pretend = 0, frame = 0
+ 269              		@ frame_needed = 1, uses_anonymous_args = 0
+ 270 0000 80B5     		push	{r7, lr}
+ 271              	.LCFI14:
+ 272              		.cfi_def_cfa_offset 8
+ 273              		.cfi_offset 7, -8
+ 274              		.cfi_offset 14, -4
+ 275 0002 00AF     		add	r7, sp, #0
+ 276              	.LCFI15:
+ 277              		.cfi_def_cfa_register 7
  356:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #if FOFI_CALIBRATION_MODE == FOFI_CALIBRATION_MODE_FACTORY
  357:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Enable factory calibration */
  358:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON0 |= SCU_PLL_PLLCON0_FOTR_Msk;
@@ -1400,36 +1387,32 @@
  362:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Enable HIB domain */
  363:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Power up HIB domain if and only if it is currently powered down */
  364:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   if((SCU_POWER->PWRSTAT & SCU_POWER_PWRSTAT_HIBEN_Msk) == 0)
- 288              		.loc 1 364 16
- 289 0004 754B     		ldr	r3, .L21
- 290 0006 1B68     		ldr	r3, [r3]
- 291              		.loc 1 364 26
- 292 0008 03F00103 		and	r3, r3, #1
- 293              		.loc 1 364 5
- 294 000c 002B     		cmp	r3, #0
- 295 000e 0CD1     		bne	.L11
+ 278              		.loc 1 364 0
+ 279 0004 754B     		ldr	r3, .L21
+ 280 0006 1B68     		ldr	r3, [r3]
+ 281 0008 03F00103 		and	r3, r3, #1
+ 282 000c 002B     		cmp	r3, #0
+ 283 000e 0CD1     		bne	.L11
  365:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
  366:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     SCU_POWER->PWRSET |= SCU_POWER_PWRSET_HIB_Msk;
- 296              		.loc 1 366 23
- 297 0010 724B     		ldr	r3, .L21
- 298 0012 5B68     		ldr	r3, [r3, #4]
- 299 0014 714A     		ldr	r2, .L21
- 300 0016 43F00103 		orr	r3, r3, #1
- 301 001a 5360     		str	r3, [r2, #4]
+ 284              		.loc 1 366 0
+ 285 0010 724B     		ldr	r3, .L21
+ 286 0012 5B68     		ldr	r3, [r3, #4]
+ 287 0014 714A     		ldr	r2, .L21
+ 288 0016 43F00103 		orr	r3, r3, #1
+ 289 001a 5360     		str	r3, [r2, #4]
  367:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  368:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     while((SCU_POWER->PWRSTAT & SCU_POWER_PWRSTAT_HIBEN_Msk) == 0)
- 302              		.loc 1 368 10
- 303 001c 00BF     		nop
- 304              	.L12:
- 305              		.loc 1 368 21 discriminator 1
- 306 001e 6F4B     		ldr	r3, .L21
- 307 0020 1B68     		ldr	r3, [r3]
- 308              		.loc 1 368 31 discriminator 1
- 309 0022 03F00103 		and	r3, r3, #1
- 310              		.loc 1 368 10 discriminator 1
- 311 0026 002B     		cmp	r3, #0
- 312 0028 F9D0     		beq	.L12
- 313              	.L11:
+ 290              		.loc 1 368 0
+ 291 001c 00BF     		nop
+ 292              	.L12:
+ 293              		.loc 1 368 0 is_stmt 0 discriminator 1
+ 294 001e 6F4B     		ldr	r3, .L21
+ 295 0020 1B68     		ldr	r3, [r3]
+ 296 0022 03F00103 		and	r3, r3, #1
+ 297 0026 002B     		cmp	r3, #0
+ 298 0028 F9D0     		beq	.L12
+ 299              	.L11:
  369:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     {
  370:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       /* wait until HIB domain is enabled */
  371:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     }
@@ -1437,27 +1420,25 @@
  373:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  374:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Remove the reset only if HIB domain were in a state of reset */
  375:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   if((SCU_RESET->RSTSTAT) & SCU_RESET_RSTSTAT_HIBRS_Msk)
- 314              		.loc 1 375 16
- 315 002a 6D4B     		ldr	r3, .L21+4
- 316 002c 1B68     		ldr	r3, [r3]
- 317              		.loc 1 375 27
- 318 002e 03F40073 		and	r3, r3, #512
- 319              		.loc 1 375 5
- 320 0032 002B     		cmp	r3, #0
- 321 0034 09D0     		beq	.L13
+ 300              		.loc 1 375 0 is_stmt 1
+ 301 002a 6D4B     		ldr	r3, .L21+4
+ 302 002c 1B68     		ldr	r3, [r3]
+ 303 002e 03F40073 		and	r3, r3, #512
+ 304 0032 002B     		cmp	r3, #0
+ 305 0034 09D0     		beq	.L13
  376:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
  377:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     SCU_RESET->RSTCLR |= SCU_RESET_RSTCLR_HIBRS_Msk;
- 322              		.loc 1 377 23
- 323 0036 6A4B     		ldr	r3, .L21+4
- 324 0038 9B68     		ldr	r3, [r3, #8]
- 325 003a 694A     		ldr	r2, .L21+4
- 326 003c 43F40073 		orr	r3, r3, #512
- 327 0040 9360     		str	r3, [r2, #8]
+ 306              		.loc 1 377 0
+ 307 0036 6A4B     		ldr	r3, .L21+4
+ 308 0038 9B68     		ldr	r3, [r3, #8]
+ 309 003a 694A     		ldr	r2, .L21+4
+ 310 003c 43F40073 		orr	r3, r3, #512
+ 311 0040 9360     		str	r3, [r2, #8]
  378:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     delay(DELAY_CNT_150US_50MHZ);
- 328              		.loc 1 378 5
- 329 0042 41F64C50 		movw	r0, #7500
- 330 0046 FFF7FEFF 		bl	delay
- 331              	.L13:
+ 312              		.loc 1 378 0
+ 313 0042 41F64C50 		movw	r0, #7500
+ 314 0046 FFF7FEFF 		bl	delay
+ 315              	.L13:
  379:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   }
  380:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   
  381:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #if STDBY_CLOCK_SRC == STDBY_CLOCK_SRC_OSCULP
@@ -1505,101 +1486,93 @@
  423:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  424:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Enable automatic calibration of internal fast oscillator */
  425:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON0 |= SCU_PLL_PLLCON0_AOTREN_Msk;
- 332              		.loc 1 425 20
- 333 004a 664B     		ldr	r3, .L21+8
- 334 004c 5B68     		ldr	r3, [r3, #4]
- 335 004e 654A     		ldr	r2, .L21+8
- 336 0050 43F40023 		orr	r3, r3, #524288
- 337 0054 5360     		str	r3, [r2, #4]
+ 316              		.loc 1 425 0
+ 317 004a 664B     		ldr	r3, .L21+8
+ 318 004c 5B68     		ldr	r3, [r3, #4]
+ 319 004e 654A     		ldr	r2, .L21+8
+ 320 0050 43F40023 		orr	r3, r3, #524288
+ 321 0054 5360     		str	r3, [r2, #4]
  426:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #endif /* FOFI_CALIBRATION_MODE == FOFI_CALIBRATION_MODE_AUTOMATIC */
  427:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  428:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   delay(DELAY_CNT_50US_50MHZ);
- 338              		.loc 1 428 3
- 339 0056 40F6C410 		movw	r0, #2500
- 340 005a FFF7FEFF 		bl	delay
+ 322              		.loc 1 428 0
+ 323 0056 40F6C410 		movw	r0, #2500
+ 324 005a FFF7FEFF 		bl	delay
  429:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  430:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #if ENABLE_PLL
  431:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  432:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* enable PLL */
  433:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON0 &= ~(SCU_PLL_PLLCON0_VCOPWD_Msk | SCU_PLL_PLLCON0_PLLPWD_Msk);
- 341              		.loc 1 433 20
- 342 005e 614B     		ldr	r3, .L21+8
- 343 0060 5B68     		ldr	r3, [r3, #4]
- 344 0062 604A     		ldr	r2, .L21+8
- 345 0064 23F48033 		bic	r3, r3, #65536
- 346 0068 23F00203 		bic	r3, r3, #2
- 347 006c 5360     		str	r3, [r2, #4]
+ 325              		.loc 1 433 0
+ 326 005e 614B     		ldr	r3, .L21+8
+ 327 0060 5B68     		ldr	r3, [r3, #4]
+ 328 0062 604A     		ldr	r2, .L21+8
+ 329 0064 23F48033 		bic	r3, r3, #65536
+ 330 0068 23F00203 		bic	r3, r3, #2
+ 331 006c 5360     		str	r3, [r2, #4]
  434:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  435:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #if PLL_CLOCK_SRC != PLL_CLOCK_SRC_OFI
  436:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* enable OSC_HP */
  437:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   if ((SCU_OSC->OSCHPCTRL & SCU_OSC_OSCHPCTRL_MODE_Msk) != 0U)
- 348              		.loc 1 437 15
- 349 006e 5E4B     		ldr	r3, .L21+12
- 350 0070 5B68     		ldr	r3, [r3, #4]
- 351              		.loc 1 437 27
- 352 0072 03F03003 		and	r3, r3, #48
- 353              		.loc 1 437 6
- 354 0076 002B     		cmp	r3, #0
- 355 0078 29D0     		beq	.L14
+ 332              		.loc 1 437 0
+ 333 006e 5E4B     		ldr	r3, .L21+12
+ 334 0070 5B68     		ldr	r3, [r3, #4]
+ 335 0072 03F03003 		and	r3, r3, #48
+ 336 0076 002B     		cmp	r3, #0
+ 337 0078 29D0     		beq	.L14
  438:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
  439:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     SCU_OSC->OSCHPCTRL &= ~(SCU_OSC_OSCHPCTRL_MODE_Msk | SCU_OSC_OSCHPCTRL_OSCVAL_Msk);
- 356              		.loc 1 439 24
- 357 007a 5B4B     		ldr	r3, .L21+12
- 358 007c 5B68     		ldr	r3, [r3, #4]
- 359 007e 5A4A     		ldr	r2, .L21+12
- 360 0080 23F47023 		bic	r3, r3, #983040
- 361 0084 23F03003 		bic	r3, r3, #48
- 362 0088 5360     		str	r3, [r2, #4]
+ 338              		.loc 1 439 0
+ 339 007a 5B4B     		ldr	r3, .L21+12
+ 340 007c 5B68     		ldr	r3, [r3, #4]
+ 341 007e 5A4A     		ldr	r2, .L21+12
+ 342 0080 23F47023 		bic	r3, r3, #983040
+ 343 0084 23F03003 		bic	r3, r3, #48
+ 344 0088 5360     		str	r3, [r2, #4]
  440:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     SCU_OSC->OSCHPCTRL |= ((OSCHP_GetFrequency() / FOSCREF) - 1UL) << SCU_OSC_OSCHPCTRL_OSCVAL_Pos;
- 363              		.loc 1 440 29
- 364 008a FFF7FEFF 		bl	OSCHP_GetFrequency
- 365 008e 0346     		mov	r3, r0
- 366              		.loc 1 440 50
- 367 0090 564A     		ldr	r2, .L21+16
- 368 0092 A2FB0323 		umull	r2, r3, r2, r3
- 369 0096 1B0D     		lsrs	r3, r3, #20
- 370              		.loc 1 440 61
- 371 0098 013B     		subs	r3, r3, #1
- 372              		.loc 1 440 68
- 373 009a 1A04     		lsls	r2, r3, #16
- 374              		.loc 1 440 24
- 375 009c 524B     		ldr	r3, .L21+12
- 376 009e 5B68     		ldr	r3, [r3, #4]
- 377 00a0 5149     		ldr	r1, .L21+12
- 378 00a2 1343     		orrs	r3, r3, r2
- 379 00a4 4B60     		str	r3, [r1, #4]
+ 345              		.loc 1 440 0
+ 346 008a FFF7FEFF 		bl	OSCHP_GetFrequency
+ 347 008e 0246     		mov	r2, r0
+ 348 0090 564B     		ldr	r3, .L21+16
+ 349 0092 A3FB0223 		umull	r2, r3, r3, r2
+ 350 0096 1B0D     		lsrs	r3, r3, #20
+ 351 0098 013B     		subs	r3, r3, #1
+ 352 009a 1A04     		lsls	r2, r3, #16
+ 353 009c 524B     		ldr	r3, .L21+12
+ 354 009e 5B68     		ldr	r3, [r3, #4]
+ 355 00a0 5149     		ldr	r1, .L21+12
+ 356 00a2 1343     		orrs	r3, r3, r2
+ 357 00a4 4B60     		str	r3, [r1, #4]
  441:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  442:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     /* select OSC_HP clock as PLL input */
  443:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     SCU_PLL->PLLCON2 &= ~SCU_PLL_PLLCON2_PINSEL_Msk;
- 380              		.loc 1 443 22
- 381 00a6 4F4B     		ldr	r3, .L21+8
- 382 00a8 DB68     		ldr	r3, [r3, #12]
- 383 00aa 4E4A     		ldr	r2, .L21+8
- 384 00ac 23F00103 		bic	r3, r3, #1
- 385 00b0 D360     		str	r3, [r2, #12]
+ 358              		.loc 1 443 0
+ 359 00a6 4F4B     		ldr	r3, .L21+8
+ 360 00a8 DB68     		ldr	r3, [r3, #12]
+ 361 00aa 4E4A     		ldr	r2, .L21+8
+ 362 00ac 23F00103 		bic	r3, r3, #1
+ 363 00b0 D360     		str	r3, [r2, #12]
  444:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  445:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     /* restart OSC Watchdog */
  446:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     SCU_PLL->PLLCON0 &= ~SCU_PLL_PLLCON0_OSCRES_Msk;
- 386              		.loc 1 446 22
- 387 00b2 4C4B     		ldr	r3, .L21+8
- 388 00b4 5B68     		ldr	r3, [r3, #4]
- 389 00b6 4B4A     		ldr	r2, .L21+8
- 390 00b8 23F40033 		bic	r3, r3, #131072
- 391 00bc 5360     		str	r3, [r2, #4]
+ 364              		.loc 1 446 0
+ 365 00b2 4C4B     		ldr	r3, .L21+8
+ 366 00b4 5B68     		ldr	r3, [r3, #4]
+ 367 00b6 4B4A     		ldr	r2, .L21+8
+ 368 00b8 23F40033 		bic	r3, r3, #131072
+ 369 00bc 5360     		str	r3, [r2, #4]
  447:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  448:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_OSC_USABLE) != SCU_PLL_PLLSTAT_OSC_USABLE)
- 392              		.loc 1 448 11
- 393 00be 00BF     		nop
- 394              	.L15:
- 395              		.loc 1 448 20 discriminator 1
- 396 00c0 484B     		ldr	r3, .L21+8
- 397 00c2 1B68     		ldr	r3, [r3]
- 398              		.loc 1 448 30 discriminator 1
- 399 00c4 03F46073 		and	r3, r3, #896
- 400              		.loc 1 448 11 discriminator 1
- 401 00c8 B3F5607F 		cmp	r3, #896
- 402 00cc F8D1     		bne	.L15
- 403              	.L14:
+ 370              		.loc 1 448 0
+ 371 00be 00BF     		nop
+ 372              	.L15:
+ 373              		.loc 1 448 0 is_stmt 0 discriminator 1
+ 374 00c0 484B     		ldr	r3, .L21+8
+ 375 00c2 1B68     		ldr	r3, [r3]
+ 376 00c4 03F46073 		and	r3, r3, #896
+ 377 00c8 B3F5607F 		cmp	r3, #896
+ 378 00cc F8D1     		bne	.L15
+ 379              	.L14:
  449:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     {
  450:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       /* wait till OSC_HP output frequency is usable */
  451:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     }
@@ -1612,95 +1585,90 @@
  458:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  459:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Go to bypass the Main PLL */
  460:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON0 |= SCU_PLL_PLLCON0_VCOBYP_Msk;
- 404              		.loc 1 460 20
- 405 00ce 454B     		ldr	r3, .L21+8
- 406 00d0 5B68     		ldr	r3, [r3, #4]
- 407 00d2 444A     		ldr	r2, .L21+8
- 408 00d4 43F00103 		orr	r3, r3, #1
- 409 00d8 5360     		str	r3, [r2, #4]
+ 380              		.loc 1 460 0 is_stmt 1
+ 381 00ce 454B     		ldr	r3, .L21+8
+ 382 00d0 5B68     		ldr	r3, [r3, #4]
+ 383 00d2 444A     		ldr	r2, .L21+8
+ 384 00d4 43F00103 		orr	r3, r3, #1
+ 385 00d8 5360     		str	r3, [r2, #4]
  461:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  462:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* disconnect Oscillator from PLL */
  463:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON0 |= SCU_PLL_PLLCON0_FINDIS_Msk;
- 410              		.loc 1 463 20
- 411 00da 424B     		ldr	r3, .L21+8
- 412 00dc 5B68     		ldr	r3, [r3, #4]
- 413 00de 414A     		ldr	r2, .L21+8
- 414 00e0 43F01003 		orr	r3, r3, #16
- 415 00e4 5360     		str	r3, [r2, #4]
+ 386              		.loc 1 463 0
+ 387 00da 424B     		ldr	r3, .L21+8
+ 388 00dc 5B68     		ldr	r3, [r3, #4]
+ 389 00de 414A     		ldr	r2, .L21+8
+ 390 00e0 43F01003 		orr	r3, r3, #16
+ 391 00e4 5360     		str	r3, [r2, #4]
  464:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  465:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Setup divider settings for main PLL */
  466:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON1 = ((PLL_NDIV << SCU_PLL_PLLCON1_NDIV_Pos) |
- 416              		.loc 1 466 10
- 417 00e6 3F4B     		ldr	r3, .L21+8
- 418              		.loc 1 466 20
- 419 00e8 414A     		ldr	r2, .L21+20
- 420 00ea 9A60     		str	r2, [r3, #8]
+ 392              		.loc 1 466 0
+ 393 00e6 3F4B     		ldr	r3, .L21+8
+ 394 00e8 414A     		ldr	r2, .L21+20
+ 395 00ea 9A60     		str	r2, [r3, #8]
  467:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****                       (PLL_K2DIV_0 << SCU_PLL_PLLCON1_K2DIV_Pos) |
  468:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****                       (PLL_PDIV << SCU_PLL_PLLCON1_PDIV_Pos));
  469:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  470:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Set OSCDISCDIS */
  471:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON0 |= SCU_PLL_PLLCON0_OSCDISCDIS_Msk;
- 421              		.loc 1 471 20
- 422 00ec 3D4B     		ldr	r3, .L21+8
- 423 00ee 5B68     		ldr	r3, [r3, #4]
- 424 00f0 3C4A     		ldr	r2, .L21+8
- 425 00f2 43F04003 		orr	r3, r3, #64
- 426 00f6 5360     		str	r3, [r2, #4]
+ 396              		.loc 1 471 0
+ 397 00ec 3D4B     		ldr	r3, .L21+8
+ 398 00ee 5B68     		ldr	r3, [r3, #4]
+ 399 00f0 3C4A     		ldr	r2, .L21+8
+ 400 00f2 43F04003 		orr	r3, r3, #64
+ 401 00f6 5360     		str	r3, [r2, #4]
  472:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  473:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* connect Oscillator to PLL */
  474:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON0 &= ~SCU_PLL_PLLCON0_FINDIS_Msk;
- 427              		.loc 1 474 20
- 428 00f8 3A4B     		ldr	r3, .L21+8
- 429 00fa 5B68     		ldr	r3, [r3, #4]
- 430 00fc 394A     		ldr	r2, .L21+8
- 431 00fe 23F01003 		bic	r3, r3, #16
- 432 0102 5360     		str	r3, [r2, #4]
+ 402              		.loc 1 474 0
+ 403 00f8 3A4B     		ldr	r3, .L21+8
+ 404 00fa 5B68     		ldr	r3, [r3, #4]
+ 405 00fc 394A     		ldr	r2, .L21+8
+ 406 00fe 23F01003 		bic	r3, r3, #16
+ 407 0102 5360     		str	r3, [r2, #4]
  475:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  476:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* restart PLL Lock detection */
  477:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON0 |= SCU_PLL_PLLCON0_RESLD_Msk;
- 433              		.loc 1 477 20
- 434 0104 374B     		ldr	r3, .L21+8
- 435 0106 5B68     		ldr	r3, [r3, #4]
- 436 0108 364A     		ldr	r2, .L21+8
- 437 010a 43F48023 		orr	r3, r3, #262144
- 438 010e 5360     		str	r3, [r2, #4]
+ 408              		.loc 1 477 0
+ 409 0104 374B     		ldr	r3, .L21+8
+ 410 0106 5B68     		ldr	r3, [r3, #4]
+ 411 0108 364A     		ldr	r2, .L21+8
+ 412 010a 43F48023 		orr	r3, r3, #262144
+ 413 010e 5360     		str	r3, [r2, #4]
  478:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  479:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_VCOLOCK_Msk) == 0U)
- 439              		.loc 1 479 9
- 440 0110 00BF     		nop
- 441              	.L16:
- 442              		.loc 1 479 18 discriminator 1
- 443 0112 344B     		ldr	r3, .L21+8
- 444 0114 1B68     		ldr	r3, [r3]
- 445              		.loc 1 479 28 discriminator 1
- 446 0116 03F00403 		and	r3, r3, #4
- 447              		.loc 1 479 9 discriminator 1
- 448 011a 002B     		cmp	r3, #0
- 449 011c F9D0     		beq	.L16
+ 414              		.loc 1 479 0
+ 415 0110 00BF     		nop
+ 416              	.L16:
+ 417              		.loc 1 479 0 is_stmt 0 discriminator 1
+ 418 0112 344B     		ldr	r3, .L21+8
+ 419 0114 1B68     		ldr	r3, [r3]
+ 420 0116 03F00403 		and	r3, r3, #4
+ 421 011a 002B     		cmp	r3, #0
+ 422 011c F9D0     		beq	.L16
  480:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
  481:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     /* wait for PLL Lock */
  482:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   }
  483:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  484:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Disable bypass- put PLL clock back */
  485:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON0 &= ~SCU_PLL_PLLCON0_VCOBYP_Msk;
- 450              		.loc 1 485 20
- 451 011e 314B     		ldr	r3, .L21+8
- 452 0120 5B68     		ldr	r3, [r3, #4]
- 453 0122 304A     		ldr	r2, .L21+8
- 454 0124 23F00103 		bic	r3, r3, #1
- 455 0128 5360     		str	r3, [r2, #4]
+ 423              		.loc 1 485 0 is_stmt 1
+ 424 011e 314B     		ldr	r3, .L21+8
+ 425 0120 5B68     		ldr	r3, [r3, #4]
+ 426 0122 304A     		ldr	r2, .L21+8
+ 427 0124 23F00103 		bic	r3, r3, #1
+ 428 0128 5360     		str	r3, [r2, #4]
  486:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_VCOBYST_Msk) != 0U)
- 456              		.loc 1 486 9
- 457 012a 00BF     		nop
- 458              	.L17:
- 459              		.loc 1 486 18 discriminator 1
- 460 012c 2D4B     		ldr	r3, .L21+8
- 461 012e 1B68     		ldr	r3, [r3]
- 462              		.loc 1 486 28 discriminator 1
- 463 0130 03F00103 		and	r3, r3, #1
- 464              		.loc 1 486 9 discriminator 1
- 465 0134 002B     		cmp	r3, #0
- 466 0136 F9D1     		bne	.L17
+ 429              		.loc 1 486 0
+ 430 012a 00BF     		nop
+ 431              	.L17:
+ 432              		.loc 1 486 0 is_stmt 0 discriminator 1
+ 433 012c 2D4B     		ldr	r3, .L21+8
+ 434 012e 1B68     		ldr	r3, [r3]
+ 435 0130 03F00103 		and	r3, r3, #1
+ 436 0134 002B     		cmp	r3, #0
+ 437 0136 F9D1     		bne	.L17
  487:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
  488:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     /* wait for normal mode */
  489:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   }
@@ -1709,12 +1677,12 @@
  492:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #if (SYS_CLOCK_SRC == SYS_CLOCK_SRC_PLL)
  493:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Switch system clock to PLL */
  494:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_CLK->SYSCLKCR |= SCU_CLK_SYSCLKCR_SYSSEL_Msk;
- 467              		.loc 1 494 21
- 468 0138 2E4B     		ldr	r3, .L21+24
- 469 013a DB68     		ldr	r3, [r3, #12]
- 470 013c 2D4A     		ldr	r2, .L21+24
- 471 013e 43F48033 		orr	r3, r3, #65536
- 472 0142 D360     		str	r3, [r2, #12]
+ 438              		.loc 1 494 0 is_stmt 1
+ 439 0138 2E4B     		ldr	r3, .L21+24
+ 440 013a DB68     		ldr	r3, [r3, #12]
+ 441 013c 2D4A     		ldr	r2, .L21+24
+ 442 013e 43F48033 		orr	r3, r3, #65536
+ 443 0142 D360     		str	r3, [r2, #12]
  495:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #else
  496:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Switch system clock to backup clock */
  497:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_CLK->SYSCLKCR &= ~SCU_CLK_SYSCLKCR_SYSSEL_Msk;
@@ -1722,149 +1690,133 @@
  499:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  500:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Before scaling to final frequency we need to setup the clock dividers */
  501:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_CLK->PBCLKCR = PBCLKDIV;
- 473              		.loc 1 501 10
- 474 0144 2B4B     		ldr	r3, .L21+24
- 475              		.loc 1 501 20
- 476 0146 0022     		movs	r2, #0
- 477 0148 5A61     		str	r2, [r3, #20]
+ 444              		.loc 1 501 0
+ 445 0144 2B4B     		ldr	r3, .L21+24
+ 446 0146 0022     		movs	r2, #0
+ 447 0148 5A61     		str	r2, [r3, #20]
  502:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_CLK->CPUCLKCR = CPUCLKDIV;
- 478              		.loc 1 502 10
- 479 014a 2A4B     		ldr	r3, .L21+24
- 480              		.loc 1 502 21
- 481 014c 0022     		movs	r2, #0
- 482 014e 1A61     		str	r2, [r3, #16]
+ 448              		.loc 1 502 0
+ 449 014a 2A4B     		ldr	r3, .L21+24
+ 450 014c 0022     		movs	r2, #0
+ 451 014e 1A61     		str	r2, [r3, #16]
  503:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_CLK->CCUCLKCR = CCUCLKDIV;
- 483              		.loc 1 503 10
- 484 0150 284B     		ldr	r3, .L21+24
- 485              		.loc 1 503 21
- 486 0152 0022     		movs	r2, #0
- 487 0154 1A62     		str	r2, [r3, #32]
+ 452              		.loc 1 503 0
+ 453 0150 284B     		ldr	r3, .L21+24
+ 454 0152 0022     		movs	r2, #0
+ 455 0154 1A62     		str	r2, [r3, #32]
  504:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_CLK->WDTCLKCR = WDTCLKDIV;
- 488              		.loc 1 504 10
- 489 0156 274B     		ldr	r3, .L21+24
- 490              		.loc 1 504 21
- 491 0158 0022     		movs	r2, #0
- 492 015a 5A62     		str	r2, [r3, #36]
+ 456              		.loc 1 504 0
+ 457 0156 274B     		ldr	r3, .L21+24
+ 458 0158 0022     		movs	r2, #0
+ 459 015a 5A62     		str	r2, [r3, #36]
  505:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_CLK->EBUCLKCR = EBUCLKDIV;
- 493              		.loc 1 505 10
- 494 015c 254B     		ldr	r3, .L21+24
- 495              		.loc 1 505 21
- 496 015e 0022     		movs	r2, #0
- 497 0160 DA61     		str	r2, [r3, #28]
+ 460              		.loc 1 505 0
+ 461 015c 254B     		ldr	r3, .L21+24
+ 462 015e 0022     		movs	r2, #0
+ 463 0160 DA61     		str	r2, [r3, #28]
  506:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_CLK->USBCLKCR = USBCLKDIV;
- 498              		.loc 1 506 10
- 499 0162 244B     		ldr	r3, .L21+24
- 500              		.loc 1 506 21
- 501 0164 0322     		movs	r2, #3
- 502 0166 9A61     		str	r2, [r3, #24]
+ 464              		.loc 1 506 0
+ 465 0162 244B     		ldr	r3, .L21+24
+ 466 0164 0322     		movs	r2, #3
+ 467 0166 9A61     		str	r2, [r3, #24]
  507:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  508:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #if ENABLE_PLL
  509:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* PLL frequency stepping...*/
  510:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Reset OSCDISCDIS */
  511:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON0 &= ~SCU_PLL_PLLCON0_OSCDISCDIS_Msk;
- 503              		.loc 1 511 20
- 504 0168 1E4B     		ldr	r3, .L21+8
- 505 016a 5B68     		ldr	r3, [r3, #4]
- 506 016c 1D4A     		ldr	r2, .L21+8
- 507 016e 23F04003 		bic	r3, r3, #64
- 508 0172 5360     		str	r3, [r2, #4]
+ 468              		.loc 1 511 0
+ 469 0168 1E4B     		ldr	r3, .L21+8
+ 470 016a 5B68     		ldr	r3, [r3, #4]
+ 471 016c 1D4A     		ldr	r2, .L21+8
+ 472 016e 23F04003 		bic	r3, r3, #64
+ 473 0172 5360     		str	r3, [r2, #4]
  512:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  513:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON1 = ((PLL_NDIV << SCU_PLL_PLLCON1_NDIV_Pos) |
- 509              		.loc 1 513 10
- 510 0174 1B4B     		ldr	r3, .L21+8
- 511              		.loc 1 513 20
- 512 0176 204A     		ldr	r2, .L21+28
- 513 0178 9A60     		str	r2, [r3, #8]
+ 474              		.loc 1 513 0
+ 475 0174 1B4B     		ldr	r3, .L21+8
+ 476 0176 204A     		ldr	r2, .L21+28
+ 477 0178 9A60     		str	r2, [r3, #8]
  514:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 	                    (PLL_K2DIV_1 << SCU_PLL_PLLCON1_K2DIV_Pos) |
  515:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 	                    (PLL_PDIV << SCU_PLL_PLLCON1_PDIV_Pos));
  516:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  517:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  518:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   delay(DELAY_CNT_50US_60MHZ);
- 514              		.loc 1 518 3
- 515 017a 40F6B830 		movw	r0, #3000
- 516 017e FFF7FEFF 		bl	delay
+ 478              		.loc 1 518 0
+ 479 017a 40F6B830 		movw	r0, #3000
+ 480 017e FFF7FEFF 		bl	delay
  519:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_VCOLOCK_Msk) == 0U)
- 517              		.loc 1 519 9
- 518 0182 00BF     		nop
- 519              	.L18:
- 520              		.loc 1 519 18 discriminator 1
- 521 0184 174B     		ldr	r3, .L21+8
- 522 0186 1B68     		ldr	r3, [r3]
- 523              		.loc 1 519 28 discriminator 1
- 524 0188 03F00403 		and	r3, r3, #4
- 525              		.loc 1 519 9 discriminator 1
- 526 018c 002B     		cmp	r3, #0
- 527 018e F9D0     		beq	.L18
+ 481              		.loc 1 519 0
+ 482 0182 00BF     		nop
+ 483              	.L18:
+ 484              		.loc 1 519 0 is_stmt 0 discriminator 1
+ 485 0184 174B     		ldr	r3, .L21+8
+ 486 0186 1B68     		ldr	r3, [r3]
+ 487 0188 03F00403 		and	r3, r3, #4
+ 488 018c 002B     		cmp	r3, #0
+ 489 018e F9D0     		beq	.L18
  520:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
  521:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     /* wait for PLL Lock */
  522:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   }
  523:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  524:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON1 = ((PLL_NDIV << SCU_PLL_PLLCON1_NDIV_Pos) |
- 528              		.loc 1 524 10
- 529 0190 144B     		ldr	r3, .L21+8
- 530              		.loc 1 524 20
- 531 0192 1A4A     		ldr	r2, .L21+32
- 532 0194 9A60     		str	r2, [r3, #8]
+ 490              		.loc 1 524 0 is_stmt 1
+ 491 0190 144B     		ldr	r3, .L21+8
+ 492 0192 1A4A     		ldr	r2, .L21+32
+ 493 0194 9A60     		str	r2, [r3, #8]
  525:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 	                    (PLL_K2DIV_2 << SCU_PLL_PLLCON1_K2DIV_Pos) |
  526:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 	                    (PLL_PDIV << SCU_PLL_PLLCON1_PDIV_Pos));
  527:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  528:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  529:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   delay(DELAY_CNT_50US_90MHZ);
- 533              		.loc 1 529 3
- 534 0196 41F29410 		movw	r0, #4500
- 535 019a FFF7FEFF 		bl	delay
+ 494              		.loc 1 529 0
+ 495 0196 41F29410 		movw	r0, #4500
+ 496 019a FFF7FEFF 		bl	delay
  530:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_VCOLOCK_Msk) == 0U)
- 536              		.loc 1 530 9
- 537 019e 00BF     		nop
- 538              	.L19:
- 539              		.loc 1 530 18 discriminator 1
- 540 01a0 104B     		ldr	r3, .L21+8
- 541 01a2 1B68     		ldr	r3, [r3]
- 542              		.loc 1 530 28 discriminator 1
- 543 01a4 03F00403 		and	r3, r3, #4
- 544              		.loc 1 530 9 discriminator 1
- 545 01a8 002B     		cmp	r3, #0
- 546 01aa F9D0     		beq	.L19
+ 497              		.loc 1 530 0
+ 498 019e 00BF     		nop
+ 499              	.L19:
+ 500              		.loc 1 530 0 is_stmt 0 discriminator 1
+ 501 01a0 104B     		ldr	r3, .L21+8
+ 502 01a2 1B68     		ldr	r3, [r3]
+ 503 01a4 03F00403 		and	r3, r3, #4
+ 504 01a8 002B     		cmp	r3, #0
+ 505 01aa F9D0     		beq	.L19
  531:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
  532:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     /* wait for PLL Lock */
  533:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   }
  534:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  535:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_PLL->PLLCON1 = ((PLL_NDIV << SCU_PLL_PLLCON1_NDIV_Pos) |
- 547              		.loc 1 535 10
- 548 01ac 0D4B     		ldr	r3, .L21+8
- 549              		.loc 1 535 20
- 550 01ae 144A     		ldr	r2, .L21+36
- 551 01b0 9A60     		str	r2, [r3, #8]
+ 506              		.loc 1 535 0 is_stmt 1
+ 507 01ac 0D4B     		ldr	r3, .L21+8
+ 508 01ae 144A     		ldr	r2, .L21+36
+ 509 01b0 9A60     		str	r2, [r3, #8]
  536:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 	                    (PLL_K2DIV << SCU_PLL_PLLCON1_K2DIV_Pos) |
  537:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 	                    (PLL_PDIV << SCU_PLL_PLLCON1_PDIV_Pos));
  538:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  539:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  540:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   delay(DELAY_CNT_50US_120MHZ);
- 552              		.loc 1 540 3
- 553 01b2 41F27070 		movw	r0, #6000
- 554 01b6 FFF7FEFF 		bl	delay
+ 510              		.loc 1 540 0
+ 511 01b2 41F27070 		movw	r0, #6000
+ 512 01b6 FFF7FEFF 		bl	delay
  541:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_VCOLOCK_Msk) == 0U)
- 555              		.loc 1 541 9
- 556 01ba 00BF     		nop
- 557              	.L20:
- 558              		.loc 1 541 18 discriminator 1
- 559 01bc 094B     		ldr	r3, .L21+8
- 560 01be 1B68     		ldr	r3, [r3]
- 561              		.loc 1 541 28 discriminator 1
- 562 01c0 03F00403 		and	r3, r3, #4
- 563              		.loc 1 541 9 discriminator 1
- 564 01c4 002B     		cmp	r3, #0
- 565 01c6 F9D0     		beq	.L20
+ 513              		.loc 1 541 0
+ 514 01ba 00BF     		nop
+ 515              	.L20:
+ 516              		.loc 1 541 0 is_stmt 0 discriminator 1
+ 517 01bc 094B     		ldr	r3, .L21+8
+ 518 01be 1B68     		ldr	r3, [r3]
+ 519 01c0 03F00403 		and	r3, r3, #4
+ 520 01c4 002B     		cmp	r3, #0
+ 521 01c6 F9D0     		beq	.L20
  542:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
  543:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     /* wait for PLL Lock */
  544:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   }
  545:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  546:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_TRAP->TRAPCLR = SCU_TRAP_TRAPCLR_SOSCWDGT_Msk | SCU_TRAP_TRAPCLR_SVCOLCKT_Msk;
- 566              		.loc 1 546 11
- 567 01c8 0E4B     		ldr	r3, .L21+40
- 568              		.loc 1 546 21
- 569 01ca 0522     		movs	r2, #5
- 570 01cc DA60     		str	r2, [r3, #12]
+ 522              		.loc 1 546 0 is_stmt 1
+ 523 01c8 0E4B     		ldr	r3, .L21+40
+ 524 01ca 0522     		movs	r2, #5
+ 525 01cc DA60     		str	r2, [r3, #12]
  547:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #endif /* ENABLE_PLL */
  548:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  549:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #if ENABLE_USBPLL
@@ -1922,11 +1874,10 @@
  601:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  602:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Enable selected clocks */
  603:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SCU_CLK->CLKSET = ENABLE_SCUCLK;
- 571              		.loc 1 603 10
- 572 01ce 094B     		ldr	r3, .L21+24
- 573              		.loc 1 603 19
- 574 01d0 0022     		movs	r2, #0
- 575 01d2 5A60     		str	r2, [r3, #4]
+ 526              		.loc 1 603 0
+ 527 01ce 094B     		ldr	r3, .L21+24
+ 528 01d0 0022     		movs	r2, #0
+ 529 01d2 5A60     		str	r2, [r3, #4]
  604:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  605:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #if ENABLE_EXTCLK == 1
  606:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   /* Configure external clock */
@@ -1946,334 +1897,317 @@
  620:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** #endif  /* ENABLE_EXTCLK == 1  */
  621:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  622:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SystemCoreClockUpdate();
- 576              		.loc 1 622 3
- 577 01d4 FFF7FEFF 		bl	SystemCoreClockUpdate
+ 530              		.loc 1 622 0
+ 531 01d4 FFF7FEFF 		bl	SystemCoreClockUpdate
  623:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** }
- 578              		.loc 1 623 1
- 579 01d8 00BF     		nop
- 580 01da 80BD     		pop	{r7, pc}
- 581              	.L22:
- 582              		.align	2
- 583              	.L21:
- 584 01dc 00420050 		.word	1342194176
- 585 01e0 00440050 		.word	1342194688
- 586 01e4 10470050 		.word	1342195472
- 587 01e8 00470050 		.word	1342195456
- 588 01ec 6BCA5F6B 		.word	1801439851
- 589 01f0 004F1301 		.word	18042624
- 590 01f4 00460050 		.word	1342195200
- 591 01f8 004F0701 		.word	17256192
- 592 01fc 004F0401 		.word	17059584
- 593 0200 004F0301 		.word	16994048
- 594 0204 60410050 		.word	1342194016
- 595              		.cfi_endproc
- 596              	.LFE126:
- 598              		.section	.text.SystemCoreClockUpdate,"ax",%progbits
- 599              		.align	1
- 600              		.weak	SystemCoreClockUpdate
- 601              		.syntax unified
- 602              		.thumb
- 603              		.thumb_func
- 605              	SystemCoreClockUpdate:
- 606              	.LFB127:
+ 532              		.loc 1 623 0
+ 533 01d8 00BF     		nop
+ 534 01da 80BD     		pop	{r7, pc}
+ 535              	.L22:
+ 536              		.align	2
+ 537              	.L21:
+ 538 01dc 00420050 		.word	1342194176
+ 539 01e0 00440050 		.word	1342194688
+ 540 01e4 10470050 		.word	1342195472
+ 541 01e8 00470050 		.word	1342195456
+ 542 01ec 6BCA5F6B 		.word	1801439851
+ 543 01f0 004F1301 		.word	18042624
+ 544 01f4 00460050 		.word	1342195200
+ 545 01f8 004F0701 		.word	17256192
+ 546 01fc 004F0401 		.word	17059584
+ 547 0200 004F0301 		.word	16994048
+ 548 0204 60410050 		.word	1342194016
+ 549              		.cfi_endproc
+ 550              	.LFE126:
+ 552              		.section	.text.SystemCoreClockUpdate,"ax",%progbits
+ 553              		.align	1
+ 554              		.weak	SystemCoreClockUpdate
+ 555              		.syntax unified
+ 556              		.thumb
+ 557              		.thumb_func
+ 558              		.fpu fpv4-sp-d16
+ 560              	SystemCoreClockUpdate:
+ 561              	.LFB127:
  624:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  625:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** __WEAK void SystemCoreClockUpdate(void)
  626:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** {
- 607              		.loc 1 626 1
- 608              		.cfi_startproc
- 609              		@ args = 0, pretend = 0, frame = 16
- 610              		@ frame_needed = 1, uses_anonymous_args = 0
- 611 0000 80B5     		push	{r7, lr}
- 612              	.LCFI16:
- 613              		.cfi_def_cfa_offset 8
- 614              		.cfi_offset 7, -8
- 615              		.cfi_offset 14, -4
- 616 0002 84B0     		sub	sp, sp, #16
- 617              	.LCFI17:
- 618              		.cfi_def_cfa_offset 24
- 619 0004 00AF     		add	r7, sp, #0
- 620              	.LCFI18:
- 621              		.cfi_def_cfa_register 7
+ 562              		.loc 1 626 0
+ 563              		.cfi_startproc
+ 564              		@ args = 0, pretend = 0, frame = 16
+ 565              		@ frame_needed = 1, uses_anonymous_args = 0
+ 566 0000 80B5     		push	{r7, lr}
+ 567              	.LCFI16:
+ 568              		.cfi_def_cfa_offset 8
+ 569              		.cfi_offset 7, -8
+ 570              		.cfi_offset 14, -4
+ 571 0002 84B0     		sub	sp, sp, #16
+ 572              	.LCFI17:
+ 573              		.cfi_def_cfa_offset 24
+ 574 0004 00AF     		add	r7, sp, #0
+ 575              	.LCFI18:
+ 576              		.cfi_def_cfa_register 7
  627:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   uint32_t pdiv;
  628:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   uint32_t ndiv;
  629:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   uint32_t kdiv;
  630:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   uint32_t temp;
  631:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  632:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   if (SCU_CLK->SYSCLKCR & SCU_CLK_SYSCLKCR_SYSSEL_Msk)
- 622              		.loc 1 632 14
- 623 0006 2F4B     		ldr	r3, .L29
- 624 0008 DB68     		ldr	r3, [r3, #12]
- 625              		.loc 1 632 25
- 626 000a 03F48033 		and	r3, r3, #65536
- 627              		.loc 1 632 6
- 628 000e 002B     		cmp	r3, #0
- 629 0010 3ED0     		beq	.L24
+ 577              		.loc 1 632 0
+ 578 0006 2F4B     		ldr	r3, .L30
+ 579 0008 DB68     		ldr	r3, [r3, #12]
+ 580 000a 03F48033 		and	r3, r3, #65536
+ 581 000e 002B     		cmp	r3, #0
+ 582 0010 3ED0     		beq	.L24
  633:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
  634:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     /* fPLL is clock source for fSYS */
  635:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     if(SCU_PLL->PLLCON2 & SCU_PLL_PLLCON2_PINSEL_Msk)
- 630              		.loc 1 635 15
- 631 0012 2D4B     		ldr	r3, .L29+4
- 632 0014 DB68     		ldr	r3, [r3, #12]
- 633              		.loc 1 635 25
- 634 0016 03F00103 		and	r3, r3, #1
- 635              		.loc 1 635 7
- 636 001a 002B     		cmp	r3, #0
- 637 001c 02D0     		beq	.L25
+ 583              		.loc 1 635 0
+ 584 0012 2D4B     		ldr	r3, .L30+4
+ 585 0014 DB68     		ldr	r3, [r3, #12]
+ 586 0016 03F00103 		and	r3, r3, #1
+ 587 001a 002B     		cmp	r3, #0
+ 588 001c 02D0     		beq	.L25
  636:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     {
  637:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       /* PLL input clock is the backup clock (fOFI) */
  638:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       temp = OFI_FREQUENCY;
- 638              		.loc 1 638 12
- 639 001e 2B4B     		ldr	r3, .L29+8
- 640 0020 FB60     		str	r3, [r7, #12]
- 641 0022 02E0     		b	.L26
- 642              	.L25:
+ 589              		.loc 1 638 0
+ 590 001e 2B4B     		ldr	r3, .L30+8
+ 591 0020 FB60     		str	r3, [r7, #12]
+ 592 0022 02E0     		b	.L26
+ 593              	.L25:
  639:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     }
  640:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     else
  641:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     {
  642:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       /* PLL input clock is the high performance osicllator (fOSCHP) */
  643:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       temp = OSCHP_GetFrequency();
- 643              		.loc 1 643 14
- 644 0024 FFF7FEFF 		bl	OSCHP_GetFrequency
- 645 0028 F860     		str	r0, [r7, #12]
- 646              	.L26:
+ 594              		.loc 1 643 0
+ 595 0024 FFF7FEFF 		bl	OSCHP_GetFrequency
+ 596 0028 F860     		str	r0, [r7, #12]
+ 597              	.L26:
  644:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     }
  645:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  646:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     /* check if PLL is locked */
  647:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     if (SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_VCOLOCK_Msk)
- 647              		.loc 1 647 16
- 648 002a 274B     		ldr	r3, .L29+4
- 649 002c 1B68     		ldr	r3, [r3]
- 650              		.loc 1 647 26
- 651 002e 03F00403 		and	r3, r3, #4
- 652              		.loc 1 647 8
- 653 0032 002B     		cmp	r3, #0
- 654 0034 20D0     		beq	.L27
+ 598              		.loc 1 647 0
+ 599 002a 274B     		ldr	r3, .L30+4
+ 600 002c 1B68     		ldr	r3, [r3]
+ 601 002e 03F00403 		and	r3, r3, #4
+ 602 0032 002B     		cmp	r3, #0
+ 603 0034 20D0     		beq	.L27
  648:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     {
  649:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       /* PLL normal mode */
  650:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       /* read back divider settings */
  651:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       pdiv = ((SCU_PLL->PLLCON1 & SCU_PLL_PLLCON1_PDIV_Msk) >> SCU_PLL_PLLCON1_PDIV_Pos) + 1;
- 655              		.loc 1 651 23
- 656 0036 244B     		ldr	r3, .L29+4
- 657 0038 9B68     		ldr	r3, [r3, #8]
- 658              		.loc 1 651 61
- 659 003a 1B0E     		lsrs	r3, r3, #24
- 660 003c 03F00F03 		and	r3, r3, #15
- 661              		.loc 1 651 12
- 662 0040 0133     		adds	r3, r3, #1
- 663 0042 7B60     		str	r3, [r7, #4]
+ 604              		.loc 1 651 0
+ 605 0036 244B     		ldr	r3, .L30+4
+ 606 0038 9B68     		ldr	r3, [r3, #8]
+ 607 003a 1B0E     		lsrs	r3, r3, #24
+ 608 003c 03F00F03 		and	r3, r3, #15
+ 609 0040 0133     		adds	r3, r3, #1
+ 610 0042 7B60     		str	r3, [r7, #4]
  652:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       ndiv = ((SCU_PLL->PLLCON1 & SCU_PLL_PLLCON1_NDIV_Msk) >> SCU_PLL_PLLCON1_NDIV_Pos) + 1;
- 664              		.loc 1 652 23
- 665 0044 204B     		ldr	r3, .L29+4
- 666 0046 9B68     		ldr	r3, [r3, #8]
- 667              		.loc 1 652 61
- 668 0048 1B0A     		lsrs	r3, r3, #8
- 669 004a 03F07F03 		and	r3, r3, #127
- 670              		.loc 1 652 12
- 671 004e 0133     		adds	r3, r3, #1
- 672 0050 3B60     		str	r3, [r7]
+ 611              		.loc 1 652 0
+ 612 0044 204B     		ldr	r3, .L30+4
+ 613 0046 9B68     		ldr	r3, [r3, #8]
+ 614 0048 1B0A     		lsrs	r3, r3, #8
+ 615 004a 03F07F03 		and	r3, r3, #127
+ 616 004e 0133     		adds	r3, r3, #1
+ 617 0050 3B60     		str	r3, [r7]
  653:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       kdiv = ((SCU_PLL->PLLCON1 & SCU_PLL_PLLCON1_K2DIV_Msk) >> SCU_PLL_PLLCON1_K2DIV_Pos) + 1;
- 673              		.loc 1 653 23
- 674 0052 1D4B     		ldr	r3, .L29+4
- 675 0054 9B68     		ldr	r3, [r3, #8]
- 676              		.loc 1 653 62
- 677 0056 1B0C     		lsrs	r3, r3, #16
- 678 0058 03F07F03 		and	r3, r3, #127
- 679              		.loc 1 653 12
- 680 005c 0133     		adds	r3, r3, #1
- 681 005e BB60     		str	r3, [r7, #8]
+ 618              		.loc 1 653 0
+ 619 0052 1D4B     		ldr	r3, .L30+4
+ 620 0054 9B68     		ldr	r3, [r3, #8]
+ 621 0056 1B0C     		lsrs	r3, r3, #16
+ 622 0058 03F07F03 		and	r3, r3, #127
+ 623 005c 0133     		adds	r3, r3, #1
+ 624 005e BB60     		str	r3, [r7, #8]
  654:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  655:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       temp = (temp / (pdiv * kdiv)) * ndiv;
- 682              		.loc 1 655 28
- 683 0060 7B68     		ldr	r3, [r7, #4]
- 684 0062 BA68     		ldr	r2, [r7, #8]
- 685 0064 02FB03F3 		mul	r3, r2, r3
- 686              		.loc 1 655 20
- 687 0068 FA68     		ldr	r2, [r7, #12]
- 688 006a B2FBF3F2 		udiv	r2, r2, r3
- 689              		.loc 1 655 12
- 690 006e 3B68     		ldr	r3, [r7]
- 691 0070 02FB03F3 		mul	r3, r2, r3
- 692 0074 FB60     		str	r3, [r7, #12]
- 693 0076 0DE0     		b	.L28
- 694              	.L27:
+ 625              		.loc 1 655 0
+ 626 0060 7B68     		ldr	r3, [r7, #4]
+ 627 0062 BA68     		ldr	r2, [r7, #8]
+ 628 0064 02FB03F3 		mul	r3, r2, r3
+ 629 0068 FA68     		ldr	r2, [r7, #12]
+ 630 006a B2FBF3F2 		udiv	r2, r2, r3
+ 631 006e 3B68     		ldr	r3, [r7]
+ 632 0070 02FB03F3 		mul	r3, r2, r3
+ 633 0074 FB60     		str	r3, [r7, #12]
+ 634 0076 0DE0     		b	.L29
+ 635              	.L27:
  656:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     }
  657:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     else
  658:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     {
  659:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       /* PLL prescalar mode */
  660:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       /* read back divider settings */
  661:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       kdiv  = ((SCU_PLL->PLLCON1 & SCU_PLL_PLLCON1_K1DIV_Msk) >> SCU_PLL_PLLCON1_K1DIV_Pos) + 1;
- 695              		.loc 1 661 24
- 696 0078 134B     		ldr	r3, .L29+4
- 697 007a 9B68     		ldr	r3, [r3, #8]
- 698              		.loc 1 661 63
- 699 007c 03F07F03 		and	r3, r3, #127
- 700              		.loc 1 661 13
- 701 0080 0133     		adds	r3, r3, #1
- 702 0082 BB60     		str	r3, [r7, #8]
+ 636              		.loc 1 661 0
+ 637 0078 134B     		ldr	r3, .L30+4
+ 638 007a 9B68     		ldr	r3, [r3, #8]
+ 639 007c 03F07F03 		and	r3, r3, #127
+ 640 0080 0133     		adds	r3, r3, #1
+ 641 0082 BB60     		str	r3, [r7, #8]
  662:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       
  663:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****       temp = (temp / kdiv);
- 703              		.loc 1 663 12
- 704 0084 FA68     		ldr	r2, [r7, #12]
- 705 0086 BB68     		ldr	r3, [r7, #8]
- 706 0088 B2FBF3F3 		udiv	r3, r2, r3
- 707 008c FB60     		str	r3, [r7, #12]
- 708 008e 01E0     		b	.L28
- 709              	.L24:
+ 642              		.loc 1 663 0
+ 643 0084 FA68     		ldr	r2, [r7, #12]
+ 644 0086 BB68     		ldr	r3, [r7, #8]
+ 645 0088 B2FBF3F3 		udiv	r3, r2, r3
+ 646 008c FB60     		str	r3, [r7, #12]
+ 647 008e 01E0     		b	.L29
+ 648              	.L24:
  664:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     }
  665:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   }
  666:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   else
  667:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   {
  668:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     /* fOFI is clock source for fSYS */    
  669:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****     temp = OFI_FREQUENCY;
- 710              		.loc 1 669 10
- 711 0090 0E4B     		ldr	r3, .L29+8
- 712 0092 FB60     		str	r3, [r7, #12]
- 713              	.L28:
+ 649              		.loc 1 669 0
+ 650 0090 0E4B     		ldr	r3, .L30+8
+ 651 0092 FB60     		str	r3, [r7, #12]
+ 652              	.L29:
  670:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   }
  671:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  672:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   temp = temp / ((SCU_CLK->SYSCLKCR & SCU_CLK_SYSCLKCR_SYSDIV_Msk) + 1);
- 714              		.loc 1 672 26
- 715 0094 0B4B     		ldr	r3, .L29
- 716 0096 DB68     		ldr	r3, [r3, #12]
- 717              		.loc 1 672 37
- 718 0098 DBB2     		uxtb	r3, r3
- 719              		.loc 1 672 68
- 720 009a 0133     		adds	r3, r3, #1
- 721              		.loc 1 672 8
- 722 009c FA68     		ldr	r2, [r7, #12]
- 723 009e B2FBF3F3 		udiv	r3, r2, r3
- 724 00a2 FB60     		str	r3, [r7, #12]
+ 653              		.loc 1 672 0
+ 654 0094 0B4B     		ldr	r3, .L30
+ 655 0096 DB68     		ldr	r3, [r3, #12]
+ 656 0098 DBB2     		uxtb	r3, r3
+ 657 009a 0133     		adds	r3, r3, #1
+ 658 009c FA68     		ldr	r2, [r7, #12]
+ 659 009e B2FBF3F3 		udiv	r3, r2, r3
+ 660 00a2 FB60     		str	r3, [r7, #12]
  673:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   temp = temp / ((SCU_CLK->CPUCLKCR & SCU_CLK_CPUCLKCR_CPUDIV_Msk) + 1);
- 725              		.loc 1 673 26
- 726 00a4 074B     		ldr	r3, .L29
- 727 00a6 1B69     		ldr	r3, [r3, #16]
- 728              		.loc 1 673 37
- 729 00a8 03F00103 		and	r3, r3, #1
- 730              		.loc 1 673 68
- 731 00ac 0133     		adds	r3, r3, #1
- 732              		.loc 1 673 8
- 733 00ae FA68     		ldr	r2, [r7, #12]
- 734 00b0 B2FBF3F3 		udiv	r3, r2, r3
- 735 00b4 FB60     		str	r3, [r7, #12]
+ 661              		.loc 1 673 0
+ 662 00a4 074B     		ldr	r3, .L30
+ 663 00a6 1B69     		ldr	r3, [r3, #16]
+ 664 00a8 03F00103 		and	r3, r3, #1
+ 665 00ac 0133     		adds	r3, r3, #1
+ 666 00ae FA68     		ldr	r2, [r7, #12]
+ 667 00b0 B2FBF3F3 		udiv	r3, r2, r3
+ 668 00b4 FB60     		str	r3, [r7, #12]
  674:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  675:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   SystemCoreClock = temp;
- 736              		.loc 1 675 19
- 737 00b6 064A     		ldr	r2, .L29+12
- 738 00b8 FB68     		ldr	r3, [r7, #12]
- 739 00ba 1360     		str	r3, [r2]
+ 669              		.loc 1 675 0
+ 670 00b6 064A     		ldr	r2, .L30+12
+ 671 00b8 FB68     		ldr	r3, [r7, #12]
+ 672 00ba 1360     		str	r3, [r2]
  676:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** }
- 740              		.loc 1 676 1
- 741 00bc 00BF     		nop
- 742 00be 1037     		adds	r7, r7, #16
- 743              	.LCFI19:
- 744              		.cfi_def_cfa_offset 8
- 745 00c0 BD46     		mov	sp, r7
- 746              	.LCFI20:
- 747              		.cfi_def_cfa_register 13
- 748              		@ sp needed
- 749 00c2 80BD     		pop	{r7, pc}
- 750              	.L30:
- 751              		.align	2
- 752              	.L29:
- 753 00c4 00460050 		.word	1342195200
- 754 00c8 10470050 		.word	1342195472
- 755 00cc 00366E01 		.word	24000000
- 756 00d0 00000000 		.word	SystemCoreClock
- 757              		.cfi_endproc
- 758              	.LFE127:
- 760              		.section	.text.OSCHP_GetFrequency,"ax",%progbits
- 761              		.align	1
- 762              		.weak	OSCHP_GetFrequency
- 763              		.syntax unified
- 764              		.thumb
- 765              		.thumb_func
- 767              	OSCHP_GetFrequency:
- 768              	.LFB128:
+ 673              		.loc 1 676 0
+ 674 00bc 00BF     		nop
+ 675 00be 1037     		adds	r7, r7, #16
+ 676              	.LCFI19:
+ 677              		.cfi_def_cfa_offset 8
+ 678 00c0 BD46     		mov	sp, r7
+ 679              	.LCFI20:
+ 680              		.cfi_def_cfa_register 13
+ 681              		@ sp needed
+ 682 00c2 80BD     		pop	{r7, pc}
+ 683              	.L31:
+ 684              		.align	2
+ 685              	.L30:
+ 686 00c4 00460050 		.word	1342195200
+ 687 00c8 10470050 		.word	1342195472
+ 688 00cc 00366E01 		.word	24000000
+ 689 00d0 00000000 		.word	SystemCoreClock
+ 690              		.cfi_endproc
+ 691              	.LFE127:
+ 693              		.section	.text.OSCHP_GetFrequency,"ax",%progbits
+ 694              		.align	1
+ 695              		.weak	OSCHP_GetFrequency
+ 696              		.syntax unified
+ 697              		.thumb
+ 698              		.thumb_func
+ 699              		.fpu fpv4-sp-d16
+ 701              	OSCHP_GetFrequency:
+ 702              	.LFB128:
  677:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** 
  678:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** __WEAK uint32_t OSCHP_GetFrequency(void)
  679:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** {
- 769              		.loc 1 679 1
- 770              		.cfi_startproc
- 771              		@ args = 0, pretend = 0, frame = 0
- 772              		@ frame_needed = 1, uses_anonymous_args = 0
- 773              		@ link register save eliminated.
- 774 0000 80B4     		push	{r7}
- 775              	.LCFI21:
- 776              		.cfi_def_cfa_offset 4
- 777              		.cfi_offset 7, -4
- 778 0002 00AF     		add	r7, sp, #0
- 779              	.LCFI22:
- 780              		.cfi_def_cfa_register 7
+ 703              		.loc 1 679 0
+ 704              		.cfi_startproc
+ 705              		@ args = 0, pretend = 0, frame = 0
+ 706              		@ frame_needed = 1, uses_anonymous_args = 0
+ 707              		@ link register save eliminated.
+ 708 0000 80B4     		push	{r7}
+ 709              	.LCFI21:
+ 710              		.cfi_def_cfa_offset 4
+ 711              		.cfi_offset 7, -4
+ 712 0002 00AF     		add	r7, sp, #0
+ 713              	.LCFI22:
+ 714              		.cfi_def_cfa_register 7
  680:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c ****   return OSCHP_FREQUENCY;
- 781              		.loc 1 680 10
- 782 0004 024B     		ldr	r3, .L33
+ 715              		.loc 1 680 0
+ 716 0004 024B     		ldr	r3, .L34
  681:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Source/system_XMC4500.c **** }
- 783              		.loc 1 681 1
- 784 0006 1846     		mov	r0, r3
- 785 0008 BD46     		mov	sp, r7
- 786              	.LCFI23:
- 787              		.cfi_def_cfa_register 13
- 788              		@ sp needed
- 789 000a 5DF8047B 		ldr	r7, [sp], #4
- 790              	.LCFI24:
- 791              		.cfi_restore 7
- 792              		.cfi_def_cfa_offset 0
- 793 000e 7047     		bx	lr
- 794              	.L34:
- 795              		.align	2
- 796              	.L33:
- 797 0010 001BB700 		.word	12000000
- 798              		.cfi_endproc
- 799              	.LFE128:
- 801              		.text
- 802              	.Letext0:
- 803              		.file 3 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/mach
- 804              		.file 4 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/
- 805              		.file 5 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h"
- 806              		.file 6 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/system_X
- 807              		.file 7 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/XMC4500.
+ 717              		.loc 1 681 0
+ 718 0006 1846     		mov	r0, r3
+ 719 0008 BD46     		mov	sp, r7
+ 720              	.LCFI23:
+ 721              		.cfi_def_cfa_register 13
+ 722              		@ sp needed
+ 723 000a 5DF8047B 		ldr	r7, [sp], #4
+ 724              	.LCFI24:
+ 725              		.cfi_restore 7
+ 726              		.cfi_def_cfa_offset 0
+ 727 000e 7047     		bx	lr
+ 728              	.L35:
+ 729              		.align	2
+ 730              	.L34:
+ 731 0010 001BB700 		.word	12000000
+ 732              		.cfi_endproc
+ 733              	.LFE128:
+ 735              		.text
+ 736              	.Letext0:
+ 737              		.file 3 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 738              		.file 4 "/usr/arm-none-eabi/include/sys/lock.h"
+ 739              		.file 5 "/usr/arm-none-eabi/include/sys/_types.h"
+ 740              		.file 6 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
+ 741              		.file 7 "/usr/arm-none-eabi/include/sys/reent.h"
+ 742              		.file 8 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 743              		.file 9 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h"
+ 744              		.file 10 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/system_
+ 745              		.file 11 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/XMC4500
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 system_XMC4500.c
-     /tmp/cc1yR7om.s:23     .no_init:0000000000000000 SystemCoreClock
-     /tmp/cc1yR7om.s:20     .no_init:0000000000000000 $d
-     /tmp/cc1yR7om.s:29     .no_init:0000000000000004 g_chipid
-     /tmp/cc1yR7om.s:32     .text.delay:0000000000000000 $t
-     /tmp/cc1yR7om.s:37     .text.delay:0000000000000000 delay
-     /tmp/cc1yR7om.s:99     .text.SystemInit:0000000000000000 $t
-     /tmp/cc1yR7om.s:105    .text.SystemInit:0000000000000000 SystemInit
-     /tmp/cc1yR7om.s:148    .text.SystemCoreSetup:0000000000000000 SystemCoreSetup
-     /tmp/cc1yR7om.s:274    .text.SystemCoreClockSetup:0000000000000000 SystemCoreClockSetup
-     /tmp/cc1yR7om.s:137    .text.SystemInit:0000000000000020 $d
-     /tmp/cc1yR7om.s:142    .text.SystemCoreSetup:0000000000000000 $t
-     /tmp/cc1yR7om.s:261    .text.SystemCoreSetup:0000000000000068 $d
-     /tmp/cc1yR7om.s:268    .text.SystemCoreClockSetup:0000000000000000 $t
-     /tmp/cc1yR7om.s:767    .text.OSCHP_GetFrequency:0000000000000000 OSCHP_GetFrequency
-     /tmp/cc1yR7om.s:605    .text.SystemCoreClockUpdate:0000000000000000 SystemCoreClockUpdate
-     /tmp/cc1yR7om.s:584    .text.SystemCoreClockSetup:00000000000001dc $d
-     /tmp/cc1yR7om.s:599    .text.SystemCoreClockUpdate:0000000000000000 $t
-     /tmp/cc1yR7om.s:753    .text.SystemCoreClockUpdate:00000000000000c4 $d
-     /tmp/cc1yR7om.s:761    .text.OSCHP_GetFrequency:0000000000000000 $t
-     /tmp/cc1yR7om.s:797    .text.OSCHP_GetFrequency:0000000000000010 $d
-                           .group:0000000000000000 wm4.0.467689a90594456bf46c01d2d8793c7f
-                           .group:0000000000000000 wm4._newlib_version.h.4.bfdf54b0af045d4a71376ae00f63a22c
-                           .group:0000000000000000 wm4.newlib.h.18.1c9fedb6b3cd797cff253cc0fd593ef2
-                           .group:0000000000000000 wm4.ieeefp.h.77.c88535c35f465c05b101960cf0179075
+     /tmp/cclwl3LR.s:21     .no_init:0000000000000000 SystemCoreClock
+     /tmp/cclwl3LR.s:18     .no_init:0000000000000000 $d
+     /tmp/cclwl3LR.s:27     .no_init:0000000000000004 g_chipid
+     /tmp/cclwl3LR.s:30     .text.delay:0000000000000000 $t
+     /tmp/cclwl3LR.s:36     .text.delay:0000000000000000 delay
+     /tmp/cclwl3LR.s:95     .text.SystemInit:0000000000000000 $t
+     /tmp/cclwl3LR.s:102    .text.SystemInit:0000000000000000 SystemInit
+     /tmp/cclwl3LR.s:146    .text.SystemCoreSetup:0000000000000000 SystemCoreSetup
+     /tmp/cclwl3LR.s:264    .text.SystemCoreClockSetup:0000000000000000 SystemCoreClockSetup
+     /tmp/cclwl3LR.s:134    .text.SystemInit:0000000000000020 $d
+     /tmp/cclwl3LR.s:139    .text.SystemCoreSetup:0000000000000000 $t
+     /tmp/cclwl3LR.s:250    .text.SystemCoreSetup:0000000000000064 $d
+     /tmp/cclwl3LR.s:257    .text.SystemCoreClockSetup:0000000000000000 $t
+     /tmp/cclwl3LR.s:701    .text.OSCHP_GetFrequency:0000000000000000 OSCHP_GetFrequency
+     /tmp/cclwl3LR.s:560    .text.SystemCoreClockUpdate:0000000000000000 SystemCoreClockUpdate
+     /tmp/cclwl3LR.s:538    .text.SystemCoreClockSetup:00000000000001dc $d
+     /tmp/cclwl3LR.s:553    .text.SystemCoreClockUpdate:0000000000000000 $t
+     /tmp/cclwl3LR.s:686    .text.SystemCoreClockUpdate:00000000000000c4 $d
+     /tmp/cclwl3LR.s:694    .text.OSCHP_GetFrequency:0000000000000000 $t
+     /tmp/cclwl3LR.s:731    .text.OSCHP_GetFrequency:0000000000000010 $d
+                           .group:0000000000000000 wm4.0.7a9f4dea188ccacb7d502cdcabb040c1
+                           .group:0000000000000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:0000000000000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:0000000000000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
                            .group:0000000000000000 wm4.features.h.22.026edb2397769f4ae13f35900dbdb560
-                           .group:0000000000000000 wm4.config.h.224.c701144a7b0518c6ee9b9b5465b79f81
+                           .group:0000000000000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
                            .group:0000000000000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
-                           .group:0000000000000000 wm4.stddef.h.39.27677723d43e5b5a7afdf8d798429f1d
-                           .group:0000000000000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
-                           .group:0000000000000000 wm4.stddef.h.155.3588ebfdd1e8c7ede80509bb9c3b8009
+                           .group:0000000000000000 wm4.stddef.h.39.99b5021e28f91cdb161c889e07266673
                            .group:0000000000000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
-                           .group:0000000000000000 wm4._types.h.127.34941de1b2539d59d5cac00e0dd27a45
-                           .group:0000000000000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
                            .group:0000000000000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
-                           .group:0000000000000000 wm4.reent.h.77.dcd6129ff07fe81bd5636db29abe53b2
-                           .group:0000000000000000 wm4.cdefs.h.49.a54b2d5c07711bc7320a3fea9f12cb56
+                           .group:0000000000000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:0000000000000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:0000000000000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:0000000000000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:0000000000000000 wm4.cdefs.h.47.14fad0b327eb9dcf106599b738d85132
                            .group:0000000000000000 wm4.string.h.15.dab3980bf35408a4c507182805e2de3a
-                           .group:0000000000000000 wm4.stddef.h.155.ba788add86a0e365f264484f110c3c29
+                           .group:0000000000000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
                            .group:0000000000000000 wm4.XMC4500.h.55.9aa45b9b5790506b2dcb963e4e7adeaf
-                           .group:0000000000000000 wm4._intsup.h.10.48bafbb683905c4daa4565a85aeeb264
+                           .group:0000000000000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
                            .group:0000000000000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
                            .group:0000000000000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
                            .group:0000000000000000 wm4.core_cm4.h.64.5e0cbcf8bebbf5a079d72775fef0c8d7

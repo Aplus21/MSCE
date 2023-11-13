@@ -1,36 +1,3 @@
-/*
- * Copyright (C) 2014 Infineon Technologies AG. All rights reserved.
- *
- * Infineon Technologies AG (Infineon) is supplying this software for use with
- * Infineon's microcontrollers.
- * This file can be freely distributed within development tools that are
- * supporting such microcontrollers.
- *
- * THIS SOFTWARE IS PROVIDED "AS IS". NO WARRANTIES, WHETHER EXPRESS, IMPLIED
- * OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
- * INFINEON SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL,
- * OR CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
- *
- */
-
-/**
- * @file
- * @date 04 Dec, 2014
- * @version 1.0.0
- *
- * @brief XMC4500 Relax kit GPIO toggle example
- *
- * GPIO toggle example flashes the leds of the board with a periodic rate.
- * LED1 is connected to P1.1
- * LED2 is connected to P1.0
- *
- * History <br>
- *
- * Version 1.0.0 Initial <br>
- *
- */
-
 #include <xmc_gpio.h>
 #include <XMC4500.h>
 #include <xmc4_gpio.h>
@@ -46,7 +13,7 @@
 #define DASH_TIME (DOT_TIME * 3)
 #define LETTER_TIME (DOT_TIME * 3)
 #define SPACE_TIME (DOT_TIME * 7)
-#define REPEAT_TIME (DOT_TIME * 500)
+#define REPEAT_TIME (DOT_TIME * 50)
 #define TICKS_PER_SECOND 1000
 
 const XMC_GPIO_CONFIG_t out_config = \
@@ -58,11 +25,10 @@ const XMC_GPIO_CONFIG_t in_config = \
        .output_level=XMC_GPIO_OUTPUT_LEVEL_LOW,\
        .output_strength=XMC_GPIO_OUTPUT_STRENGTH_STRONG_SHARP_EDGE};
 
-static volatile bool startCount = false;
 static volatile uint32_t msCounter = 0;
 char secretCode [] = "I CAN MORSE";
 int gapTime = 0;
-char gapText[32];
+char gapText[50];
 
 static __IO uint32_t msTicks;
 
@@ -94,7 +60,7 @@ void DelayInit()
     SysTick_Config(SystemCoreClock / TICKS_PER_SECOND);
 }
 
-void DelayMs(uint32_t ms)
+void delay_ms(uint32_t ms)
 {
     // Reload ms value
     msTicks = ms;
@@ -106,13 +72,13 @@ void DelayMs(uint32_t ms)
 
 void dot(){
     XMC_GPIO_SetOutputHigh(LED1);
-    DelayMs(DOT_TIME);
+    delay_ms(DOT_TIME);
     XMC_GPIO_SetOutputLow(LED1);
 }
 
 void dash(){
     XMC_GPIO_SetOutputHigh(LED1);
-    DelayMs(DASH_TIME);
+    delay_ms(DASH_TIME);
     XMC_GPIO_SetOutputLow(LED1);
 }
 
@@ -130,7 +96,7 @@ void textToMorse(const char *text) {
                     dash();
                 }
                 // Space between Morse characters (1 dot)
-                DelayMs(DOT_TIME);
+                delay_ms(DOT_TIME);
             }
         }
         else if (c >= '0' && c <= '9') {
@@ -144,29 +110,20 @@ void textToMorse(const char *text) {
                     dash();
                 }
                 // Space between Morse characters (1 dot)
-                DelayMs(DOT_TIME);
+                delay_ms(DOT_TIME);
             }
         }
         else if (c == ' ') {
             // Space between words (7 dots)
-            DelayMs(SPACE_TIME);
+            delay_ms(SPACE_TIME);
         }
         // Space between Morse letters (3 dots)
-        DelayMs(LETTER_TIME);
+        delay_ms(LETTER_TIME);
     }
-    // Space between Transmission
-    //DelayMs(REPEAT_TIME);
 }
 
 int main(void)
-{
-    /*XMC_GPIO_CONFIG_t config;
-
-    config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL;
-    config.output_level = XMC_GPIO_OUTPUT_LEVEL_LOW;
-    config.output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM;
-    */
-    
+{   
     XMC_GPIO_Init(LED1, &out_config);
     XMC_GPIO_Init(LED2,     &out_config);
     XMC_GPIO_Init(GPIO_BUTTON1,  &in_config);
@@ -176,10 +133,9 @@ int main(void)
     
     while(1)
     {
-        
         if(XMC_GPIO_GetInput(GPIO_BUTTON1) == 0) {
-            XMC_GPIO_SetOutputHigh(LED2);
-            gapTime = msCounter - gapTime;         
+            gapTime = msCounter - gapTime;
+            textToMorse(secretCode); //.. / -.-. .- -. / -- --- .-. ... .
         } else {
             XMC_GPIO_SetOutputLow(LED2);
         }
@@ -189,7 +145,5 @@ int main(void)
         } else {
             XMC_GPIO_SetOutputLow(LED2);
         }
-    
     }
-    
 }

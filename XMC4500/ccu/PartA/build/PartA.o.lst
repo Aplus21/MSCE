@@ -1,28 +1,27 @@
    1              		.cpu cortex-m4
-   2              		.arch armv7e-m
-   3              		.fpu fpv4-sp-d16
-   4              		.eabi_attribute 27, 1
-   5              		.eabi_attribute 20, 1
-   6              		.eabi_attribute 21, 1
-   7              		.eabi_attribute 23, 3
-   8              		.eabi_attribute 24, 1
-   9              		.eabi_attribute 25, 1
-  10              		.eabi_attribute 26, 1
-  11              		.eabi_attribute 30, 6
-  12              		.eabi_attribute 34, 1
-  13              		.eabi_attribute 18, 4
-  14              		.file	"PartA.c"
-  15              		.text
-  16              	.Ltext0:
-  17              		.cfi_sections	.debug_frame
-  18              		.section	.text.__NVIC_SetPriority,"ax",%progbits
-  19              		.align	1
-  20              		.syntax unified
-  21              		.thumb
-  22              		.thumb_func
-  24              	__NVIC_SetPriority:
-  25              	.LFB111:
-  26              		.file 1 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h"
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"PartA.c"
+  13              		.text
+  14              	.Ltext0:
+  15              		.cfi_sections	.debug_frame
+  16              		.section	.text.__NVIC_SetPriority,"ax",%progbits
+  17              		.align	1
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv4-sp-d16
+  23              	__NVIC_SetPriority:
+  24              	.LFB111:
+  25              		.file 1 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h"
    1:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h **** /**************************************************************************//**
    2:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****  * @file     core_cm4.h
    3:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****  * @brief    CMSIS Cortex-M4 Core Peripheral Access Layer Header File
@@ -1822,104 +1821,91 @@
 1797:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****  */
 1798:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h **** __STATIC_INLINE void __NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
 1799:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h **** {
-  27              		.loc 1 1799 1
-  28              		.cfi_startproc
-  29              		@ args = 0, pretend = 0, frame = 8
-  30              		@ frame_needed = 1, uses_anonymous_args = 0
-  31              		@ link register save eliminated.
-  32 0000 80B4     		push	{r7}
-  33              	.LCFI0:
-  34              		.cfi_def_cfa_offset 4
-  35              		.cfi_offset 7, -4
-  36 0002 83B0     		sub	sp, sp, #12
-  37              	.LCFI1:
-  38              		.cfi_def_cfa_offset 16
-  39 0004 00AF     		add	r7, sp, #0
-  40              	.LCFI2:
-  41              		.cfi_def_cfa_register 7
-  42 0006 0346     		mov	r3, r0
-  43 0008 3960     		str	r1, [r7]
-  44 000a FB71     		strb	r3, [r7, #7]
+  26              		.loc 1 1799 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 8
+  29              		@ frame_needed = 1, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31 0000 80B4     		push	{r7}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 4
+  34              		.cfi_offset 7, -4
+  35 0002 83B0     		sub	sp, sp, #12
+  36              	.LCFI1:
+  37              		.cfi_def_cfa_offset 16
+  38 0004 00AF     		add	r7, sp, #0
+  39              	.LCFI2:
+  40              		.cfi_def_cfa_register 7
+  41 0006 0346     		mov	r3, r0
+  42 0008 3960     		str	r1, [r7]
+  43 000a FB71     		strb	r3, [r7, #7]
 1800:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   if ((int32_t)(IRQn) >= 0)
-  45              		.loc 1 1800 6
-  46 000c 97F90730 		ldrsb	r3, [r7, #7]
-  47 0010 002B     		cmp	r3, #0
-  48 0012 0ADB     		blt	.L2
+  44              		.loc 1 1800 0
+  45 000c 97F90730 		ldrsb	r3, [r7, #7]
+  46 0010 002B     		cmp	r3, #0
+  47 0012 0ADB     		blt	.L2
 1801:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   {
 1802:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****     NVIC->IP[((uint32_t)(int32_t)IRQn)]               = (uint8_t)((priority << (8U - __NVIC_PRIO_BI
-  49              		.loc 1 1802 57
-  50 0014 3B68     		ldr	r3, [r7]
-  51 0016 DAB2     		uxtb	r2, r3
-  52              		.loc 1 1802 9
-  53 0018 0C49     		ldr	r1, .L5
-  54              		.loc 1 1802 15
-  55 001a 97F90730 		ldrsb	r3, [r7, #7]
-  56              		.loc 1 1802 57
-  57 001e 9200     		lsls	r2, r2, #2
-  58 0020 D2B2     		uxtb	r2, r2
-  59              		.loc 1 1802 55
-  60 0022 0B44     		add	r3, r3, r1
-  61 0024 83F80023 		strb	r2, [r3, #768]
+  48              		.loc 1 1802 0
+  49 0014 3B68     		ldr	r3, [r7]
+  50 0016 DAB2     		uxtb	r2, r3
+  51 0018 0C49     		ldr	r1, .L5
+  52 001a 97F90730 		ldrsb	r3, [r7, #7]
+  53 001e 9200     		lsls	r2, r2, #2
+  54 0020 D2B2     		uxtb	r2, r2
+  55 0022 0B44     		add	r3, r3, r1
+  56 0024 83F80023 		strb	r2, [r3, #768]
 1803:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   }
 1804:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   else
 1805:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   {
 1806:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****     SCB->SHP[(((uint32_t)(int32_t)IRQn) & 0xFUL)-4UL] = (uint8_t)((priority << (8U - __NVIC_PRIO_BI
 1807:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   }
 1808:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h **** }
-  62              		.loc 1 1808 1
-  63 0028 0AE0     		b	.L4
-  64              	.L2:
+  57              		.loc 1 1808 0
+  58 0028 0AE0     		b	.L4
+  59              	.L2:
 1806:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   }
-  65              		.loc 1 1806 57
-  66 002a 3B68     		ldr	r3, [r7]
-  67 002c DAB2     		uxtb	r2, r3
-1806:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   }
-  68              		.loc 1 1806 8
-  69 002e 0849     		ldr	r1, .L5+4
-1806:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   }
-  70              		.loc 1 1806 41
-  71 0030 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
-  72 0032 03F00F03 		and	r3, r3, #15
-1806:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   }
-  73              		.loc 1 1806 49
-  74 0036 043B     		subs	r3, r3, #4
-1806:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   }
-  75              		.loc 1 1806 57
-  76 0038 9200     		lsls	r2, r2, #2
-  77 003a D2B2     		uxtb	r2, r2
-1806:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   }
-  78              		.loc 1 1806 55
-  79 003c 0B44     		add	r3, r3, r1
-  80 003e 1A76     		strb	r2, [r3, #24]
-  81              	.L4:
-  82              		.loc 1 1808 1
-  83 0040 00BF     		nop
-  84 0042 0C37     		adds	r7, r7, #12
-  85              	.LCFI3:
-  86              		.cfi_def_cfa_offset 4
-  87 0044 BD46     		mov	sp, r7
-  88              	.LCFI4:
-  89              		.cfi_def_cfa_register 13
-  90              		@ sp needed
-  91 0046 5DF8047B 		ldr	r7, [sp], #4
-  92              	.LCFI5:
-  93              		.cfi_restore 7
-  94              		.cfi_def_cfa_offset 0
-  95 004a 7047     		bx	lr
-  96              	.L6:
-  97              		.align	2
-  98              	.L5:
-  99 004c 00E100E0 		.word	-536813312
- 100 0050 00ED00E0 		.word	-536810240
- 101              		.cfi_endproc
- 102              	.LFE111:
- 104              		.section	.text.SysTick_Config,"ax",%progbits
- 105              		.align	1
- 106              		.syntax unified
- 107              		.thumb
- 108              		.thumb_func
- 110              	SysTick_Config:
- 111              	.LFB119:
+  60              		.loc 1 1806 0
+  61 002a 3B68     		ldr	r3, [r7]
+  62 002c DAB2     		uxtb	r2, r3
+  63 002e 0849     		ldr	r1, .L5+4
+  64 0030 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+  65 0032 03F00F03 		and	r3, r3, #15
+  66 0036 043B     		subs	r3, r3, #4
+  67 0038 9200     		lsls	r2, r2, #2
+  68 003a D2B2     		uxtb	r2, r2
+  69 003c 0B44     		add	r3, r3, r1
+  70 003e 1A76     		strb	r2, [r3, #24]
+  71              	.L4:
+  72              		.loc 1 1808 0
+  73 0040 00BF     		nop
+  74 0042 0C37     		adds	r7, r7, #12
+  75              	.LCFI3:
+  76              		.cfi_def_cfa_offset 4
+  77 0044 BD46     		mov	sp, r7
+  78              	.LCFI4:
+  79              		.cfi_def_cfa_register 13
+  80              		@ sp needed
+  81 0046 5DF8047B 		ldr	r7, [sp], #4
+  82              	.LCFI5:
+  83              		.cfi_restore 7
+  84              		.cfi_def_cfa_offset 0
+  85 004a 7047     		bx	lr
+  86              	.L6:
+  87              		.align	2
+  88              	.L5:
+  89 004c 00E100E0 		.word	-536813312
+  90 0050 00ED00E0 		.word	-536810240
+  91              		.cfi_endproc
+  92              	.LFE111:
+  94              		.section	.text.SysTick_Config,"ax",%progbits
+  95              		.align	1
+  96              		.syntax unified
+  97              		.thumb
+  98              		.thumb_func
+  99              		.fpu fpv4-sp-d16
+ 101              	SysTick_Config:
+ 102              	.LFB119:
 1809:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h **** 
 1810:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h **** 
 1811:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h **** /**
@@ -2109,93 +2095,89 @@
 1995:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****  */
 1996:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h **** __STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
 1997:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h **** {
- 112              		.loc 1 1997 1
- 113              		.cfi_startproc
- 114              		@ args = 0, pretend = 0, frame = 8
- 115              		@ frame_needed = 1, uses_anonymous_args = 0
- 116 0000 80B5     		push	{r7, lr}
- 117              	.LCFI6:
- 118              		.cfi_def_cfa_offset 8
- 119              		.cfi_offset 7, -8
- 120              		.cfi_offset 14, -4
- 121 0002 82B0     		sub	sp, sp, #8
- 122              	.LCFI7:
- 123              		.cfi_def_cfa_offset 16
- 124 0004 00AF     		add	r7, sp, #0
- 125              	.LCFI8:
- 126              		.cfi_def_cfa_register 7
- 127 0006 7860     		str	r0, [r7, #4]
+ 103              		.loc 1 1997 0
+ 104              		.cfi_startproc
+ 105              		@ args = 0, pretend = 0, frame = 8
+ 106              		@ frame_needed = 1, uses_anonymous_args = 0
+ 107 0000 80B5     		push	{r7, lr}
+ 108              	.LCFI6:
+ 109              		.cfi_def_cfa_offset 8
+ 110              		.cfi_offset 7, -8
+ 111              		.cfi_offset 14, -4
+ 112 0002 82B0     		sub	sp, sp, #8
+ 113              	.LCFI7:
+ 114              		.cfi_def_cfa_offset 16
+ 115 0004 00AF     		add	r7, sp, #0
+ 116              	.LCFI8:
+ 117              		.cfi_def_cfa_register 7
+ 118 0006 7860     		str	r0, [r7, #4]
 1998:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   if ((ticks - 1UL) > SysTick_LOAD_RELOAD_Msk)
- 128              		.loc 1 1998 14
- 129 0008 7B68     		ldr	r3, [r7, #4]
- 130 000a 013B     		subs	r3, r3, #1
- 131              		.loc 1 1998 6
- 132 000c B3F1807F 		cmp	r3, #16777216
- 133 0010 01D3     		bcc	.L8
+ 119              		.loc 1 1998 0
+ 120 0008 7B68     		ldr	r3, [r7, #4]
+ 121 000a 013B     		subs	r3, r3, #1
+ 122 000c B3F1807F 		cmp	r3, #16777216
+ 123 0010 01D3     		bcc	.L8
 1999:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   {
 2000:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****     return (1UL);                                                   /* Reload value impossible */
- 134              		.loc 1 2000 12
- 135 0012 0123     		movs	r3, #1
- 136 0014 0FE0     		b	.L9
- 137              	.L8:
+ 124              		.loc 1 2000 0
+ 125 0012 0123     		movs	r3, #1
+ 126 0014 0FE0     		b	.L9
+ 127              	.L8:
 2001:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   }
 2002:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h **** 
 2003:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   SysTick->LOAD  = (uint32_t)(ticks - 1UL);                         /* set reload register */
- 138              		.loc 1 2003 10
- 139 0016 0A4A     		ldr	r2, .L10
- 140              		.loc 1 2003 20
- 141 0018 7B68     		ldr	r3, [r7, #4]
- 142 001a 013B     		subs	r3, r3, #1
- 143              		.loc 1 2003 18
- 144 001c 5360     		str	r3, [r2, #4]
+ 128              		.loc 1 2003 0
+ 129 0016 0A4A     		ldr	r2, .L10
+ 130 0018 7B68     		ldr	r3, [r7, #4]
+ 131 001a 013B     		subs	r3, r3, #1
+ 132 001c 5360     		str	r3, [r2, #4]
 2004:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   NVIC_SetPriority (SysTick_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL); /* set Priority for Systick Int
- 145              		.loc 1 2004 3
- 146 001e 3F21     		movs	r1, #63
- 147 0020 4FF0FF30 		mov	r0, #-1
- 148 0024 FFF7FEFF 		bl	__NVIC_SetPriority
+ 133              		.loc 1 2004 0
+ 134 001e 3F21     		movs	r1, #63
+ 135 0020 4FF0FF30 		mov	r0, #-1
+ 136 0024 FFF7FEFF 		bl	__NVIC_SetPriority
 2005:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   SysTick->VAL   = 0UL;                                             /* Load the SysTick Counter Val
- 149              		.loc 1 2005 10
- 150 0028 054B     		ldr	r3, .L10
- 151              		.loc 1 2005 18
- 152 002a 0022     		movs	r2, #0
- 153 002c 9A60     		str	r2, [r3, #8]
+ 137              		.loc 1 2005 0
+ 138 0028 054B     		ldr	r3, .L10
+ 139 002a 0022     		movs	r2, #0
+ 140 002c 9A60     		str	r2, [r3, #8]
 2006:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   SysTick->CTRL  = SysTick_CTRL_CLKSOURCE_Msk |
- 154              		.loc 1 2006 10
- 155 002e 044B     		ldr	r3, .L10
- 156              		.loc 1 2006 18
- 157 0030 0722     		movs	r2, #7
- 158 0032 1A60     		str	r2, [r3]
+ 141              		.loc 1 2006 0
+ 142 002e 044B     		ldr	r3, .L10
+ 143 0030 0722     		movs	r2, #7
+ 144 0032 1A60     		str	r2, [r3]
 2007:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****                    SysTick_CTRL_TICKINT_Msk   |
 2008:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****                    SysTick_CTRL_ENABLE_Msk;                         /* Enable SysTick IRQ and SysTi
 2009:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h ****   return (0UL);                                                     /* Function successful */
- 159              		.loc 1 2009 10
- 160 0034 0023     		movs	r3, #0
- 161              	.L9:
+ 145              		.loc 1 2009 0
+ 146 0034 0023     		movs	r3, #0
+ 147              	.L9:
 2010:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h **** }
- 162              		.loc 1 2010 1
- 163 0036 1846     		mov	r0, r3
- 164 0038 0837     		adds	r7, r7, #8
- 165              	.LCFI9:
- 166              		.cfi_def_cfa_offset 8
- 167 003a BD46     		mov	sp, r7
- 168              	.LCFI10:
- 169              		.cfi_def_cfa_register 13
- 170              		@ sp needed
- 171 003c 80BD     		pop	{r7, pc}
- 172              	.L11:
- 173 003e 00BF     		.align	2
- 174              	.L10:
- 175 0040 10E000E0 		.word	-536813552
- 176              		.cfi_endproc
- 177              	.LFE119:
- 179              		.section	.text.XMC_GPIO_SetOutputHigh,"ax",%progbits
- 180              		.align	1
- 181              		.syntax unified
- 182              		.thumb
- 183              		.thumb_func
- 185              	XMC_GPIO_SetOutputHigh:
- 186              	.LFB130:
- 187              		.file 2 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h"
+ 148              		.loc 1 2010 0
+ 149 0036 1846     		mov	r0, r3
+ 150 0038 0837     		adds	r7, r7, #8
+ 151              	.LCFI9:
+ 152              		.cfi_def_cfa_offset 8
+ 153 003a BD46     		mov	sp, r7
+ 154              	.LCFI10:
+ 155              		.cfi_def_cfa_register 13
+ 156              		@ sp needed
+ 157 003c 80BD     		pop	{r7, pc}
+ 158              	.L11:
+ 159 003e 00BF     		.align	2
+ 160              	.L10:
+ 161 0040 10E000E0 		.word	-536813552
+ 162              		.cfi_endproc
+ 163              	.LFE119:
+ 165              		.section	.text.XMC_GPIO_SetOutputHigh,"ax",%progbits
+ 166              		.align	1
+ 167              		.syntax unified
+ 168              		.thumb
+ 169              		.thumb_func
+ 170              		.fpu fpv4-sp-d16
+ 172              	XMC_GPIO_SetOutputHigh:
+ 173              	.LFB130:
+ 174              		.file 2 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h"
    1:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h **** /**
    2:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h ****  * @file xmc_gpio.h
    3:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h ****  * @date 2015-06-20
@@ -2453,58 +2435,58 @@
  255:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h **** 
  256:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h **** __STATIC_INLINE void XMC_GPIO_SetOutputHigh(XMC_GPIO_PORT_t *const port, const uint8_t pin)
  257:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h **** {
- 188              		.loc 2 257 1
- 189              		.cfi_startproc
- 190              		@ args = 0, pretend = 0, frame = 8
- 191              		@ frame_needed = 1, uses_anonymous_args = 0
- 192              		@ link register save eliminated.
- 193 0000 80B4     		push	{r7}
- 194              	.LCFI11:
- 195              		.cfi_def_cfa_offset 4
- 196              		.cfi_offset 7, -4
- 197 0002 83B0     		sub	sp, sp, #12
- 198              	.LCFI12:
- 199              		.cfi_def_cfa_offset 16
- 200 0004 00AF     		add	r7, sp, #0
- 201              	.LCFI13:
- 202              		.cfi_def_cfa_register 7
- 203 0006 7860     		str	r0, [r7, #4]
- 204 0008 0B46     		mov	r3, r1
- 205 000a FB70     		strb	r3, [r7, #3]
+ 175              		.loc 2 257 0
+ 176              		.cfi_startproc
+ 177              		@ args = 0, pretend = 0, frame = 8
+ 178              		@ frame_needed = 1, uses_anonymous_args = 0
+ 179              		@ link register save eliminated.
+ 180 0000 80B4     		push	{r7}
+ 181              	.LCFI11:
+ 182              		.cfi_def_cfa_offset 4
+ 183              		.cfi_offset 7, -4
+ 184 0002 83B0     		sub	sp, sp, #12
+ 185              	.LCFI12:
+ 186              		.cfi_def_cfa_offset 16
+ 187 0004 00AF     		add	r7, sp, #0
+ 188              	.LCFI13:
+ 189              		.cfi_def_cfa_register 7
+ 190 0006 7860     		str	r0, [r7, #4]
+ 191 0008 0B46     		mov	r3, r1
+ 192 000a FB70     		strb	r3, [r7, #3]
  258:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h ****   XMC_ASSERT("XMC_GPIO_SetOutputHigh: Invalid port", XMC_GPIO_CHECK_OUTPUT_PORT(port));
  259:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h **** 
  260:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h ****   port->OMR = (uint32_t)0x1U << pin;
- 206              		.loc 2 260 30
- 207 000c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 208 000e 0122     		movs	r2, #1
- 209 0010 9A40     		lsls	r2, r2, r3
- 210              		.loc 2 260 13
- 211 0012 7B68     		ldr	r3, [r7, #4]
- 212 0014 5A60     		str	r2, [r3, #4]
+ 193              		.loc 2 260 0
+ 194 000c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 195 000e 0122     		movs	r2, #1
+ 196 0010 9A40     		lsls	r2, r2, r3
+ 197 0012 7B68     		ldr	r3, [r7, #4]
+ 198 0014 5A60     		str	r2, [r3, #4]
  261:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h **** }
- 213              		.loc 2 261 1
- 214 0016 00BF     		nop
- 215 0018 0C37     		adds	r7, r7, #12
- 216              	.LCFI14:
- 217              		.cfi_def_cfa_offset 4
- 218 001a BD46     		mov	sp, r7
- 219              	.LCFI15:
- 220              		.cfi_def_cfa_register 13
- 221              		@ sp needed
- 222 001c 5DF8047B 		ldr	r7, [sp], #4
- 223              	.LCFI16:
- 224              		.cfi_restore 7
- 225              		.cfi_def_cfa_offset 0
- 226 0020 7047     		bx	lr
- 227              		.cfi_endproc
- 228              	.LFE130:
- 230              		.section	.text.XMC_GPIO_SetOutputLow,"ax",%progbits
- 231              		.align	1
- 232              		.syntax unified
- 233              		.thumb
- 234              		.thumb_func
- 236              	XMC_GPIO_SetOutputLow:
- 237              	.LFB131:
+ 199              		.loc 2 261 0
+ 200 0016 00BF     		nop
+ 201 0018 0C37     		adds	r7, r7, #12
+ 202              	.LCFI14:
+ 203              		.cfi_def_cfa_offset 4
+ 204 001a BD46     		mov	sp, r7
+ 205              	.LCFI15:
+ 206              		.cfi_def_cfa_register 13
+ 207              		@ sp needed
+ 208 001c 5DF8047B 		ldr	r7, [sp], #4
+ 209              	.LCFI16:
+ 210              		.cfi_restore 7
+ 211              		.cfi_def_cfa_offset 0
+ 212 0020 7047     		bx	lr
+ 213              		.cfi_endproc
+ 214              	.LFE130:
+ 216              		.section	.text.XMC_GPIO_SetOutputLow,"ax",%progbits
+ 217              		.align	1
+ 218              		.syntax unified
+ 219              		.thumb
+ 220              		.thumb_func
+ 221              		.fpu fpv4-sp-d16
+ 223              	XMC_GPIO_SetOutputLow:
+ 224              	.LFB131:
  262:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h **** 
  263:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h **** /**
  264:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h ****  *
@@ -2527,250 +2509,250 @@
  281:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h **** 
  282:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h **** __STATIC_INLINE void XMC_GPIO_SetOutputLow(XMC_GPIO_PORT_t *const port, const uint8_t pin)
  283:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h **** {
- 238              		.loc 2 283 1
- 239              		.cfi_startproc
- 240              		@ args = 0, pretend = 0, frame = 8
- 241              		@ frame_needed = 1, uses_anonymous_args = 0
- 242              		@ link register save eliminated.
- 243 0000 80B4     		push	{r7}
- 244              	.LCFI17:
- 245              		.cfi_def_cfa_offset 4
- 246              		.cfi_offset 7, -4
- 247 0002 83B0     		sub	sp, sp, #12
- 248              	.LCFI18:
- 249              		.cfi_def_cfa_offset 16
- 250 0004 00AF     		add	r7, sp, #0
- 251              	.LCFI19:
- 252              		.cfi_def_cfa_register 7
- 253 0006 7860     		str	r0, [r7, #4]
- 254 0008 0B46     		mov	r3, r1
- 255 000a FB70     		strb	r3, [r7, #3]
+ 225              		.loc 2 283 0
+ 226              		.cfi_startproc
+ 227              		@ args = 0, pretend = 0, frame = 8
+ 228              		@ frame_needed = 1, uses_anonymous_args = 0
+ 229              		@ link register save eliminated.
+ 230 0000 80B4     		push	{r7}
+ 231              	.LCFI17:
+ 232              		.cfi_def_cfa_offset 4
+ 233              		.cfi_offset 7, -4
+ 234 0002 83B0     		sub	sp, sp, #12
+ 235              	.LCFI18:
+ 236              		.cfi_def_cfa_offset 16
+ 237 0004 00AF     		add	r7, sp, #0
+ 238              	.LCFI19:
+ 239              		.cfi_def_cfa_register 7
+ 240 0006 7860     		str	r0, [r7, #4]
+ 241 0008 0B46     		mov	r3, r1
+ 242 000a FB70     		strb	r3, [r7, #3]
  284:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h ****   XMC_ASSERT("XMC_GPIO_SetOutputLow: Invalid port", XMC_GPIO_CHECK_OUTPUT_PORT(port));
  285:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h **** 
  286:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h ****   port->OMR = 0x10000U << pin;
- 256              		.loc 2 286 24
- 257 000c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
- 258 000e 4FF48032 		mov	r2, #65536
- 259 0012 9A40     		lsls	r2, r2, r3
- 260              		.loc 2 286 13
- 261 0014 7B68     		ldr	r3, [r7, #4]
- 262 0016 5A60     		str	r2, [r3, #4]
+ 243              		.loc 2 286 0
+ 244 000c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 245 000e 4FF48032 		mov	r2, #65536
+ 246 0012 9A40     		lsls	r2, r2, r3
+ 247 0014 7B68     		ldr	r3, [r7, #4]
+ 248 0016 5A60     		str	r2, [r3, #4]
  287:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h **** }
- 263              		.loc 2 287 1
- 264 0018 00BF     		nop
- 265 001a 0C37     		adds	r7, r7, #12
- 266              	.LCFI20:
- 267              		.cfi_def_cfa_offset 4
- 268 001c BD46     		mov	sp, r7
- 269              	.LCFI21:
- 270              		.cfi_def_cfa_register 13
- 271              		@ sp needed
- 272 001e 5DF8047B 		ldr	r7, [sp], #4
- 273              	.LCFI22:
- 274              		.cfi_restore 7
- 275              		.cfi_def_cfa_offset 0
- 276 0022 7047     		bx	lr
- 277              		.cfi_endproc
- 278              	.LFE131:
- 280              		.global	secretCode
- 281              		.data
- 282              		.align	2
- 285              	secretCode:
- 286 0000 49204341 		.ascii	"I CAN MORSE\000"
- 286      4E204D4F 
- 286      52534500 
- 287              		.bss
- 288              		.align	2
- 289              	msTicks:
- 290 0000 00000000 		.space	4
- 292              		.global	morseCode
- 293              		.section	.rodata
- 294              		.align	2
- 295              	.LC0:
- 296 0000 2E2D00   		.ascii	".-\000"
- 297 0003 00       		.align	2
- 298              	.LC1:
- 299 0004 2D2E2E2E 		.ascii	"-...\000"
- 299      00
- 300 0009 000000   		.align	2
- 301              	.LC2:
- 302 000c 2D2E2D2E 		.ascii	"-.-.\000"
- 302      00
- 303 0011 000000   		.align	2
- 304              	.LC3:
- 305 0014 2D2E2E00 		.ascii	"-..\000"
- 306              		.align	2
- 307              	.LC4:
- 308 0018 2E00     		.ascii	".\000"
- 309 001a 0000     		.align	2
- 310              	.LC5:
- 311 001c 2E2E2D2E 		.ascii	"..-.\000"
- 311      00
- 312 0021 000000   		.align	2
- 313              	.LC6:
- 314 0024 2D2D2E00 		.ascii	"--.\000"
- 315              		.align	2
- 316              	.LC7:
- 317 0028 2E2E2E2E 		.ascii	"....\000"
- 317      00
- 318 002d 000000   		.align	2
- 319              	.LC8:
- 320 0030 2E2E00   		.ascii	"..\000"
- 321 0033 00       		.align	2
- 322              	.LC9:
- 323 0034 2E2D2D2D 		.ascii	".---\000"
- 323      00
- 324 0039 000000   		.align	2
- 325              	.LC10:
- 326 003c 2D2E2D00 		.ascii	"-.-\000"
- 327              		.align	2
- 328              	.LC11:
- 329 0040 2E2D2E2E 		.ascii	".-..\000"
- 329      00
- 330 0045 000000   		.align	2
- 331              	.LC12:
- 332 0048 2D2D00   		.ascii	"--\000"
- 333 004b 00       		.align	2
- 334              	.LC13:
- 335 004c 2D2E00   		.ascii	"-.\000"
- 336 004f 00       		.align	2
- 337              	.LC14:
- 338 0050 2D2D2D00 		.ascii	"---\000"
- 339              		.align	2
- 340              	.LC15:
- 341 0054 2E2D2D2E 		.ascii	".--.\000"
- 341      00
- 342 0059 000000   		.align	2
- 343              	.LC16:
- 344 005c 2D2D2E2D 		.ascii	"--.-\000"
- 344      00
- 345 0061 000000   		.align	2
- 346              	.LC17:
- 347 0064 2E2D2E00 		.ascii	".-.\000"
- 348              		.align	2
- 349              	.LC18:
- 350 0068 2E2E2E00 		.ascii	"...\000"
- 351              		.align	2
- 352              	.LC19:
- 353 006c 2D00     		.ascii	"-\000"
- 354 006e 0000     		.align	2
- 355              	.LC20:
- 356 0070 2E2E2D00 		.ascii	"..-\000"
- 357              		.align	2
- 358              	.LC21:
- 359 0074 2E2E2E2D 		.ascii	"...-\000"
- 359      00
- 360 0079 000000   		.align	2
- 361              	.LC22:
- 362 007c 2E2D2D00 		.ascii	".--\000"
- 363              		.align	2
- 364              	.LC23:
- 365 0080 2D2E2E2D 		.ascii	"-..-\000"
- 365      00
- 366 0085 000000   		.align	2
- 367              	.LC24:
- 368 0088 2D2E2D2D 		.ascii	"-.--\000"
- 368      00
- 369 008d 000000   		.align	2
- 370              	.LC25:
- 371 0090 2D2D2E2E 		.ascii	"--..\000"
- 371      00
- 372 0095 000000   		.align	2
- 373              	.LC26:
- 374 0098 2D2D2D2D 		.ascii	"-----\000"
- 374      2D00
- 375 009e 0000     		.align	2
- 376              	.LC27:
- 377 00a0 2E2D2D2D 		.ascii	".----\000"
- 377      2D00
- 378 00a6 0000     		.align	2
- 379              	.LC28:
- 380 00a8 2E2E2D2D 		.ascii	"..---\000"
- 380      2D00
- 381 00ae 0000     		.align	2
- 382              	.LC29:
- 383 00b0 2E2E2E2D 		.ascii	"...--\000"
- 383      2D00
- 384 00b6 0000     		.align	2
- 385              	.LC30:
- 386 00b8 2E2E2E2E 		.ascii	"....-\000"
- 386      2D00
- 387 00be 0000     		.align	2
- 388              	.LC31:
- 389 00c0 2E2E2E2E 		.ascii	".....\000"
- 389      2E00
- 390 00c6 0000     		.align	2
- 391              	.LC32:
- 392 00c8 2D2E2E2E 		.ascii	"-....\000"
- 392      2E00
- 393 00ce 0000     		.align	2
- 394              	.LC33:
- 395 00d0 2D2D2E2E 		.ascii	"--...\000"
- 395      2E00
- 396 00d6 0000     		.align	2
- 397              	.LC34:
- 398 00d8 2D2D2D2E 		.ascii	"---..\000"
- 398      2E00
- 399 00de 0000     		.align	2
- 400              	.LC35:
- 401 00e0 2D2D2D2D 		.ascii	"----.\000"
- 401      2E00
- 402 00e6 0000     		.align	2
- 403              	.LC36:
- 404 00e8 2F00     		.ascii	"/\000"
- 405 00ea 0000     		.align	2
- 406              	.LC37:
- 407 00ec 2000     		.ascii	" \000"
- 408              		.data
- 409              		.align	2
- 412              	morseCode:
- 413 000c 00000000 		.word	.LC0
- 414 0010 04000000 		.word	.LC1
- 415 0014 0C000000 		.word	.LC2
- 416 0018 14000000 		.word	.LC3
- 417 001c 18000000 		.word	.LC4
- 418 0020 1C000000 		.word	.LC5
- 419 0024 24000000 		.word	.LC6
- 420 0028 28000000 		.word	.LC7
- 421 002c 30000000 		.word	.LC8
- 422 0030 34000000 		.word	.LC9
- 423 0034 3C000000 		.word	.LC10
- 424 0038 40000000 		.word	.LC11
- 425 003c 48000000 		.word	.LC12
- 426 0040 4C000000 		.word	.LC13
- 427 0044 50000000 		.word	.LC14
- 428 0048 54000000 		.word	.LC15
- 429 004c 5C000000 		.word	.LC16
- 430 0050 64000000 		.word	.LC17
- 431 0054 68000000 		.word	.LC18
- 432 0058 6C000000 		.word	.LC19
- 433 005c 70000000 		.word	.LC20
- 434 0060 74000000 		.word	.LC21
- 435 0064 7C000000 		.word	.LC22
- 436 0068 80000000 		.word	.LC23
- 437 006c 88000000 		.word	.LC24
- 438 0070 90000000 		.word	.LC25
- 439 0074 98000000 		.word	.LC26
- 440 0078 A0000000 		.word	.LC27
- 441 007c A8000000 		.word	.LC28
- 442 0080 B0000000 		.word	.LC29
- 443 0084 B8000000 		.word	.LC30
- 444 0088 C0000000 		.word	.LC31
- 445 008c C8000000 		.word	.LC32
- 446 0090 D0000000 		.word	.LC33
- 447 0094 D8000000 		.word	.LC34
- 448 0098 E0000000 		.word	.LC35
- 449 009c E8000000 		.word	.LC36
- 450 00a0 EC000000 		.word	.LC37
- 451              		.section	.text.SysTick_Handler,"ax",%progbits
- 452              		.align	1
- 453              		.global	SysTick_Handler
- 454              		.syntax unified
- 455              		.thumb
- 456              		.thumb_func
- 458              	SysTick_Handler:
- 459              	.LFB139:
- 460              		.file 3 "PartA.c"
+ 249              		.loc 2 287 0
+ 250 0018 00BF     		nop
+ 251 001a 0C37     		adds	r7, r7, #12
+ 252              	.LCFI20:
+ 253              		.cfi_def_cfa_offset 4
+ 254 001c BD46     		mov	sp, r7
+ 255              	.LCFI21:
+ 256              		.cfi_def_cfa_register 13
+ 257              		@ sp needed
+ 258 001e 5DF8047B 		ldr	r7, [sp], #4
+ 259              	.LCFI22:
+ 260              		.cfi_restore 7
+ 261              		.cfi_def_cfa_offset 0
+ 262 0022 7047     		bx	lr
+ 263              		.cfi_endproc
+ 264              	.LFE131:
+ 266              		.global	secretCode
+ 267              		.data
+ 268              		.align	2
+ 271              	secretCode:
+ 272 0000 49204341 		.ascii	"I CAN MORSE\000"
+ 272      4E204D4F 
+ 272      52534500 
+ 273              		.bss
+ 274              		.align	2
+ 275              	msTicks:
+ 276 0000 00000000 		.space	4
+ 278              		.global	morseCode
+ 279              		.section	.rodata
+ 280              		.align	2
+ 281              	.LC0:
+ 282 0000 2E2D00   		.ascii	".-\000"
+ 283 0003 00       		.align	2
+ 284              	.LC1:
+ 285 0004 2D2E2E2E 		.ascii	"-...\000"
+ 285      00
+ 286 0009 000000   		.align	2
+ 287              	.LC2:
+ 288 000c 2D2E2D2E 		.ascii	"-.-.\000"
+ 288      00
+ 289 0011 000000   		.align	2
+ 290              	.LC3:
+ 291 0014 2D2E2E00 		.ascii	"-..\000"
+ 292              		.align	2
+ 293              	.LC4:
+ 294 0018 2E00     		.ascii	".\000"
+ 295 001a 0000     		.align	2
+ 296              	.LC5:
+ 297 001c 2E2E2D2E 		.ascii	"..-.\000"
+ 297      00
+ 298 0021 000000   		.align	2
+ 299              	.LC6:
+ 300 0024 2D2D2E00 		.ascii	"--.\000"
+ 301              		.align	2
+ 302              	.LC7:
+ 303 0028 2E2E2E2E 		.ascii	"....\000"
+ 303      00
+ 304 002d 000000   		.align	2
+ 305              	.LC8:
+ 306 0030 2E2E00   		.ascii	"..\000"
+ 307 0033 00       		.align	2
+ 308              	.LC9:
+ 309 0034 2E2D2D2D 		.ascii	".---\000"
+ 309      00
+ 310 0039 000000   		.align	2
+ 311              	.LC10:
+ 312 003c 2D2E2D00 		.ascii	"-.-\000"
+ 313              		.align	2
+ 314              	.LC11:
+ 315 0040 2E2D2E2E 		.ascii	".-..\000"
+ 315      00
+ 316 0045 000000   		.align	2
+ 317              	.LC12:
+ 318 0048 2D2D00   		.ascii	"--\000"
+ 319 004b 00       		.align	2
+ 320              	.LC13:
+ 321 004c 2D2E00   		.ascii	"-.\000"
+ 322 004f 00       		.align	2
+ 323              	.LC14:
+ 324 0050 2D2D2D00 		.ascii	"---\000"
+ 325              		.align	2
+ 326              	.LC15:
+ 327 0054 2E2D2D2E 		.ascii	".--.\000"
+ 327      00
+ 328 0059 000000   		.align	2
+ 329              	.LC16:
+ 330 005c 2D2D2E2D 		.ascii	"--.-\000"
+ 330      00
+ 331 0061 000000   		.align	2
+ 332              	.LC17:
+ 333 0064 2E2D2E00 		.ascii	".-.\000"
+ 334              		.align	2
+ 335              	.LC18:
+ 336 0068 2E2E2E00 		.ascii	"...\000"
+ 337              		.align	2
+ 338              	.LC19:
+ 339 006c 2D00     		.ascii	"-\000"
+ 340 006e 0000     		.align	2
+ 341              	.LC20:
+ 342 0070 2E2E2D00 		.ascii	"..-\000"
+ 343              		.align	2
+ 344              	.LC21:
+ 345 0074 2E2E2E2D 		.ascii	"...-\000"
+ 345      00
+ 346 0079 000000   		.align	2
+ 347              	.LC22:
+ 348 007c 2E2D2D00 		.ascii	".--\000"
+ 349              		.align	2
+ 350              	.LC23:
+ 351 0080 2D2E2E2D 		.ascii	"-..-\000"
+ 351      00
+ 352 0085 000000   		.align	2
+ 353              	.LC24:
+ 354 0088 2D2E2D2D 		.ascii	"-.--\000"
+ 354      00
+ 355 008d 000000   		.align	2
+ 356              	.LC25:
+ 357 0090 2D2D2E2E 		.ascii	"--..\000"
+ 357      00
+ 358 0095 000000   		.align	2
+ 359              	.LC26:
+ 360 0098 2D2D2D2D 		.ascii	"-----\000"
+ 360      2D00
+ 361 009e 0000     		.align	2
+ 362              	.LC27:
+ 363 00a0 2E2D2D2D 		.ascii	".----\000"
+ 363      2D00
+ 364 00a6 0000     		.align	2
+ 365              	.LC28:
+ 366 00a8 2E2E2D2D 		.ascii	"..---\000"
+ 366      2D00
+ 367 00ae 0000     		.align	2
+ 368              	.LC29:
+ 369 00b0 2E2E2E2D 		.ascii	"...--\000"
+ 369      2D00
+ 370 00b6 0000     		.align	2
+ 371              	.LC30:
+ 372 00b8 2E2E2E2E 		.ascii	"....-\000"
+ 372      2D00
+ 373 00be 0000     		.align	2
+ 374              	.LC31:
+ 375 00c0 2E2E2E2E 		.ascii	".....\000"
+ 375      2E00
+ 376 00c6 0000     		.align	2
+ 377              	.LC32:
+ 378 00c8 2D2E2E2E 		.ascii	"-....\000"
+ 378      2E00
+ 379 00ce 0000     		.align	2
+ 380              	.LC33:
+ 381 00d0 2D2D2E2E 		.ascii	"--...\000"
+ 381      2E00
+ 382 00d6 0000     		.align	2
+ 383              	.LC34:
+ 384 00d8 2D2D2D2E 		.ascii	"---..\000"
+ 384      2E00
+ 385 00de 0000     		.align	2
+ 386              	.LC35:
+ 387 00e0 2D2D2D2D 		.ascii	"----.\000"
+ 387      2E00
+ 388 00e6 0000     		.align	2
+ 389              	.LC36:
+ 390 00e8 2F00     		.ascii	"/\000"
+ 391 00ea 0000     		.align	2
+ 392              	.LC37:
+ 393 00ec 2000     		.ascii	" \000"
+ 394              		.data
+ 395              		.align	2
+ 398              	morseCode:
+ 399 000c 00000000 		.word	.LC0
+ 400 0010 04000000 		.word	.LC1
+ 401 0014 0C000000 		.word	.LC2
+ 402 0018 14000000 		.word	.LC3
+ 403 001c 18000000 		.word	.LC4
+ 404 0020 1C000000 		.word	.LC5
+ 405 0024 24000000 		.word	.LC6
+ 406 0028 28000000 		.word	.LC7
+ 407 002c 30000000 		.word	.LC8
+ 408 0030 34000000 		.word	.LC9
+ 409 0034 3C000000 		.word	.LC10
+ 410 0038 40000000 		.word	.LC11
+ 411 003c 48000000 		.word	.LC12
+ 412 0040 4C000000 		.word	.LC13
+ 413 0044 50000000 		.word	.LC14
+ 414 0048 54000000 		.word	.LC15
+ 415 004c 5C000000 		.word	.LC16
+ 416 0050 64000000 		.word	.LC17
+ 417 0054 68000000 		.word	.LC18
+ 418 0058 6C000000 		.word	.LC19
+ 419 005c 70000000 		.word	.LC20
+ 420 0060 74000000 		.word	.LC21
+ 421 0064 7C000000 		.word	.LC22
+ 422 0068 80000000 		.word	.LC23
+ 423 006c 88000000 		.word	.LC24
+ 424 0070 90000000 		.word	.LC25
+ 425 0074 98000000 		.word	.LC26
+ 426 0078 A0000000 		.word	.LC27
+ 427 007c A8000000 		.word	.LC28
+ 428 0080 B0000000 		.word	.LC29
+ 429 0084 B8000000 		.word	.LC30
+ 430 0088 C0000000 		.word	.LC31
+ 431 008c C8000000 		.word	.LC32
+ 432 0090 D0000000 		.word	.LC33
+ 433 0094 D8000000 		.word	.LC34
+ 434 0098 E0000000 		.word	.LC35
+ 435 009c E8000000 		.word	.LC36
+ 436 00a0 EC000000 		.word	.LC37
+ 437              		.section	.text.SysTick_Handler,"ax",%progbits
+ 438              		.align	1
+ 439              		.global	SysTick_Handler
+ 440              		.syntax unified
+ 441              		.thumb
+ 442              		.thumb_func
+ 443              		.fpu fpv4-sp-d16
+ 445              	SysTick_Handler:
+ 446              	.LFB138:
+ 447              		.file 3 "PartA.c"
    1:PartA.c       **** #include <xmc_gpio.h>
    2:PartA.c       **** #include <XMC4500.h>
    3:PartA.c       **** #include <xmc4_gpio.h>
@@ -2782,7 +2764,7 @@
    9:PartA.c       **** #define DASH_TIME (DOT_TIME * 3)
   10:PartA.c       **** #define LETTER_TIME (DOT_TIME * 3)
   11:PartA.c       **** #define SPACE_TIME (DOT_TIME * 7)
-  12:PartA.c       **** #define REPEAT_TIME (DOT_TIME * 500)
+  12:PartA.c       **** #define REPEAT_TIME (DOT_TIME * 50)
   13:PartA.c       **** #define TICKS_PER_SECOND 1000
   14:PartA.c       **** 
   15:PartA.c       **** char secretCode [] = "I CAN MORSE";
@@ -2800,607 +2782,601 @@
   27:PartA.c       **** // SysTick_Handler function will be called every 1 ms
   28:PartA.c       **** void SysTick_Handler()
   29:PartA.c       **** {
- 461              		.loc 3 29 1
- 462              		.cfi_startproc
- 463              		@ args = 0, pretend = 0, frame = 0
- 464              		@ frame_needed = 1, uses_anonymous_args = 0
- 465              		@ link register save eliminated.
- 466 0000 80B4     		push	{r7}
- 467              	.LCFI23:
- 468              		.cfi_def_cfa_offset 4
- 469              		.cfi_offset 7, -4
- 470 0002 00AF     		add	r7, sp, #0
- 471              	.LCFI24:
- 472              		.cfi_def_cfa_register 7
+ 448              		.loc 3 29 0
+ 449              		.cfi_startproc
+ 450              		@ args = 0, pretend = 0, frame = 0
+ 451              		@ frame_needed = 1, uses_anonymous_args = 0
+ 452              		@ link register save eliminated.
+ 453 0000 80B4     		push	{r7}
+ 454              	.LCFI23:
+ 455              		.cfi_def_cfa_offset 4
+ 456              		.cfi_offset 7, -4
+ 457 0002 00AF     		add	r7, sp, #0
+ 458              	.LCFI24:
+ 459              		.cfi_def_cfa_register 7
   30:PartA.c       ****     if (msTicks != 0)
- 473              		.loc 3 30 17
- 474 0004 064B     		ldr	r3, .L17
- 475 0006 1B68     		ldr	r3, [r3]
- 476              		.loc 3 30 8
- 477 0008 002B     		cmp	r3, #0
- 478 000a 04D0     		beq	.L16
+ 460              		.loc 3 30 0
+ 461 0004 064B     		ldr	r3, .L17
+ 462 0006 1B68     		ldr	r3, [r3]
+ 463 0008 002B     		cmp	r3, #0
+ 464 000a 04D0     		beq	.L16
   31:PartA.c       ****     {
   32:PartA.c       ****         msTicks--;
- 479              		.loc 3 32 16
- 480 000c 044B     		ldr	r3, .L17
- 481 000e 1B68     		ldr	r3, [r3]
- 482 0010 013B     		subs	r3, r3, #1
- 483 0012 034A     		ldr	r2, .L17
- 484 0014 1360     		str	r3, [r2]
- 485              	.L16:
+ 465              		.loc 3 32 0
+ 466 000c 044B     		ldr	r3, .L17
+ 467 000e 1B68     		ldr	r3, [r3]
+ 468 0010 013B     		subs	r3, r3, #1
+ 469 0012 034A     		ldr	r2, .L17
+ 470 0014 1360     		str	r3, [r2]
+ 471              	.L16:
   33:PartA.c       ****     }
   34:PartA.c       **** }
- 486              		.loc 3 34 1
- 487 0016 00BF     		nop
- 488 0018 BD46     		mov	sp, r7
- 489              	.LCFI25:
- 490              		.cfi_def_cfa_register 13
- 491              		@ sp needed
- 492 001a 5DF8047B 		ldr	r7, [sp], #4
- 493              	.LCFI26:
- 494              		.cfi_restore 7
- 495              		.cfi_def_cfa_offset 0
- 496 001e 7047     		bx	lr
- 497              	.L18:
- 498              		.align	2
- 499              	.L17:
- 500 0020 00000000 		.word	msTicks
- 501              		.cfi_endproc
- 502              	.LFE139:
- 504              		.section	.text.DelayInit,"ax",%progbits
- 505              		.align	1
- 506              		.global	DelayInit
- 507              		.syntax unified
- 508              		.thumb
- 509              		.thumb_func
- 511              	DelayInit:
- 512              	.LFB140:
+ 472              		.loc 3 34 0
+ 473 0016 00BF     		nop
+ 474 0018 BD46     		mov	sp, r7
+ 475              	.LCFI25:
+ 476              		.cfi_def_cfa_register 13
+ 477              		@ sp needed
+ 478 001a 5DF8047B 		ldr	r7, [sp], #4
+ 479              	.LCFI26:
+ 480              		.cfi_restore 7
+ 481              		.cfi_def_cfa_offset 0
+ 482 001e 7047     		bx	lr
+ 483              	.L18:
+ 484              		.align	2
+ 485              	.L17:
+ 486 0020 00000000 		.word	msTicks
+ 487              		.cfi_endproc
+ 488              	.LFE138:
+ 490              		.section	.text.DelayInit,"ax",%progbits
+ 491              		.align	1
+ 492              		.global	DelayInit
+ 493              		.syntax unified
+ 494              		.thumb
+ 495              		.thumb_func
+ 496              		.fpu fpv4-sp-d16
+ 498              	DelayInit:
+ 499              	.LFB139:
   35:PartA.c       **** 
   36:PartA.c       **** void DelayInit()
   37:PartA.c       **** {
- 513              		.loc 3 37 1
- 514              		.cfi_startproc
- 515              		@ args = 0, pretend = 0, frame = 0
- 516              		@ frame_needed = 1, uses_anonymous_args = 0
- 517 0000 80B5     		push	{r7, lr}
- 518              	.LCFI27:
- 519              		.cfi_def_cfa_offset 8
- 520              		.cfi_offset 7, -8
- 521              		.cfi_offset 14, -4
- 522 0002 00AF     		add	r7, sp, #0
- 523              	.LCFI28:
- 524              		.cfi_def_cfa_register 7
+ 500              		.loc 3 37 0
+ 501              		.cfi_startproc
+ 502              		@ args = 0, pretend = 0, frame = 0
+ 503              		@ frame_needed = 1, uses_anonymous_args = 0
+ 504 0000 80B5     		push	{r7, lr}
+ 505              	.LCFI27:
+ 506              		.cfi_def_cfa_offset 8
+ 507              		.cfi_offset 7, -8
+ 508              		.cfi_offset 14, -4
+ 509 0002 00AF     		add	r7, sp, #0
+ 510              	.LCFI28:
+ 511              		.cfi_def_cfa_register 7
   38:PartA.c       ****     // Update SystemCoreClock value
   39:PartA.c       ****     SystemCoreClockUpdate();
- 525              		.loc 3 39 5
- 526 0004 FFF7FEFF 		bl	SystemCoreClockUpdate
+ 512              		.loc 3 39 0
+ 513 0004 FFF7FEFF 		bl	SystemCoreClockUpdate
   40:PartA.c       ****     // Configure the SysTick timer to overflow every 1 s
   41:PartA.c       ****     SysTick_Config(SystemCoreClock / TICKS_PER_SECOND);
- 527              		.loc 3 41 5
- 528 0008 054B     		ldr	r3, .L20
- 529 000a 1B68     		ldr	r3, [r3]
- 530 000c 054A     		ldr	r2, .L20+4
- 531 000e A2FB0323 		umull	r2, r3, r2, r3
- 532 0012 9B09     		lsrs	r3, r3, #6
- 533 0014 1846     		mov	r0, r3
- 534 0016 FFF7FEFF 		bl	SysTick_Config
+ 514              		.loc 3 41 0
+ 515 0008 054B     		ldr	r3, .L20
+ 516 000a 1B68     		ldr	r3, [r3]
+ 517 000c 054A     		ldr	r2, .L20+4
+ 518 000e A2FB0323 		umull	r2, r3, r2, r3
+ 519 0012 9B09     		lsrs	r3, r3, #6
+ 520 0014 1846     		mov	r0, r3
+ 521 0016 FFF7FEFF 		bl	SysTick_Config
   42:PartA.c       **** }
- 535              		.loc 3 42 1
- 536 001a 00BF     		nop
- 537 001c 80BD     		pop	{r7, pc}
- 538              	.L21:
- 539 001e 00BF     		.align	2
- 540              	.L20:
- 541 0020 00000000 		.word	SystemCoreClock
- 542 0024 D34D6210 		.word	274877907
- 543              		.cfi_endproc
- 544              	.LFE140:
- 546              		.section	.text.delayMs,"ax",%progbits
- 547              		.align	1
- 548              		.global	delayMs
- 549              		.syntax unified
- 550              		.thumb
- 551              		.thumb_func
- 553              	delayMs:
- 554              	.LFB141:
+ 522              		.loc 3 42 0
+ 523 001a 00BF     		nop
+ 524 001c 80BD     		pop	{r7, pc}
+ 525              	.L21:
+ 526 001e 00BF     		.align	2
+ 527              	.L20:
+ 528 0020 00000000 		.word	SystemCoreClock
+ 529 0024 D34D6210 		.word	274877907
+ 530              		.cfi_endproc
+ 531              	.LFE139:
+ 533              		.section	.text.delayMs,"ax",%progbits
+ 534              		.align	1
+ 535              		.global	delayMs
+ 536              		.syntax unified
+ 537              		.thumb
+ 538              		.thumb_func
+ 539              		.fpu fpv4-sp-d16
+ 541              	delayMs:
+ 542              	.LFB140:
   43:PartA.c       **** 
   44:PartA.c       **** void delayMs(uint32_t ms)
   45:PartA.c       **** {
- 555              		.loc 3 45 1
- 556              		.cfi_startproc
- 557              		@ args = 0, pretend = 0, frame = 8
- 558              		@ frame_needed = 1, uses_anonymous_args = 0
- 559              		@ link register save eliminated.
- 560 0000 80B4     		push	{r7}
- 561              	.LCFI29:
- 562              		.cfi_def_cfa_offset 4
- 563              		.cfi_offset 7, -4
- 564 0002 83B0     		sub	sp, sp, #12
- 565              	.LCFI30:
- 566              		.cfi_def_cfa_offset 16
- 567 0004 00AF     		add	r7, sp, #0
- 568              	.LCFI31:
- 569              		.cfi_def_cfa_register 7
- 570 0006 7860     		str	r0, [r7, #4]
+ 543              		.loc 3 45 0
+ 544              		.cfi_startproc
+ 545              		@ args = 0, pretend = 0, frame = 8
+ 546              		@ frame_needed = 1, uses_anonymous_args = 0
+ 547              		@ link register save eliminated.
+ 548 0000 80B4     		push	{r7}
+ 549              	.LCFI29:
+ 550              		.cfi_def_cfa_offset 4
+ 551              		.cfi_offset 7, -4
+ 552 0002 83B0     		sub	sp, sp, #12
+ 553              	.LCFI30:
+ 554              		.cfi_def_cfa_offset 16
+ 555 0004 00AF     		add	r7, sp, #0
+ 556              	.LCFI31:
+ 557              		.cfi_def_cfa_register 7
+ 558 0006 7860     		str	r0, [r7, #4]
   46:PartA.c       ****     // Reload ms value
   47:PartA.c       ****     msTicks = ms;
- 571              		.loc 3 47 13
- 572 0008 074A     		ldr	r2, .L24
- 573 000a 7B68     		ldr	r3, [r7, #4]
- 574 000c 1360     		str	r3, [r2]
+ 559              		.loc 3 47 0
+ 560 0008 064A     		ldr	r2, .L24
+ 561 000a 7B68     		ldr	r3, [r7, #4]
+ 562 000c 1360     		str	r3, [r2]
   48:PartA.c       ****     // Wait until msTick reach zero
   49:PartA.c       ****     while (msTicks){
- 575              		.loc 3 49 11
- 576 000e 00BF     		nop
- 577              	.L23:
- 578              		.loc 3 49 12 discriminator 1
- 579 0010 054B     		ldr	r3, .L24
- 580 0012 1B68     		ldr	r3, [r3]
- 581              		.loc 3 49 11 discriminator 1
- 582 0014 002B     		cmp	r3, #0
- 583 0016 FBD1     		bne	.L23
+ 563              		.loc 3 49 0
+ 564 000e 00BF     		nop
+ 565              	.L23:
+ 566              		.loc 3 49 0 is_stmt 0 discriminator 1
+ 567 0010 044B     		ldr	r3, .L24
+ 568 0012 1B68     		ldr	r3, [r3]
+ 569 0014 002B     		cmp	r3, #0
+ 570 0016 FBD1     		bne	.L23
   50:PartA.c       **** 
   51:PartA.c       ****     }
   52:PartA.c       **** }
- 584              		.loc 3 52 1
- 585 0018 00BF     		nop
- 586 001a 00BF     		nop
- 587 001c 0C37     		adds	r7, r7, #12
- 588              	.LCFI32:
- 589              		.cfi_def_cfa_offset 4
- 590 001e BD46     		mov	sp, r7
- 591              	.LCFI33:
- 592              		.cfi_def_cfa_register 13
- 593              		@ sp needed
- 594 0020 5DF8047B 		ldr	r7, [sp], #4
- 595              	.LCFI34:
- 596              		.cfi_restore 7
- 597              		.cfi_def_cfa_offset 0
- 598 0024 7047     		bx	lr
- 599              	.L25:
- 600 0026 00BF     		.align	2
- 601              	.L24:
- 602 0028 00000000 		.word	msTicks
- 603              		.cfi_endproc
- 604              	.LFE141:
- 606              		.section	.text.dot,"ax",%progbits
- 607              		.align	1
- 608              		.global	dot
- 609              		.syntax unified
- 610              		.thumb
- 611              		.thumb_func
- 613              	dot:
- 614              	.LFB142:
+ 571              		.loc 3 52 0 is_stmt 1
+ 572 0018 00BF     		nop
+ 573 001a 0C37     		adds	r7, r7, #12
+ 574              	.LCFI32:
+ 575              		.cfi_def_cfa_offset 4
+ 576 001c BD46     		mov	sp, r7
+ 577              	.LCFI33:
+ 578              		.cfi_def_cfa_register 13
+ 579              		@ sp needed
+ 580 001e 5DF8047B 		ldr	r7, [sp], #4
+ 581              	.LCFI34:
+ 582              		.cfi_restore 7
+ 583              		.cfi_def_cfa_offset 0
+ 584 0022 7047     		bx	lr
+ 585              	.L25:
+ 586              		.align	2
+ 587              	.L24:
+ 588 0024 00000000 		.word	msTicks
+ 589              		.cfi_endproc
+ 590              	.LFE140:
+ 592              		.section	.text.dot,"ax",%progbits
+ 593              		.align	1
+ 594              		.global	dot
+ 595              		.syntax unified
+ 596              		.thumb
+ 597              		.thumb_func
+ 598              		.fpu fpv4-sp-d16
+ 600              	dot:
+ 601              	.LFB141:
   53:PartA.c       **** 
   54:PartA.c       **** void dot(){
- 615              		.loc 3 54 11
- 616              		.cfi_startproc
- 617              		@ args = 0, pretend = 0, frame = 0
- 618              		@ frame_needed = 1, uses_anonymous_args = 0
- 619 0000 80B5     		push	{r7, lr}
- 620              	.LCFI35:
- 621              		.cfi_def_cfa_offset 8
- 622              		.cfi_offset 7, -8
- 623              		.cfi_offset 14, -4
- 624 0002 00AF     		add	r7, sp, #0
- 625              	.LCFI36:
- 626              		.cfi_def_cfa_register 7
+ 602              		.loc 3 54 0
+ 603              		.cfi_startproc
+ 604              		@ args = 0, pretend = 0, frame = 0
+ 605              		@ frame_needed = 1, uses_anonymous_args = 0
+ 606 0000 80B5     		push	{r7, lr}
+ 607              	.LCFI35:
+ 608              		.cfi_def_cfa_offset 8
+ 609              		.cfi_offset 7, -8
+ 610              		.cfi_offset 14, -4
+ 611 0002 00AF     		add	r7, sp, #0
+ 612              	.LCFI36:
+ 613              		.cfi_def_cfa_register 7
   55:PartA.c       ****     XMC_GPIO_SetOutputHigh(LED1);
- 627              		.loc 3 55 5
- 628 0004 0121     		movs	r1, #1
- 629 0006 0648     		ldr	r0, .L27
- 630 0008 FFF7FEFF 		bl	XMC_GPIO_SetOutputHigh
+ 614              		.loc 3 55 0
+ 615 0004 0121     		movs	r1, #1
+ 616 0006 0648     		ldr	r0, .L27
+ 617 0008 FFF7FEFF 		bl	XMC_GPIO_SetOutputHigh
   56:PartA.c       ****     delayMs(DOT_TIME);
- 631              		.loc 3 56 5
- 632 000c 6420     		movs	r0, #100
- 633 000e FFF7FEFF 		bl	delayMs
+ 618              		.loc 3 56 0
+ 619 000c 6420     		movs	r0, #100
+ 620 000e FFF7FEFF 		bl	delayMs
   57:PartA.c       ****     XMC_GPIO_SetOutputLow(LED1);
- 634              		.loc 3 57 5
- 635 0012 0121     		movs	r1, #1
- 636 0014 0248     		ldr	r0, .L27
- 637 0016 FFF7FEFF 		bl	XMC_GPIO_SetOutputLow
+ 621              		.loc 3 57 0
+ 622 0012 0121     		movs	r1, #1
+ 623 0014 0248     		ldr	r0, .L27
+ 624 0016 FFF7FEFF 		bl	XMC_GPIO_SetOutputLow
   58:PartA.c       **** }
- 638              		.loc 3 58 1
- 639 001a 00BF     		nop
- 640 001c 80BD     		pop	{r7, pc}
- 641              	.L28:
- 642 001e 00BF     		.align	2
- 643              	.L27:
- 644 0020 00810248 		.word	1208123648
- 645              		.cfi_endproc
- 646              	.LFE142:
- 648              		.section	.text.dash,"ax",%progbits
- 649              		.align	1
- 650              		.global	dash
- 651              		.syntax unified
- 652              		.thumb
- 653              		.thumb_func
- 655              	dash:
- 656              	.LFB143:
+ 625              		.loc 3 58 0
+ 626 001a 00BF     		nop
+ 627 001c 80BD     		pop	{r7, pc}
+ 628              	.L28:
+ 629 001e 00BF     		.align	2
+ 630              	.L27:
+ 631 0020 00810248 		.word	1208123648
+ 632              		.cfi_endproc
+ 633              	.LFE141:
+ 635              		.section	.text.dash,"ax",%progbits
+ 636              		.align	1
+ 637              		.global	dash
+ 638              		.syntax unified
+ 639              		.thumb
+ 640              		.thumb_func
+ 641              		.fpu fpv4-sp-d16
+ 643              	dash:
+ 644              	.LFB142:
   59:PartA.c       **** 
   60:PartA.c       **** void dash(){
- 657              		.loc 3 60 12
- 658              		.cfi_startproc
- 659              		@ args = 0, pretend = 0, frame = 0
- 660              		@ frame_needed = 1, uses_anonymous_args = 0
- 661 0000 80B5     		push	{r7, lr}
- 662              	.LCFI37:
- 663              		.cfi_def_cfa_offset 8
- 664              		.cfi_offset 7, -8
- 665              		.cfi_offset 14, -4
- 666 0002 00AF     		add	r7, sp, #0
- 667              	.LCFI38:
- 668              		.cfi_def_cfa_register 7
+ 645              		.loc 3 60 0
+ 646              		.cfi_startproc
+ 647              		@ args = 0, pretend = 0, frame = 0
+ 648              		@ frame_needed = 1, uses_anonymous_args = 0
+ 649 0000 80B5     		push	{r7, lr}
+ 650              	.LCFI37:
+ 651              		.cfi_def_cfa_offset 8
+ 652              		.cfi_offset 7, -8
+ 653              		.cfi_offset 14, -4
+ 654 0002 00AF     		add	r7, sp, #0
+ 655              	.LCFI38:
+ 656              		.cfi_def_cfa_register 7
   61:PartA.c       ****     XMC_GPIO_SetOutputHigh(LED1);
- 669              		.loc 3 61 5
- 670 0004 0121     		movs	r1, #1
- 671 0006 0648     		ldr	r0, .L30
- 672 0008 FFF7FEFF 		bl	XMC_GPIO_SetOutputHigh
+ 657              		.loc 3 61 0
+ 658 0004 0121     		movs	r1, #1
+ 659 0006 0648     		ldr	r0, .L30
+ 660 0008 FFF7FEFF 		bl	XMC_GPIO_SetOutputHigh
   62:PartA.c       ****     delayMs(DASH_TIME);
- 673              		.loc 3 62 5
- 674 000c 4FF49670 		mov	r0, #300
- 675 0010 FFF7FEFF 		bl	delayMs
+ 661              		.loc 3 62 0
+ 662 000c 4FF49670 		mov	r0, #300
+ 663 0010 FFF7FEFF 		bl	delayMs
   63:PartA.c       ****     XMC_GPIO_SetOutputLow(LED1);
- 676              		.loc 3 63 5
- 677 0014 0121     		movs	r1, #1
- 678 0016 0248     		ldr	r0, .L30
- 679 0018 FFF7FEFF 		bl	XMC_GPIO_SetOutputLow
+ 664              		.loc 3 63 0
+ 665 0014 0121     		movs	r1, #1
+ 666 0016 0248     		ldr	r0, .L30
+ 667 0018 FFF7FEFF 		bl	XMC_GPIO_SetOutputLow
   64:PartA.c       **** }
- 680              		.loc 3 64 1
- 681 001c 00BF     		nop
- 682 001e 80BD     		pop	{r7, pc}
- 683              	.L31:
- 684              		.align	2
- 685              	.L30:
- 686 0020 00810248 		.word	1208123648
- 687              		.cfi_endproc
- 688              	.LFE143:
- 690              		.section	.text.textToMorse,"ax",%progbits
- 691              		.align	1
- 692              		.global	textToMorse
- 693              		.syntax unified
- 694              		.thumb
- 695              		.thumb_func
- 697              	textToMorse:
- 698              	.LFB144:
+ 668              		.loc 3 64 0
+ 669 001c 00BF     		nop
+ 670 001e 80BD     		pop	{r7, pc}
+ 671              	.L31:
+ 672              		.align	2
+ 673              	.L30:
+ 674 0020 00810248 		.word	1208123648
+ 675              		.cfi_endproc
+ 676              	.LFE142:
+ 678              		.section	.text.textToMorse,"ax",%progbits
+ 679              		.align	1
+ 680              		.global	textToMorse
+ 681              		.syntax unified
+ 682              		.thumb
+ 683              		.thumb_func
+ 684              		.fpu fpv4-sp-d16
+ 686              	textToMorse:
+ 687              	.LFB143:
   65:PartA.c       **** 
   66:PartA.c       **** void textToMorse(const char *text) {
- 699              		.loc 3 66 36
- 700              		.cfi_startproc
- 701              		@ args = 0, pretend = 0, frame = 24
- 702              		@ frame_needed = 1, uses_anonymous_args = 0
- 703 0000 80B5     		push	{r7, lr}
- 704              	.LCFI39:
- 705              		.cfi_def_cfa_offset 8
- 706              		.cfi_offset 7, -8
- 707              		.cfi_offset 14, -4
- 708 0002 86B0     		sub	sp, sp, #24
- 709              	.LCFI40:
- 710              		.cfi_def_cfa_offset 32
- 711 0004 00AF     		add	r7, sp, #0
- 712              	.LCFI41:
- 713              		.cfi_def_cfa_register 7
- 714 0006 7860     		str	r0, [r7, #4]
- 715              	.LBB2:
+ 688              		.loc 3 66 0
+ 689              		.cfi_startproc
+ 690              		@ args = 0, pretend = 0, frame = 24
+ 691              		@ frame_needed = 1, uses_anonymous_args = 0
+ 692 0000 80B5     		push	{r7, lr}
+ 693              	.LCFI39:
+ 694              		.cfi_def_cfa_offset 8
+ 695              		.cfi_offset 7, -8
+ 696              		.cfi_offset 14, -4
+ 697 0002 86B0     		sub	sp, sp, #24
+ 698              	.LCFI40:
+ 699              		.cfi_def_cfa_offset 32
+ 700 0004 00AF     		add	r7, sp, #0
+ 701              	.LCFI41:
+ 702              		.cfi_def_cfa_register 7
+ 703 0006 7860     		str	r0, [r7, #4]
+ 704              	.LBB2:
   67:PartA.c       ****     for (int i = 0; i < strlen(text); i++) {
- 716              		.loc 3 67 14
- 717 0008 0023     		movs	r3, #0
- 718 000a 7B61     		str	r3, [r7, #20]
- 719              		.loc 3 67 5
- 720 000c 4DE0     		b	.L33
- 721              	.L42:
- 722              	.LBB3:
- 723              	.LBB4:
+ 705              		.loc 3 67 0
+ 706 0008 0023     		movs	r3, #0
+ 707 000a 7B61     		str	r3, [r7, #20]
+ 708 000c 4FE0     		b	.L33
+ 709              	.L42:
+ 710              	.LBB3:
+ 711              	.LBB4:
   68:PartA.c       ****         char c = tolower(text[i]);
- 724              		.loc 3 68 18
- 725 000e 7B69     		ldr	r3, [r7, #20]
- 726 0010 7A68     		ldr	r2, [r7, #4]
- 727 0012 1344     		add	r3, r3, r2
- 728 0014 1B78     		ldrb	r3, [r3]
- 729 0016 FB73     		strb	r3, [r7, #15]
- 730 0018 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
- 731 001a 0133     		adds	r3, r3, #1
- 732 001c 294A     		ldr	r2, .L43
- 733 001e 1344     		add	r3, r3, r2
- 734 0020 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 735 0022 03F00303 		and	r3, r3, #3
- 736 0026 012B     		cmp	r3, #1
- 737 0028 02D1     		bne	.L34
- 738              		.loc 3 68 18 is_stmt 0 discriminator 1
- 739 002a FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
- 740 002c 2033     		adds	r3, r3, #32
- 741 002e 00E0     		b	.L35
- 742              	.L34:
- 743              		.loc 3 68 18 discriminator 2
- 744 0030 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
- 745              	.L35:
- 746              	.LBE4:
- 747              		.loc 3 68 14 is_stmt 1 discriminator 4
- 748 0032 BB73     		strb	r3, [r7, #14]
+ 712              		.loc 3 68 0
+ 713 000e 7B69     		ldr	r3, [r7, #20]
+ 714 0010 7A68     		ldr	r2, [r7, #4]
+ 715 0012 1344     		add	r3, r3, r2
+ 716 0014 1B78     		ldrb	r3, [r3]
+ 717 0016 FB73     		strb	r3, [r7, #15]
+ 718 0018 FFF7FEFF 		bl	__locale_ctype_ptr
+ 719 001c 0246     		mov	r2, r0
+ 720 001e FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 721 0020 0133     		adds	r3, r3, #1
+ 722 0022 1344     		add	r3, r3, r2
+ 723 0024 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 724 0026 03F00303 		and	r3, r3, #3
+ 725 002a 012B     		cmp	r3, #1
+ 726 002c 02D1     		bne	.L34
+ 727              		.loc 3 68 0 is_stmt 0 discriminator 1
+ 728 002e FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 729 0030 2033     		adds	r3, r3, #32
+ 730 0032 00E0     		b	.L35
+ 731              	.L34:
+ 732              		.loc 3 68 0 discriminator 2
+ 733 0034 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 734              	.L35:
+ 735              	.LBE4:
+ 736              		.loc 3 68 0 discriminator 4
+ 737 0036 BB73     		strb	r3, [r7, #14]
   69:PartA.c       ****         if (c >= 'a' && c <= 'z') {
- 749              		.loc 3 69 12 discriminator 4
- 750 0034 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
- 751 0036 602B     		cmp	r3, #96
- 752 0038 29D9     		bls	.L36
- 753              		.loc 3 69 22 discriminator 1
- 754 003a BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
- 755 003c 7A2B     		cmp	r3, #122
- 756 003e 26D8     		bhi	.L36
- 757              	.LBB5:
+ 738              		.loc 3 69 0 is_stmt 1 discriminator 4
+ 739 0038 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 740 003a 602B     		cmp	r3, #96
+ 741 003c 29D9     		bls	.L36
+ 742              		.loc 3 69 0 is_stmt 0 discriminator 1
+ 743 003e BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 744 0040 7A2B     		cmp	r3, #122
+ 745 0042 26D8     		bhi	.L36
+ 746              	.LBB5:
   70:PartA.c       ****             const char *morse = morseCode[c - 'a'];
- 758              		.loc 3 70 45
- 759 0040 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
- 760 0042 613B     		subs	r3, r3, #97
- 761              		.loc 3 70 25
- 762 0044 204A     		ldr	r2, .L43+4
- 763 0046 52F82330 		ldr	r3, [r2, r3, lsl #2]
- 764 004a BB60     		str	r3, [r7, #8]
- 765              	.LBB6:
+ 747              		.loc 3 70 0 is_stmt 1
+ 748 0044 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 749 0046 613B     		subs	r3, r3, #97
+ 750 0048 1E4A     		ldr	r2, .L43
+ 751 004a 52F82330 		ldr	r3, [r2, r3, lsl #2]
+ 752 004e BB60     		str	r3, [r7, #8]
+ 753              	.LBB6:
   71:PartA.c       ****             for (int j = 0; morse[j] != '\0'; j++) {
- 766              		.loc 3 71 22
- 767 004c 0023     		movs	r3, #0
- 768 004e 3B61     		str	r3, [r7, #16]
- 769              		.loc 3 71 13
- 770 0050 16E0     		b	.L37
- 771              	.L40:
+ 754              		.loc 3 71 0
+ 755 0050 0023     		movs	r3, #0
+ 756 0052 3B61     		str	r3, [r7, #16]
+ 757 0054 16E0     		b	.L37
+ 758              	.L40:
   72:PartA.c       ****                 if (morse[j] == '.') {
- 772              		.loc 3 72 26
- 773 0052 3B69     		ldr	r3, [r7, #16]
- 774 0054 BA68     		ldr	r2, [r7, #8]
- 775 0056 1344     		add	r3, r3, r2
- 776 0058 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 777              		.loc 3 72 20
- 778 005a 2E2B     		cmp	r3, #46
- 779 005c 02D1     		bne	.L38
+ 759              		.loc 3 72 0
+ 760 0056 3B69     		ldr	r3, [r7, #16]
+ 761 0058 BA68     		ldr	r2, [r7, #8]
+ 762 005a 1344     		add	r3, r3, r2
+ 763 005c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 764 005e 2E2B     		cmp	r3, #46
+ 765 0060 02D1     		bne	.L38
   73:PartA.c       ****                     // Dot: 100ms
   74:PartA.c       ****                     dot();
- 780              		.loc 3 74 21
- 781 005e FFF7FEFF 		bl	dot
- 782 0062 07E0     		b	.L39
- 783              	.L38:
+ 766              		.loc 3 74 0
+ 767 0062 FFF7FEFF 		bl	dot
+ 768 0066 07E0     		b	.L39
+ 769              	.L38:
   75:PartA.c       ****                 } else if (morse[j] == '-') {
- 784              		.loc 3 75 33
- 785 0064 3B69     		ldr	r3, [r7, #16]
- 786 0066 BA68     		ldr	r2, [r7, #8]
- 787 0068 1344     		add	r3, r3, r2
- 788 006a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 789              		.loc 3 75 27
- 790 006c 2D2B     		cmp	r3, #45
- 791 006e 01D1     		bne	.L39
+ 770              		.loc 3 75 0
+ 771 0068 3B69     		ldr	r3, [r7, #16]
+ 772 006a BA68     		ldr	r2, [r7, #8]
+ 773 006c 1344     		add	r3, r3, r2
+ 774 006e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 775 0070 2D2B     		cmp	r3, #45
+ 776 0072 01D1     		bne	.L39
   76:PartA.c       ****                     // Dash: 300ms
   77:PartA.c       ****                     dash();
- 792              		.loc 3 77 21
- 793 0070 FFF7FEFF 		bl	dash
- 794              	.L39:
+ 777              		.loc 3 77 0
+ 778 0074 FFF7FEFF 		bl	dash
+ 779              	.L39:
   78:PartA.c       ****                 }
   79:PartA.c       ****                 // Space between Morse characters (1 dot)
   80:PartA.c       ****                 delayMs(DOT_TIME);
- 795              		.loc 3 80 17 discriminator 2
- 796 0074 6420     		movs	r0, #100
- 797 0076 FFF7FEFF 		bl	delayMs
+ 780              		.loc 3 80 0 discriminator 2
+ 781 0078 6420     		movs	r0, #100
+ 782 007a FFF7FEFF 		bl	delayMs
   71:PartA.c       ****                 if (morse[j] == '.') {
- 798              		.loc 3 71 48 discriminator 2
- 799 007a 3B69     		ldr	r3, [r7, #16]
- 800 007c 0133     		adds	r3, r3, #1
- 801 007e 3B61     		str	r3, [r7, #16]
- 802              	.L37:
+ 783              		.loc 3 71 0 discriminator 2
+ 784 007e 3B69     		ldr	r3, [r7, #16]
+ 785 0080 0133     		adds	r3, r3, #1
+ 786 0082 3B61     		str	r3, [r7, #16]
+ 787              	.L37:
   71:PartA.c       ****                 if (morse[j] == '.') {
- 803              		.loc 3 71 34 discriminator 1
- 804 0080 3B69     		ldr	r3, [r7, #16]
- 805 0082 BA68     		ldr	r2, [r7, #8]
- 806 0084 1344     		add	r3, r3, r2
- 807 0086 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-  71:PartA.c       ****                 if (morse[j] == '.') {
- 808              		.loc 3 71 13 discriminator 1
- 809 0088 002B     		cmp	r3, #0
- 810 008a E2D1     		bne	.L40
- 811              	.LBE6:
- 812              	.LBE5:
+ 788              		.loc 3 71 0 is_stmt 0 discriminator 1
+ 789 0084 3B69     		ldr	r3, [r7, #16]
+ 790 0086 BA68     		ldr	r2, [r7, #8]
+ 791 0088 1344     		add	r3, r3, r2
+ 792 008a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 793 008c 002B     		cmp	r3, #0
+ 794 008e E2D1     		bne	.L40
+ 795              	.LBE6:
+ 796              	.LBE5:
   69:PartA.c       ****             const char *morse = morseCode[c - 'a'];
- 813              		.loc 3 69 35
- 814 008c 06E0     		b	.L41
- 815              	.L36:
+ 797              		.loc 3 69 0 is_stmt 1
+ 798 0090 06E0     		b	.L41
+ 799              	.L36:
   81:PartA.c       ****             }
   82:PartA.c       ****         } else if (c == ' ') {
- 816              		.loc 3 82 19
- 817 008e BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
- 818 0090 202B     		cmp	r3, #32
- 819 0092 03D1     		bne	.L41
+ 800              		.loc 3 82 0
+ 801 0092 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 802 0094 202B     		cmp	r3, #32
+ 803 0096 03D1     		bne	.L41
   83:PartA.c       ****             // Space between words (7 dots)
   84:PartA.c       ****             delayMs(SPACE_TIME);
- 820              		.loc 3 84 13
- 821 0094 4FF42F70 		mov	r0, #700
- 822 0098 FFF7FEFF 		bl	delayMs
- 823              	.L41:
+ 804              		.loc 3 84 0
+ 805 0098 4FF42F70 		mov	r0, #700
+ 806 009c FFF7FEFF 		bl	delayMs
+ 807              	.L41:
   85:PartA.c       ****         }
   86:PartA.c       ****         // Space between Morse letters (3 dots)
   87:PartA.c       ****         delayMs(LETTER_TIME);
- 824              		.loc 3 87 9 discriminator 2
- 825 009c 4FF49670 		mov	r0, #300
- 826 00a0 FFF7FEFF 		bl	delayMs
- 827              	.LBE3:
+ 808              		.loc 3 87 0 discriminator 2
+ 809 00a0 4FF49670 		mov	r0, #300
+ 810 00a4 FFF7FEFF 		bl	delayMs
+ 811              	.LBE3:
   67:PartA.c       ****         char c = tolower(text[i]);
- 828              		.loc 3 67 40 discriminator 2
- 829 00a4 7B69     		ldr	r3, [r7, #20]
- 830 00a6 0133     		adds	r3, r3, #1
- 831 00a8 7B61     		str	r3, [r7, #20]
- 832              	.L33:
+ 812              		.loc 3 67 0 discriminator 2
+ 813 00a8 7B69     		ldr	r3, [r7, #20]
+ 814 00aa 0133     		adds	r3, r3, #1
+ 815 00ac 7B61     		str	r3, [r7, #20]
+ 816              	.L33:
   67:PartA.c       ****         char c = tolower(text[i]);
- 833              		.loc 3 67 25 discriminator 1
- 834 00aa 7868     		ldr	r0, [r7, #4]
- 835 00ac FFF7FEFF 		bl	strlen
- 836 00b0 0246     		mov	r2, r0
-  67:PartA.c       ****         char c = tolower(text[i]);
- 837              		.loc 3 67 23 discriminator 1
- 838 00b2 7B69     		ldr	r3, [r7, #20]
-  67:PartA.c       ****         char c = tolower(text[i]);
- 839              		.loc 3 67 5 discriminator 1
- 840 00b4 9A42     		cmp	r2, r3
- 841 00b6 AAD8     		bhi	.L42
- 842              	.LBE2:
+ 817              		.loc 3 67 0 is_stmt 0 discriminator 1
+ 818 00ae 7868     		ldr	r0, [r7, #4]
+ 819 00b0 FFF7FEFF 		bl	strlen
+ 820 00b4 0246     		mov	r2, r0
+ 821 00b6 7B69     		ldr	r3, [r7, #20]
+ 822 00b8 9A42     		cmp	r2, r3
+ 823 00ba A8D8     		bhi	.L42
+ 824              	.LBE2:
   88:PartA.c       ****     }
   89:PartA.c       **** }
- 843              		.loc 3 89 1
- 844 00b8 00BF     		nop
- 845 00ba 00BF     		nop
- 846 00bc 1837     		adds	r7, r7, #24
- 847              	.LCFI42:
- 848              		.cfi_def_cfa_offset 8
- 849 00be BD46     		mov	sp, r7
- 850              	.LCFI43:
- 851              		.cfi_def_cfa_register 13
- 852              		@ sp needed
- 853 00c0 80BD     		pop	{r7, pc}
- 854              	.L44:
- 855 00c2 00BF     		.align	2
- 856              	.L43:
- 857 00c4 00000000 		.word	_ctype_
- 858 00c8 00000000 		.word	morseCode
- 859              		.cfi_endproc
- 860              	.LFE144:
- 862              		.section	.text.main,"ax",%progbits
- 863              		.align	1
- 864              		.global	main
- 865              		.syntax unified
- 866              		.thumb
- 867              		.thumb_func
- 869              	main:
- 870              	.LFB145:
+ 825              		.loc 3 89 0 is_stmt 1
+ 826 00bc 00BF     		nop
+ 827 00be 1837     		adds	r7, r7, #24
+ 828              	.LCFI42:
+ 829              		.cfi_def_cfa_offset 8
+ 830 00c0 BD46     		mov	sp, r7
+ 831              	.LCFI43:
+ 832              		.cfi_def_cfa_register 13
+ 833              		@ sp needed
+ 834 00c2 80BD     		pop	{r7, pc}
+ 835              	.L44:
+ 836              		.align	2
+ 837              	.L43:
+ 838 00c4 00000000 		.word	morseCode
+ 839              		.cfi_endproc
+ 840              	.LFE143:
+ 842              		.section	.text.main,"ax",%progbits
+ 843              		.align	1
+ 844              		.global	main
+ 845              		.syntax unified
+ 846              		.thumb
+ 847              		.thumb_func
+ 848              		.fpu fpv4-sp-d16
+ 850              	main:
+ 851              	.LFB144:
   90:PartA.c       **** 
   91:PartA.c       **** int main(void)
   92:PartA.c       **** {
- 871              		.loc 3 92 1
- 872              		.cfi_startproc
- 873              		@ args = 0, pretend = 0, frame = 16
- 874              		@ frame_needed = 1, uses_anonymous_args = 0
- 875 0000 80B5     		push	{r7, lr}
- 876              	.LCFI44:
- 877              		.cfi_def_cfa_offset 8
- 878              		.cfi_offset 7, -8
- 879              		.cfi_offset 14, -4
- 880 0002 84B0     		sub	sp, sp, #16
- 881              	.LCFI45:
- 882              		.cfi_def_cfa_offset 24
- 883 0004 00AF     		add	r7, sp, #0
- 884              	.LCFI46:
- 885              		.cfi_def_cfa_register 7
+ 852              		.loc 3 92 0
+ 853              		.cfi_startproc
+ 854              		@ args = 0, pretend = 0, frame = 16
+ 855              		@ frame_needed = 1, uses_anonymous_args = 0
+ 856 0000 80B5     		push	{r7, lr}
+ 857              	.LCFI44:
+ 858              		.cfi_def_cfa_offset 8
+ 859              		.cfi_offset 7, -8
+ 860              		.cfi_offset 14, -4
+ 861 0002 84B0     		sub	sp, sp, #16
+ 862              	.LCFI45:
+ 863              		.cfi_def_cfa_offset 24
+ 864 0004 00AF     		add	r7, sp, #0
+ 865              	.LCFI46:
+ 866              		.cfi_def_cfa_register 7
   93:PartA.c       ****     XMC_GPIO_CONFIG_t config;
   94:PartA.c       **** 
   95:PartA.c       ****     config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL;
- 886              		.loc 3 95 17
- 887 0006 8023     		movs	r3, #128
- 888 0008 3B71     		strb	r3, [r7, #4]
+ 867              		.loc 3 95 0
+ 868 0006 8023     		movs	r3, #128
+ 869 0008 3B71     		strb	r3, [r7, #4]
   96:PartA.c       ****     config.output_level = XMC_GPIO_OUTPUT_LEVEL_LOW;
- 889              		.loc 3 96 25
- 890 000a 4FF48033 		mov	r3, #65536
- 891 000e BB60     		str	r3, [r7, #8]
+ 870              		.loc 3 96 0
+ 871 000a 4FF48033 		mov	r3, #65536
+ 872 000e BB60     		str	r3, [r7, #8]
   97:PartA.c       ****     config.output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM;
- 892              		.loc 3 97 28
- 893 0010 0423     		movs	r3, #4
- 894 0012 3B73     		strb	r3, [r7, #12]
+ 873              		.loc 3 97 0
+ 874 0010 0423     		movs	r3, #4
+ 875 0012 3B73     		strb	r3, [r7, #12]
   98:PartA.c       **** 
   99:PartA.c       ****     XMC_GPIO_Init(LED1, &config);
- 895              		.loc 3 99 5
- 896 0014 3B1D     		adds	r3, r7, #4
- 897 0016 1A46     		mov	r2, r3
- 898 0018 0121     		movs	r1, #1
- 899 001a 0648     		ldr	r0, .L47
- 900 001c FFF7FEFF 		bl	XMC_GPIO_Init
+ 876              		.loc 3 99 0
+ 877 0014 3B1D     		adds	r3, r7, #4
+ 878 0016 1A46     		mov	r2, r3
+ 879 0018 0121     		movs	r1, #1
+ 880 001a 0648     		ldr	r0, .L47
+ 881 001c FFF7FEFF 		bl	XMC_GPIO_Init
  100:PartA.c       **** 
  101:PartA.c       ****     DelayInit();
- 901              		.loc 3 101 5
- 902 0020 FFF7FEFF 		bl	DelayInit
- 903              	.L46:
+ 882              		.loc 3 101 0
+ 883 0020 FFF7FEFF 		bl	DelayInit
+ 884              	.L46:
  102:PartA.c       ****     while(1)
  103:PartA.c       ****     {
  104:PartA.c       ****         textToMorse(secretCode); //.. / -.-. .- -. / -- --- .-. ... .
- 904              		.loc 3 104 9 discriminator 1
- 905 0024 0448     		ldr	r0, .L47+4
- 906 0026 FFF7FEFF 		bl	textToMorse
+ 885              		.loc 3 104 0 discriminator 1
+ 886 0024 0448     		ldr	r0, .L47+4
+ 887 0026 FFF7FEFF 		bl	textToMorse
  105:PartA.c       ****         // Space between Transmission
  106:PartA.c       ****         delayMs(REPEAT_TIME);
- 907              		.loc 3 106 9 discriminator 1
- 908 002a 4CF25030 		movw	r0, #50000
- 909 002e FFF7FEFF 		bl	delayMs
+ 888              		.loc 3 106 0 discriminator 1
+ 889 002a 41F28830 		movw	r0, #5000
+ 890 002e FFF7FEFF 		bl	delayMs
  104:PartA.c       ****         // Space between Transmission
- 910              		.loc 3 104 9 discriminator 1
- 911 0032 F7E7     		b	.L46
- 912              	.L48:
- 913              		.align	2
- 914              	.L47:
- 915 0034 00810248 		.word	1208123648
- 916 0038 00000000 		.word	secretCode
- 917              		.cfi_endproc
- 918              	.LFE145:
- 920              		.text
- 921              	.Letext0:
- 922              		.file 4 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/mach
- 923              		.file 5 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/
- 924              		.file 6 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/XMC4500.
- 925              		.file 7 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc4_gpio.h"
- 926              		.file 8 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/system_X
- 927              		.file 9 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/ctyp
+ 891              		.loc 3 104 0 discriminator 1
+ 892 0032 F7E7     		b	.L46
+ 893              	.L48:
+ 894              		.align	2
+ 895              	.L47:
+ 896 0034 00810248 		.word	1208123648
+ 897 0038 00000000 		.word	secretCode
+ 898              		.cfi_endproc
+ 899              	.LFE144:
+ 901              		.text
+ 902              	.Letext0:
+ 903              		.file 4 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 904              		.file 5 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 905              		.file 6 "/usr/arm-none-eabi/include/sys/lock.h"
+ 906              		.file 7 "/usr/arm-none-eabi/include/sys/_types.h"
+ 907              		.file 8 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
+ 908              		.file 9 "/usr/arm-none-eabi/include/sys/reent.h"
+ 909              		.file 10 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/XMC4500
+ 910              		.file 11 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/system_
+ 911              		.file 12 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc4_gpio.h"
+ 912              		.file 13 "/usr/arm-none-eabi/include/ctype.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 PartA.c
-     /tmp/ccNP0Bbs.s:19     .text.__NVIC_SetPriority:0000000000000000 $t
-     /tmp/ccNP0Bbs.s:24     .text.__NVIC_SetPriority:0000000000000000 __NVIC_SetPriority
-     /tmp/ccNP0Bbs.s:99     .text.__NVIC_SetPriority:000000000000004c $d
-     /tmp/ccNP0Bbs.s:105    .text.SysTick_Config:0000000000000000 $t
-     /tmp/ccNP0Bbs.s:110    .text.SysTick_Config:0000000000000000 SysTick_Config
-     /tmp/ccNP0Bbs.s:175    .text.SysTick_Config:0000000000000040 $d
-     /tmp/ccNP0Bbs.s:180    .text.XMC_GPIO_SetOutputHigh:0000000000000000 $t
-     /tmp/ccNP0Bbs.s:185    .text.XMC_GPIO_SetOutputHigh:0000000000000000 XMC_GPIO_SetOutputHigh
-     /tmp/ccNP0Bbs.s:231    .text.XMC_GPIO_SetOutputLow:0000000000000000 $t
-     /tmp/ccNP0Bbs.s:236    .text.XMC_GPIO_SetOutputLow:0000000000000000 XMC_GPIO_SetOutputLow
-     /tmp/ccNP0Bbs.s:285    .data:0000000000000000 secretCode
-     /tmp/ccNP0Bbs.s:282    .data:0000000000000000 $d
-     /tmp/ccNP0Bbs.s:288    .bss:0000000000000000 $d
-     /tmp/ccNP0Bbs.s:289    .bss:0000000000000000 msTicks
-     /tmp/ccNP0Bbs.s:412    .data:000000000000000c morseCode
-     /tmp/ccNP0Bbs.s:294    .rodata:0000000000000000 $d
-     /tmp/ccNP0Bbs.s:452    .text.SysTick_Handler:0000000000000000 $t
-     /tmp/ccNP0Bbs.s:458    .text.SysTick_Handler:0000000000000000 SysTick_Handler
-     /tmp/ccNP0Bbs.s:500    .text.SysTick_Handler:0000000000000020 $d
-     /tmp/ccNP0Bbs.s:505    .text.DelayInit:0000000000000000 $t
-     /tmp/ccNP0Bbs.s:511    .text.DelayInit:0000000000000000 DelayInit
-     /tmp/ccNP0Bbs.s:541    .text.DelayInit:0000000000000020 $d
-     /tmp/ccNP0Bbs.s:547    .text.delayMs:0000000000000000 $t
-     /tmp/ccNP0Bbs.s:553    .text.delayMs:0000000000000000 delayMs
-     /tmp/ccNP0Bbs.s:602    .text.delayMs:0000000000000028 $d
-     /tmp/ccNP0Bbs.s:607    .text.dot:0000000000000000 $t
-     /tmp/ccNP0Bbs.s:613    .text.dot:0000000000000000 dot
-     /tmp/ccNP0Bbs.s:644    .text.dot:0000000000000020 $d
-     /tmp/ccNP0Bbs.s:649    .text.dash:0000000000000000 $t
-     /tmp/ccNP0Bbs.s:655    .text.dash:0000000000000000 dash
-     /tmp/ccNP0Bbs.s:686    .text.dash:0000000000000020 $d
-     /tmp/ccNP0Bbs.s:691    .text.textToMorse:0000000000000000 $t
-     /tmp/ccNP0Bbs.s:697    .text.textToMorse:0000000000000000 textToMorse
-     /tmp/ccNP0Bbs.s:857    .text.textToMorse:00000000000000c4 $d
-     /tmp/ccNP0Bbs.s:863    .text.main:0000000000000000 $t
-     /tmp/ccNP0Bbs.s:869    .text.main:0000000000000000 main
-     /tmp/ccNP0Bbs.s:915    .text.main:0000000000000034 $d
-                           .group:0000000000000000 wm4.0.467689a90594456bf46c01d2d8793c7f
-                           .group:0000000000000000 wm4.stddef.h.39.27677723d43e5b5a7afdf8d798429f1d
-                           .group:0000000000000000 wm4._newlib_version.h.4.bfdf54b0af045d4a71376ae00f63a22c
+     /tmp/ccDYy1D3.s:17     .text.__NVIC_SetPriority:0000000000000000 $t
+     /tmp/ccDYy1D3.s:23     .text.__NVIC_SetPriority:0000000000000000 __NVIC_SetPriority
+     /tmp/ccDYy1D3.s:89     .text.__NVIC_SetPriority:000000000000004c $d
+     /tmp/ccDYy1D3.s:95     .text.SysTick_Config:0000000000000000 $t
+     /tmp/ccDYy1D3.s:101    .text.SysTick_Config:0000000000000000 SysTick_Config
+     /tmp/ccDYy1D3.s:161    .text.SysTick_Config:0000000000000040 $d
+     /tmp/ccDYy1D3.s:166    .text.XMC_GPIO_SetOutputHigh:0000000000000000 $t
+     /tmp/ccDYy1D3.s:172    .text.XMC_GPIO_SetOutputHigh:0000000000000000 XMC_GPIO_SetOutputHigh
+     /tmp/ccDYy1D3.s:217    .text.XMC_GPIO_SetOutputLow:0000000000000000 $t
+     /tmp/ccDYy1D3.s:223    .text.XMC_GPIO_SetOutputLow:0000000000000000 XMC_GPIO_SetOutputLow
+     /tmp/ccDYy1D3.s:271    .data:0000000000000000 secretCode
+     /tmp/ccDYy1D3.s:268    .data:0000000000000000 $d
+     /tmp/ccDYy1D3.s:274    .bss:0000000000000000 $d
+     /tmp/ccDYy1D3.s:275    .bss:0000000000000000 msTicks
+     /tmp/ccDYy1D3.s:398    .data:000000000000000c morseCode
+     /tmp/ccDYy1D3.s:280    .rodata:0000000000000000 $d
+     /tmp/ccDYy1D3.s:438    .text.SysTick_Handler:0000000000000000 $t
+     /tmp/ccDYy1D3.s:445    .text.SysTick_Handler:0000000000000000 SysTick_Handler
+     /tmp/ccDYy1D3.s:486    .text.SysTick_Handler:0000000000000020 $d
+     /tmp/ccDYy1D3.s:491    .text.DelayInit:0000000000000000 $t
+     /tmp/ccDYy1D3.s:498    .text.DelayInit:0000000000000000 DelayInit
+     /tmp/ccDYy1D3.s:528    .text.DelayInit:0000000000000020 $d
+     /tmp/ccDYy1D3.s:534    .text.delayMs:0000000000000000 $t
+     /tmp/ccDYy1D3.s:541    .text.delayMs:0000000000000000 delayMs
+     /tmp/ccDYy1D3.s:588    .text.delayMs:0000000000000024 $d
+     /tmp/ccDYy1D3.s:593    .text.dot:0000000000000000 $t
+     /tmp/ccDYy1D3.s:600    .text.dot:0000000000000000 dot
+     /tmp/ccDYy1D3.s:631    .text.dot:0000000000000020 $d
+     /tmp/ccDYy1D3.s:636    .text.dash:0000000000000000 $t
+     /tmp/ccDYy1D3.s:643    .text.dash:0000000000000000 dash
+     /tmp/ccDYy1D3.s:674    .text.dash:0000000000000020 $d
+     /tmp/ccDYy1D3.s:679    .text.textToMorse:0000000000000000 $t
+     /tmp/ccDYy1D3.s:686    .text.textToMorse:0000000000000000 textToMorse
+     /tmp/ccDYy1D3.s:838    .text.textToMorse:00000000000000c4 $d
+     /tmp/ccDYy1D3.s:843    .text.main:0000000000000000 $t
+     /tmp/ccDYy1D3.s:850    .text.main:0000000000000000 main
+     /tmp/ccDYy1D3.s:896    .text.main:0000000000000034 $d
+                           .group:0000000000000000 wm4.0.7a9f4dea188ccacb7d502cdcabb040c1
+                           .group:0000000000000000 wm4.stddef.h.39.99b5021e28f91cdb161c889e07266673
+                           .group:0000000000000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
                            .group:0000000000000000 wm4.features.h.33.5bd1eea2d80518b50f7af0b5ce6750e0
                            .group:0000000000000000 wm4._default_types.h.15.247e5cd201eca3442cbf5404108c4935
-                           .group:0000000000000000 wm4._intsup.h.10.48bafbb683905c4daa4565a85aeeb264
+                           .group:0000000000000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
                            .group:0000000000000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
                            .group:0000000000000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
                            .group:0000000000000000 wm4.stdbool.h.29.07dce69c3b78884144b7f7bd19483461
-                           .group:0000000000000000 wm4.newlib.h.8.7cb3972cd43265932d4782d5eb589854
-                           .group:0000000000000000 wm4.ieeefp.h.77.c88535c35f465c05b101960cf0179075
-                           .group:0000000000000000 wm4.config.h.224.c701144a7b0518c6ee9b9b5465b79f81
+                           .group:0000000000000000 wm4.newlib.h.8.f6e543eac3f2f65163ba2ffe3b04987b
+                           .group:0000000000000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:0000000000000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
                            .group:0000000000000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
-                           .group:0000000000000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
-                           .group:0000000000000000 wm4.stddef.h.155.3588ebfdd1e8c7ede80509bb9c3b8009
-                           .group:0000000000000000 wm4._types.h.127.34941de1b2539d59d5cac00e0dd27a45
-                           .group:0000000000000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
                            .group:0000000000000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
-                           .group:0000000000000000 wm4.reent.h.77.dcd6129ff07fe81bd5636db29abe53b2
-                           .group:0000000000000000 wm4.cdefs.h.49.a54b2d5c07711bc7320a3fea9f12cb56
+                           .group:0000000000000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:0000000000000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:0000000000000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:0000000000000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:0000000000000000 wm4.cdefs.h.47.14fad0b327eb9dcf106599b738d85132
                            .group:0000000000000000 wm4.string.h.15.dab3980bf35408a4c507182805e2de3a
-                           .group:0000000000000000 wm4.stddef.h.155.ba788add86a0e365f264484f110c3c29
+                           .group:0000000000000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
                            .group:0000000000000000 wm4.xmc_device.h.61.ba2d082e12f51240746cffdd60d42b81
                            .group:0000000000000000 wm4.XMC4500.h.55.9aa45b9b5790506b2dcb963e4e7adeaf
                            .group:0000000000000000 wm4.core_cm4.h.32.6c6eb1c8daeca23ce7ba79c8e8120d52
@@ -3413,11 +3389,11 @@ DEFINED SYMBOLS
                            .group:0000000000000000 wm4.xmc_gpio.h.97.fa6a2e1be6030a75d960293cc3bbbd6b
                            .group:0000000000000000 wm4.xmc4_gpio_map.h.74.66e9110cf801b78826ef5354da51c32f
                            .group:0000000000000000 wm4.xmc4_gpio.h.79.ce6c49508b5a7769c66e7e3c21dcdfe4
-                           .group:0000000000000000 wm4.ctype.h.2.a1bc82073b5be9e206328f659df46ebe
+                           .group:0000000000000000 wm4.ctype.h.2.56b1b2226dd0fb45614b0e18787c61f7
 
 UNDEFINED SYMBOLS
 SystemCoreClockUpdate
 SystemCoreClock
+__locale_ctype_ptr
 strlen
-_ctype_
 XMC_GPIO_Init

@@ -9,7 +9,7 @@
 #define DASH_TIME (DOT_TIME * 3)
 #define LETTER_TIME (DOT_TIME * 3)
 #define SPACE_TIME (DOT_TIME * 7)
-#define REPEAT_TIME (DOT_TIME * 500)
+#define REPEAT_TIME (DOT_TIME * 50)
 #define TICKS_PER_SECOND 1000
 
 char secretCode [] = "I CAN MORSE";

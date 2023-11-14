@@ -82,6 +82,7 @@ void textToMorse(const char *text) {
         } else if (c == ' ') {
             // Space between words (7 dots)
             delayMs(SPACE_TIME);
+            continue;
         }
         // Space between Morse letters (3 dots)
         delayMs(LETTER_TIME);

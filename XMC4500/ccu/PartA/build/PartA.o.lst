@@ -3070,8 +3070,8 @@
  705              		.loc 3 67 0
  706 0008 0023     		movs	r3, #0
  707 000a 7B61     		str	r3, [r7, #20]
- 708 000c 4FE0     		b	.L33
- 709              	.L42:
+ 708 000c 50E0     		b	.L33
+ 709              	.L43:
  710              	.LBB3:
  711              	.LBB4:
   68:PartA.c       ****         char c = tolower(text[i]);
@@ -3115,7 +3115,7 @@
  747              		.loc 3 70 0 is_stmt 1
  748 0044 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
  749 0046 613B     		subs	r3, r3, #97
- 750 0048 1E4A     		ldr	r2, .L43
+ 750 0048 1F4A     		ldr	r2, .L44
  751 004a 52F82330 		ldr	r3, [r2, r3, lsl #2]
  752 004e BB60     		str	r3, [r7, #8]
  753              	.LBB6:
@@ -3176,186 +3176,190 @@
  796              	.LBE5:
   69:PartA.c       ****             const char *morse = morseCode[c - 'a'];
  797              		.loc 3 69 0 is_stmt 1
- 798 0090 06E0     		b	.L41
+ 798 0090 07E0     		b	.L41
  799              	.L36:
   81:PartA.c       ****             }
   82:PartA.c       ****         } else if (c == ' ') {
  800              		.loc 3 82 0
  801 0092 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
  802 0094 202B     		cmp	r3, #32
- 803 0096 03D1     		bne	.L41
+ 803 0096 04D1     		bne	.L41
   83:PartA.c       ****             // Space between words (7 dots)
   84:PartA.c       ****             delayMs(SPACE_TIME);
  804              		.loc 3 84 0
  805 0098 4FF42F70 		mov	r0, #700
  806 009c FFF7FEFF 		bl	delayMs
- 807              	.L41:
-  85:PartA.c       ****         }
-  86:PartA.c       ****         // Space between Morse letters (3 dots)
-  87:PartA.c       ****         delayMs(LETTER_TIME);
- 808              		.loc 3 87 0 discriminator 2
- 809 00a0 4FF49670 		mov	r0, #300
- 810 00a4 FFF7FEFF 		bl	delayMs
- 811              	.LBE3:
+  85:PartA.c       ****             continue;
+ 807              		.loc 3 85 0
+ 808 00a0 03E0     		b	.L42
+ 809              	.L41:
+  86:PartA.c       ****         }
+  87:PartA.c       ****         // Space between Morse letters (3 dots)
+  88:PartA.c       ****         delayMs(LETTER_TIME);
+ 810              		.loc 3 88 0
+ 811 00a2 4FF49670 		mov	r0, #300
+ 812 00a6 FFF7FEFF 		bl	delayMs
+ 813              	.L42:
+ 814              	.LBE3:
   67:PartA.c       ****         char c = tolower(text[i]);
- 812              		.loc 3 67 0 discriminator 2
- 813 00a8 7B69     		ldr	r3, [r7, #20]
- 814 00aa 0133     		adds	r3, r3, #1
- 815 00ac 7B61     		str	r3, [r7, #20]
- 816              	.L33:
+ 815              		.loc 3 67 0 discriminator 2
+ 816 00aa 7B69     		ldr	r3, [r7, #20]
+ 817 00ac 0133     		adds	r3, r3, #1
+ 818 00ae 7B61     		str	r3, [r7, #20]
+ 819              	.L33:
   67:PartA.c       ****         char c = tolower(text[i]);
- 817              		.loc 3 67 0 is_stmt 0 discriminator 1
- 818 00ae 7868     		ldr	r0, [r7, #4]
- 819 00b0 FFF7FEFF 		bl	strlen
- 820 00b4 0246     		mov	r2, r0
- 821 00b6 7B69     		ldr	r3, [r7, #20]
- 822 00b8 9A42     		cmp	r2, r3
- 823 00ba A8D8     		bhi	.L42
- 824              	.LBE2:
-  88:PartA.c       ****     }
-  89:PartA.c       **** }
- 825              		.loc 3 89 0 is_stmt 1
- 826 00bc 00BF     		nop
- 827 00be 1837     		adds	r7, r7, #24
- 828              	.LCFI42:
- 829              		.cfi_def_cfa_offset 8
- 830 00c0 BD46     		mov	sp, r7
- 831              	.LCFI43:
- 832              		.cfi_def_cfa_register 13
- 833              		@ sp needed
- 834 00c2 80BD     		pop	{r7, pc}
- 835              	.L44:
- 836              		.align	2
- 837              	.L43:
- 838 00c4 00000000 		.word	morseCode
- 839              		.cfi_endproc
- 840              	.LFE143:
- 842              		.section	.text.main,"ax",%progbits
- 843              		.align	1
- 844              		.global	main
- 845              		.syntax unified
- 846              		.thumb
- 847              		.thumb_func
- 848              		.fpu fpv4-sp-d16
- 850              	main:
- 851              	.LFB144:
-  90:PartA.c       **** 
-  91:PartA.c       **** int main(void)
-  92:PartA.c       **** {
- 852              		.loc 3 92 0
- 853              		.cfi_startproc
- 854              		@ args = 0, pretend = 0, frame = 16
- 855              		@ frame_needed = 1, uses_anonymous_args = 0
- 856 0000 80B5     		push	{r7, lr}
- 857              	.LCFI44:
- 858              		.cfi_def_cfa_offset 8
- 859              		.cfi_offset 7, -8
- 860              		.cfi_offset 14, -4
- 861 0002 84B0     		sub	sp, sp, #16
- 862              	.LCFI45:
- 863              		.cfi_def_cfa_offset 24
- 864 0004 00AF     		add	r7, sp, #0
- 865              	.LCFI46:
- 866              		.cfi_def_cfa_register 7
-  93:PartA.c       ****     XMC_GPIO_CONFIG_t config;
-  94:PartA.c       **** 
-  95:PartA.c       ****     config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL;
- 867              		.loc 3 95 0
- 868 0006 8023     		movs	r3, #128
- 869 0008 3B71     		strb	r3, [r7, #4]
-  96:PartA.c       ****     config.output_level = XMC_GPIO_OUTPUT_LEVEL_LOW;
+ 820              		.loc 3 67 0 is_stmt 0 discriminator 1
+ 821 00b0 7868     		ldr	r0, [r7, #4]
+ 822 00b2 FFF7FEFF 		bl	strlen
+ 823 00b6 0246     		mov	r2, r0
+ 824 00b8 7B69     		ldr	r3, [r7, #20]
+ 825 00ba 9A42     		cmp	r2, r3
+ 826 00bc A7D8     		bhi	.L43
+ 827              	.LBE2:
+  89:PartA.c       ****     }
+  90:PartA.c       **** }
+ 828              		.loc 3 90 0 is_stmt 1
+ 829 00be 00BF     		nop
+ 830 00c0 1837     		adds	r7, r7, #24
+ 831              	.LCFI42:
+ 832              		.cfi_def_cfa_offset 8
+ 833 00c2 BD46     		mov	sp, r7
+ 834              	.LCFI43:
+ 835              		.cfi_def_cfa_register 13
+ 836              		@ sp needed
+ 837 00c4 80BD     		pop	{r7, pc}
+ 838              	.L45:
+ 839 00c6 00BF     		.align	2
+ 840              	.L44:
+ 841 00c8 00000000 		.word	morseCode
+ 842              		.cfi_endproc
+ 843              	.LFE143:
+ 845              		.section	.text.main,"ax",%progbits
+ 846              		.align	1
+ 847              		.global	main
+ 848              		.syntax unified
+ 849              		.thumb
+ 850              		.thumb_func
+ 851              		.fpu fpv4-sp-d16
+ 853              	main:
+ 854              	.LFB144:
+  91:PartA.c       **** 
+  92:PartA.c       **** int main(void)
+  93:PartA.c       **** {
+ 855              		.loc 3 93 0
+ 856              		.cfi_startproc
+ 857              		@ args = 0, pretend = 0, frame = 16
+ 858              		@ frame_needed = 1, uses_anonymous_args = 0
+ 859 0000 80B5     		push	{r7, lr}
+ 860              	.LCFI44:
+ 861              		.cfi_def_cfa_offset 8
+ 862              		.cfi_offset 7, -8
+ 863              		.cfi_offset 14, -4
+ 864 0002 84B0     		sub	sp, sp, #16
+ 865              	.LCFI45:
+ 866              		.cfi_def_cfa_offset 24
+ 867 0004 00AF     		add	r7, sp, #0
+ 868              	.LCFI46:
+ 869              		.cfi_def_cfa_register 7
+  94:PartA.c       ****     XMC_GPIO_CONFIG_t config;
+  95:PartA.c       **** 
+  96:PartA.c       ****     config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL;
  870              		.loc 3 96 0
- 871 000a 4FF48033 		mov	r3, #65536
- 872 000e BB60     		str	r3, [r7, #8]
-  97:PartA.c       ****     config.output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM;
+ 871 0006 8023     		movs	r3, #128
+ 872 0008 3B71     		strb	r3, [r7, #4]
+  97:PartA.c       ****     config.output_level = XMC_GPIO_OUTPUT_LEVEL_LOW;
  873              		.loc 3 97 0
- 874 0010 0423     		movs	r3, #4
- 875 0012 3B73     		strb	r3, [r7, #12]
-  98:PartA.c       **** 
-  99:PartA.c       ****     XMC_GPIO_Init(LED1, &config);
- 876              		.loc 3 99 0
- 877 0014 3B1D     		adds	r3, r7, #4
- 878 0016 1A46     		mov	r2, r3
- 879 0018 0121     		movs	r1, #1
- 880 001a 0648     		ldr	r0, .L47
- 881 001c FFF7FEFF 		bl	XMC_GPIO_Init
- 100:PartA.c       **** 
- 101:PartA.c       ****     DelayInit();
- 882              		.loc 3 101 0
- 883 0020 FFF7FEFF 		bl	DelayInit
- 884              	.L46:
- 102:PartA.c       ****     while(1)
- 103:PartA.c       ****     {
- 104:PartA.c       ****         textToMorse(secretCode); //.. / -.-. .- -. / -- --- .-. ... .
- 885              		.loc 3 104 0 discriminator 1
- 886 0024 0448     		ldr	r0, .L47+4
- 887 0026 FFF7FEFF 		bl	textToMorse
+ 874 000a 4FF48033 		mov	r3, #65536
+ 875 000e BB60     		str	r3, [r7, #8]
+  98:PartA.c       ****     config.output_strength = XMC_GPIO_OUTPUT_STRENGTH_MEDIUM;
+ 876              		.loc 3 98 0
+ 877 0010 0423     		movs	r3, #4
+ 878 0012 3B73     		strb	r3, [r7, #12]
+  99:PartA.c       **** 
+ 100:PartA.c       ****     XMC_GPIO_Init(LED1, &config);
+ 879              		.loc 3 100 0
+ 880 0014 3B1D     		adds	r3, r7, #4
+ 881 0016 1A46     		mov	r2, r3
+ 882 0018 0121     		movs	r1, #1
+ 883 001a 0648     		ldr	r0, .L48
+ 884 001c FFF7FEFF 		bl	XMC_GPIO_Init
+ 101:PartA.c       **** 
+ 102:PartA.c       ****     DelayInit();
+ 885              		.loc 3 102 0
+ 886 0020 FFF7FEFF 		bl	DelayInit
+ 887              	.L47:
+ 103:PartA.c       ****     while(1)
+ 104:PartA.c       ****     {
+ 105:PartA.c       ****         textToMorse(secretCode); //.. / -.-. .- -. / -- --- .-. ... .
+ 888              		.loc 3 105 0 discriminator 1
+ 889 0024 0448     		ldr	r0, .L48+4
+ 890 0026 FFF7FEFF 		bl	textToMorse
+ 106:PartA.c       ****         // Space between Transmission
+ 107:PartA.c       ****         delayMs(REPEAT_TIME);
+ 891              		.loc 3 107 0 discriminator 1
+ 892 002a 41F28830 		movw	r0, #5000
+ 893 002e FFF7FEFF 		bl	delayMs
  105:PartA.c       ****         // Space between Transmission
- 106:PartA.c       ****         delayMs(REPEAT_TIME);
- 888              		.loc 3 106 0 discriminator 1
- 889 002a 41F28830 		movw	r0, #5000
- 890 002e FFF7FEFF 		bl	delayMs
- 104:PartA.c       ****         // Space between Transmission
- 891              		.loc 3 104 0 discriminator 1
- 892 0032 F7E7     		b	.L46
- 893              	.L48:
- 894              		.align	2
- 895              	.L47:
- 896 0034 00810248 		.word	1208123648
- 897 0038 00000000 		.word	secretCode
- 898              		.cfi_endproc
- 899              	.LFE144:
- 901              		.text
- 902              	.Letext0:
- 903              		.file 4 "/usr/arm-none-eabi/include/machine/_default_types.h"
- 904              		.file 5 "/usr/arm-none-eabi/include/sys/_stdint.h"
- 905              		.file 6 "/usr/arm-none-eabi/include/sys/lock.h"
- 906              		.file 7 "/usr/arm-none-eabi/include/sys/_types.h"
- 907              		.file 8 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
- 908              		.file 9 "/usr/arm-none-eabi/include/sys/reent.h"
- 909              		.file 10 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/XMC4500
- 910              		.file 11 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/system_
- 911              		.file 12 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc4_gpio.h"
- 912              		.file 13 "/usr/arm-none-eabi/include/ctype.h"
+ 894              		.loc 3 105 0 discriminator 1
+ 895 0032 F7E7     		b	.L47
+ 896              	.L49:
+ 897              		.align	2
+ 898              	.L48:
+ 899 0034 00810248 		.word	1208123648
+ 900 0038 00000000 		.word	secretCode
+ 901              		.cfi_endproc
+ 902              	.LFE144:
+ 904              		.text
+ 905              	.Letext0:
+ 906              		.file 4 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 907              		.file 5 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 908              		.file 6 "/usr/arm-none-eabi/include/sys/lock.h"
+ 909              		.file 7 "/usr/arm-none-eabi/include/sys/_types.h"
+ 910              		.file 8 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
+ 911              		.file 9 "/usr/arm-none-eabi/include/sys/reent.h"
+ 912              		.file 10 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/XMC4500
+ 913              		.file 11 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/system_
+ 914              		.file 12 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc4_gpio.h"
+ 915              		.file 13 "/usr/arm-none-eabi/include/ctype.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 PartA.c
-     /tmp/ccDYy1D3.s:17     .text.__NVIC_SetPriority:0000000000000000 $t
-     /tmp/ccDYy1D3.s:23     .text.__NVIC_SetPriority:0000000000000000 __NVIC_SetPriority
-     /tmp/ccDYy1D3.s:89     .text.__NVIC_SetPriority:000000000000004c $d
-     /tmp/ccDYy1D3.s:95     .text.SysTick_Config:0000000000000000 $t
-     /tmp/ccDYy1D3.s:101    .text.SysTick_Config:0000000000000000 SysTick_Config
-     /tmp/ccDYy1D3.s:161    .text.SysTick_Config:0000000000000040 $d
-     /tmp/ccDYy1D3.s:166    .text.XMC_GPIO_SetOutputHigh:0000000000000000 $t
-     /tmp/ccDYy1D3.s:172    .text.XMC_GPIO_SetOutputHigh:0000000000000000 XMC_GPIO_SetOutputHigh
-     /tmp/ccDYy1D3.s:217    .text.XMC_GPIO_SetOutputLow:0000000000000000 $t
-     /tmp/ccDYy1D3.s:223    .text.XMC_GPIO_SetOutputLow:0000000000000000 XMC_GPIO_SetOutputLow
-     /tmp/ccDYy1D3.s:271    .data:0000000000000000 secretCode
-     /tmp/ccDYy1D3.s:268    .data:0000000000000000 $d
-     /tmp/ccDYy1D3.s:274    .bss:0000000000000000 $d
-     /tmp/ccDYy1D3.s:275    .bss:0000000000000000 msTicks
-     /tmp/ccDYy1D3.s:398    .data:000000000000000c morseCode
-     /tmp/ccDYy1D3.s:280    .rodata:0000000000000000 $d
-     /tmp/ccDYy1D3.s:438    .text.SysTick_Handler:0000000000000000 $t
-     /tmp/ccDYy1D3.s:445    .text.SysTick_Handler:0000000000000000 SysTick_Handler
-     /tmp/ccDYy1D3.s:486    .text.SysTick_Handler:0000000000000020 $d
-     /tmp/ccDYy1D3.s:491    .text.DelayInit:0000000000000000 $t
-     /tmp/ccDYy1D3.s:498    .text.DelayInit:0000000000000000 DelayInit
-     /tmp/ccDYy1D3.s:528    .text.DelayInit:0000000000000020 $d
-     /tmp/ccDYy1D3.s:534    .text.delayMs:0000000000000000 $t
-     /tmp/ccDYy1D3.s:541    .text.delayMs:0000000000000000 delayMs
-     /tmp/ccDYy1D3.s:588    .text.delayMs:0000000000000024 $d
-     /tmp/ccDYy1D3.s:593    .text.dot:0000000000000000 $t
-     /tmp/ccDYy1D3.s:600    .text.dot:0000000000000000 dot
-     /tmp/ccDYy1D3.s:631    .text.dot:0000000000000020 $d
-     /tmp/ccDYy1D3.s:636    .text.dash:0000000000000000 $t
-     /tmp/ccDYy1D3.s:643    .text.dash:0000000000000000 dash
-     /tmp/ccDYy1D3.s:674    .text.dash:0000000000000020 $d
-     /tmp/ccDYy1D3.s:679    .text.textToMorse:0000000000000000 $t
-     /tmp/ccDYy1D3.s:686    .text.textToMorse:0000000000000000 textToMorse
-     /tmp/ccDYy1D3.s:838    .text.textToMorse:00000000000000c4 $d
-     /tmp/ccDYy1D3.s:843    .text.main:0000000000000000 $t
-     /tmp/ccDYy1D3.s:850    .text.main:0000000000000000 main
-     /tmp/ccDYy1D3.s:896    .text.main:0000000000000034 $d
+     /tmp/cck1BHkj.s:17     .text.__NVIC_SetPriority:0000000000000000 $t
+     /tmp/cck1BHkj.s:23     .text.__NVIC_SetPriority:0000000000000000 __NVIC_SetPriority
+     /tmp/cck1BHkj.s:89     .text.__NVIC_SetPriority:000000000000004c $d
+     /tmp/cck1BHkj.s:95     .text.SysTick_Config:0000000000000000 $t
+     /tmp/cck1BHkj.s:101    .text.SysTick_Config:0000000000000000 SysTick_Config
+     /tmp/cck1BHkj.s:161    .text.SysTick_Config:0000000000000040 $d
+     /tmp/cck1BHkj.s:166    .text.XMC_GPIO_SetOutputHigh:0000000000000000 $t
+     /tmp/cck1BHkj.s:172    .text.XMC_GPIO_SetOutputHigh:0000000000000000 XMC_GPIO_SetOutputHigh
+     /tmp/cck1BHkj.s:217    .text.XMC_GPIO_SetOutputLow:0000000000000000 $t
+     /tmp/cck1BHkj.s:223    .text.XMC_GPIO_SetOutputLow:0000000000000000 XMC_GPIO_SetOutputLow
+     /tmp/cck1BHkj.s:271    .data:0000000000000000 secretCode
+     /tmp/cck1BHkj.s:268    .data:0000000000000000 $d
+     /tmp/cck1BHkj.s:274    .bss:0000000000000000 $d
+     /tmp/cck1BHkj.s:275    .bss:0000000000000000 msTicks
+     /tmp/cck1BHkj.s:398    .data:000000000000000c morseCode
+     /tmp/cck1BHkj.s:280    .rodata:0000000000000000 $d
+     /tmp/cck1BHkj.s:438    .text.SysTick_Handler:0000000000000000 $t
+     /tmp/cck1BHkj.s:445    .text.SysTick_Handler:0000000000000000 SysTick_Handler
+     /tmp/cck1BHkj.s:486    .text.SysTick_Handler:0000000000000020 $d
+     /tmp/cck1BHkj.s:491    .text.DelayInit:0000000000000000 $t
+     /tmp/cck1BHkj.s:498    .text.DelayInit:0000000000000000 DelayInit
+     /tmp/cck1BHkj.s:528    .text.DelayInit:0000000000000020 $d
+     /tmp/cck1BHkj.s:534    .text.delayMs:0000000000000000 $t
+     /tmp/cck1BHkj.s:541    .text.delayMs:0000000000000000 delayMs
+     /tmp/cck1BHkj.s:588    .text.delayMs:0000000000000024 $d
+     /tmp/cck1BHkj.s:593    .text.dot:0000000000000000 $t
+     /tmp/cck1BHkj.s:600    .text.dot:0000000000000000 dot
+     /tmp/cck1BHkj.s:631    .text.dot:0000000000000020 $d
+     /tmp/cck1BHkj.s:636    .text.dash:0000000000000000 $t
+     /tmp/cck1BHkj.s:643    .text.dash:0000000000000000 dash
+     /tmp/cck1BHkj.s:674    .text.dash:0000000000000020 $d
+     /tmp/cck1BHkj.s:679    .text.textToMorse:0000000000000000 $t
+     /tmp/cck1BHkj.s:686    .text.textToMorse:0000000000000000 textToMorse
+     /tmp/cck1BHkj.s:841    .text.textToMorse:00000000000000c8 $d
+     /tmp/cck1BHkj.s:846    .text.main:0000000000000000 $t
+     /tmp/cck1BHkj.s:853    .text.main:0000000000000000 main
+     /tmp/cck1BHkj.s:899    .text.main:0000000000000034 $d
                            .group:0000000000000000 wm4.0.7a9f4dea188ccacb7d502cdcabb040c1
                            .group:0000000000000000 wm4.stddef.h.39.99b5021e28f91cdb161c889e07266673
                            .group:0000000000000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6

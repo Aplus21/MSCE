@@ -11,8 +11,8 @@
 
 #define DOT_TIME 100
 #define DASH_TIME (DOT_TIME * 3)
-#define LETTER_TIME (DOT_TIME * 3)
-#define SPACE_TIME (DOT_TIME * 7)
+#define LETTER_TIME (DOT_TIME * 2) //Space between letters - 1 Space between Morse characters
+#define SPACE_TIME (DOT_TIME * 4) //Space between words - 3 from Letter space
 #define REPEAT_TIME (DOT_TIME * 50)
 #define TICKS_PER_SECOND 1000
 
@@ -116,6 +116,7 @@ void textToMorse(const char *text) {
         else if (c == ' ') {
             // Space between words (7 dots)
             delay_ms(SPACE_TIME);
+            continue;
         }
         // Space between Morse letters (3 dots)
         delay_ms(LETTER_TIME);

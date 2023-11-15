@@ -2762,8 +2762,8 @@
    7:PartA.c       **** 
    8:PartA.c       **** #define DOT_TIME 100
    9:PartA.c       **** #define DASH_TIME (DOT_TIME * 3)
-  10:PartA.c       **** #define LETTER_TIME (DOT_TIME * 3)
-  11:PartA.c       **** #define SPACE_TIME (DOT_TIME * 7)
+  10:PartA.c       **** #define LETTER_TIME (DOT_TIME * 2) //Space between letters - 1 Space between Morse characters
+  11:PartA.c       **** #define SPACE_TIME (DOT_TIME * 4) //Space between words - 3 from Letter space
   12:PartA.c       **** #define REPEAT_TIME (DOT_TIME * 50)
   13:PartA.c       **** #define TICKS_PER_SECOND 1000
   14:PartA.c       **** 
@@ -3070,7 +3070,7 @@
  705              		.loc 3 67 0
  706 0008 0023     		movs	r3, #0
  707 000a 7B61     		str	r3, [r7, #20]
- 708 000c 50E0     		b	.L33
+ 708 000c 4FE0     		b	.L33
  709              	.L43:
  710              	.LBB3:
  711              	.LBB4:
@@ -3115,7 +3115,7 @@
  747              		.loc 3 70 0 is_stmt 1
  748 0044 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
  749 0046 613B     		subs	r3, r3, #97
- 750 0048 1F4A     		ldr	r2, .L44
+ 750 0048 1E4A     		ldr	r2, .L44
  751 004a 52F82330 		ldr	r3, [r2, r3, lsl #2]
  752 004e BB60     		str	r3, [r7, #8]
  753              	.LBB6:
@@ -3187,51 +3187,51 @@
   83:PartA.c       ****             // Space between words (7 dots)
   84:PartA.c       ****             delayMs(SPACE_TIME);
  804              		.loc 3 84 0
- 805 0098 4FF42F70 		mov	r0, #700
+ 805 0098 4FF4C870 		mov	r0, #400
  806 009c FFF7FEFF 		bl	delayMs
   85:PartA.c       ****             continue;
  807              		.loc 3 85 0
- 808 00a0 03E0     		b	.L42
+ 808 00a0 02E0     		b	.L42
  809              	.L41:
   86:PartA.c       ****         }
   87:PartA.c       ****         // Space between Morse letters (3 dots)
   88:PartA.c       ****         delayMs(LETTER_TIME);
  810              		.loc 3 88 0
- 811 00a2 4FF49670 		mov	r0, #300
- 812 00a6 FFF7FEFF 		bl	delayMs
+ 811 00a2 C820     		movs	r0, #200
+ 812 00a4 FFF7FEFF 		bl	delayMs
  813              	.L42:
  814              	.LBE3:
   67:PartA.c       ****         char c = tolower(text[i]);
  815              		.loc 3 67 0 discriminator 2
- 816 00aa 7B69     		ldr	r3, [r7, #20]
- 817 00ac 0133     		adds	r3, r3, #1
- 818 00ae 7B61     		str	r3, [r7, #20]
+ 816 00a8 7B69     		ldr	r3, [r7, #20]
+ 817 00aa 0133     		adds	r3, r3, #1
+ 818 00ac 7B61     		str	r3, [r7, #20]
  819              	.L33:
   67:PartA.c       ****         char c = tolower(text[i]);
  820              		.loc 3 67 0 is_stmt 0 discriminator 1
- 821 00b0 7868     		ldr	r0, [r7, #4]
- 822 00b2 FFF7FEFF 		bl	strlen
- 823 00b6 0246     		mov	r2, r0
- 824 00b8 7B69     		ldr	r3, [r7, #20]
- 825 00ba 9A42     		cmp	r2, r3
- 826 00bc A7D8     		bhi	.L43
+ 821 00ae 7868     		ldr	r0, [r7, #4]
+ 822 00b0 FFF7FEFF 		bl	strlen
+ 823 00b4 0246     		mov	r2, r0
+ 824 00b6 7B69     		ldr	r3, [r7, #20]
+ 825 00b8 9A42     		cmp	r2, r3
+ 826 00ba A8D8     		bhi	.L43
  827              	.LBE2:
   89:PartA.c       ****     }
   90:PartA.c       **** }
  828              		.loc 3 90 0 is_stmt 1
- 829 00be 00BF     		nop
- 830 00c0 1837     		adds	r7, r7, #24
+ 829 00bc 00BF     		nop
+ 830 00be 1837     		adds	r7, r7, #24
  831              	.LCFI42:
  832              		.cfi_def_cfa_offset 8
- 833 00c2 BD46     		mov	sp, r7
+ 833 00c0 BD46     		mov	sp, r7
  834              	.LCFI43:
  835              		.cfi_def_cfa_register 13
  836              		@ sp needed
- 837 00c4 80BD     		pop	{r7, pc}
+ 837 00c2 80BD     		pop	{r7, pc}
  838              	.L45:
- 839 00c6 00BF     		.align	2
+ 839              		.align	2
  840              	.L44:
- 841 00c8 00000000 		.word	morseCode
+ 841 00c4 00000000 		.word	morseCode
  842              		.cfi_endproc
  843              	.LFE143:
  845              		.section	.text.main,"ax",%progbits
@@ -3323,43 +3323,43 @@
  915              		.file 13 "/usr/arm-none-eabi/include/ctype.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 PartA.c
-     /tmp/cck1BHkj.s:17     .text.__NVIC_SetPriority:0000000000000000 $t
-     /tmp/cck1BHkj.s:23     .text.__NVIC_SetPriority:0000000000000000 __NVIC_SetPriority
-     /tmp/cck1BHkj.s:89     .text.__NVIC_SetPriority:000000000000004c $d
-     /tmp/cck1BHkj.s:95     .text.SysTick_Config:0000000000000000 $t
-     /tmp/cck1BHkj.s:101    .text.SysTick_Config:0000000000000000 SysTick_Config
-     /tmp/cck1BHkj.s:161    .text.SysTick_Config:0000000000000040 $d
-     /tmp/cck1BHkj.s:166    .text.XMC_GPIO_SetOutputHigh:0000000000000000 $t
-     /tmp/cck1BHkj.s:172    .text.XMC_GPIO_SetOutputHigh:0000000000000000 XMC_GPIO_SetOutputHigh
-     /tmp/cck1BHkj.s:217    .text.XMC_GPIO_SetOutputLow:0000000000000000 $t
-     /tmp/cck1BHkj.s:223    .text.XMC_GPIO_SetOutputLow:0000000000000000 XMC_GPIO_SetOutputLow
-     /tmp/cck1BHkj.s:271    .data:0000000000000000 secretCode
-     /tmp/cck1BHkj.s:268    .data:0000000000000000 $d
-     /tmp/cck1BHkj.s:274    .bss:0000000000000000 $d
-     /tmp/cck1BHkj.s:275    .bss:0000000000000000 msTicks
-     /tmp/cck1BHkj.s:398    .data:000000000000000c morseCode
-     /tmp/cck1BHkj.s:280    .rodata:0000000000000000 $d
-     /tmp/cck1BHkj.s:438    .text.SysTick_Handler:0000000000000000 $t
-     /tmp/cck1BHkj.s:445    .text.SysTick_Handler:0000000000000000 SysTick_Handler
-     /tmp/cck1BHkj.s:486    .text.SysTick_Handler:0000000000000020 $d
-     /tmp/cck1BHkj.s:491    .text.DelayInit:0000000000000000 $t
-     /tmp/cck1BHkj.s:498    .text.DelayInit:0000000000000000 DelayInit
-     /tmp/cck1BHkj.s:528    .text.DelayInit:0000000000000020 $d
-     /tmp/cck1BHkj.s:534    .text.delayMs:0000000000000000 $t
-     /tmp/cck1BHkj.s:541    .text.delayMs:0000000000000000 delayMs
-     /tmp/cck1BHkj.s:588    .text.delayMs:0000000000000024 $d
-     /tmp/cck1BHkj.s:593    .text.dot:0000000000000000 $t
-     /tmp/cck1BHkj.s:600    .text.dot:0000000000000000 dot
-     /tmp/cck1BHkj.s:631    .text.dot:0000000000000020 $d
-     /tmp/cck1BHkj.s:636    .text.dash:0000000000000000 $t
-     /tmp/cck1BHkj.s:643    .text.dash:0000000000000000 dash
-     /tmp/cck1BHkj.s:674    .text.dash:0000000000000020 $d
-     /tmp/cck1BHkj.s:679    .text.textToMorse:0000000000000000 $t
-     /tmp/cck1BHkj.s:686    .text.textToMorse:0000000000000000 textToMorse
-     /tmp/cck1BHkj.s:841    .text.textToMorse:00000000000000c8 $d
-     /tmp/cck1BHkj.s:846    .text.main:0000000000000000 $t
-     /tmp/cck1BHkj.s:853    .text.main:0000000000000000 main
-     /tmp/cck1BHkj.s:899    .text.main:0000000000000034 $d
+     /tmp/ccmOSMM4.s:17     .text.__NVIC_SetPriority:0000000000000000 $t
+     /tmp/ccmOSMM4.s:23     .text.__NVIC_SetPriority:0000000000000000 __NVIC_SetPriority
+     /tmp/ccmOSMM4.s:89     .text.__NVIC_SetPriority:000000000000004c $d
+     /tmp/ccmOSMM4.s:95     .text.SysTick_Config:0000000000000000 $t
+     /tmp/ccmOSMM4.s:101    .text.SysTick_Config:0000000000000000 SysTick_Config
+     /tmp/ccmOSMM4.s:161    .text.SysTick_Config:0000000000000040 $d
+     /tmp/ccmOSMM4.s:166    .text.XMC_GPIO_SetOutputHigh:0000000000000000 $t
+     /tmp/ccmOSMM4.s:172    .text.XMC_GPIO_SetOutputHigh:0000000000000000 XMC_GPIO_SetOutputHigh
+     /tmp/ccmOSMM4.s:217    .text.XMC_GPIO_SetOutputLow:0000000000000000 $t
+     /tmp/ccmOSMM4.s:223    .text.XMC_GPIO_SetOutputLow:0000000000000000 XMC_GPIO_SetOutputLow
+     /tmp/ccmOSMM4.s:271    .data:0000000000000000 secretCode
+     /tmp/ccmOSMM4.s:268    .data:0000000000000000 $d
+     /tmp/ccmOSMM4.s:274    .bss:0000000000000000 $d
+     /tmp/ccmOSMM4.s:275    .bss:0000000000000000 msTicks
+     /tmp/ccmOSMM4.s:398    .data:000000000000000c morseCode
+     /tmp/ccmOSMM4.s:280    .rodata:0000000000000000 $d
+     /tmp/ccmOSMM4.s:438    .text.SysTick_Handler:0000000000000000 $t
+     /tmp/ccmOSMM4.s:445    .text.SysTick_Handler:0000000000000000 SysTick_Handler
+     /tmp/ccmOSMM4.s:486    .text.SysTick_Handler:0000000000000020 $d
+     /tmp/ccmOSMM4.s:491    .text.DelayInit:0000000000000000 $t
+     /tmp/ccmOSMM4.s:498    .text.DelayInit:0000000000000000 DelayInit
+     /tmp/ccmOSMM4.s:528    .text.DelayInit:0000000000000020 $d
+     /tmp/ccmOSMM4.s:534    .text.delayMs:0000000000000000 $t
+     /tmp/ccmOSMM4.s:541    .text.delayMs:0000000000000000 delayMs
+     /tmp/ccmOSMM4.s:588    .text.delayMs:0000000000000024 $d
+     /tmp/ccmOSMM4.s:593    .text.dot:0000000000000000 $t
+     /tmp/ccmOSMM4.s:600    .text.dot:0000000000000000 dot
+     /tmp/ccmOSMM4.s:631    .text.dot:0000000000000020 $d
+     /tmp/ccmOSMM4.s:636    .text.dash:0000000000000000 $t
+     /tmp/ccmOSMM4.s:643    .text.dash:0000000000000000 dash
+     /tmp/ccmOSMM4.s:674    .text.dash:0000000000000020 $d
+     /tmp/ccmOSMM4.s:679    .text.textToMorse:0000000000000000 $t
+     /tmp/ccmOSMM4.s:686    .text.textToMorse:0000000000000000 textToMorse
+     /tmp/ccmOSMM4.s:841    .text.textToMorse:00000000000000c4 $d
+     /tmp/ccmOSMM4.s:846    .text.main:0000000000000000 $t
+     /tmp/ccmOSMM4.s:853    .text.main:0000000000000000 main
+     /tmp/ccmOSMM4.s:899    .text.main:0000000000000034 $d
                            .group:0000000000000000 wm4.0.7a9f4dea188ccacb7d502cdcabb040c1
                            .group:0000000000000000 wm4.stddef.h.39.99b5021e28f91cdb161c889e07266673
                            .group:0000000000000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6

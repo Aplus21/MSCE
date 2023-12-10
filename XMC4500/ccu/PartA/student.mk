@@ -6,7 +6,9 @@ LD_NAME = PartA
 
 # Add lists of space separated source files
 # Own sources, e.g. main.c
-SRCS = PartA.c
+SRCS = PartA.c func.c
+# Header files for configuration
+HDRS = config.h
 # Library sources, e.g. xmc_gpio.c
 LIBSRCS = xmc_gpio.c xmc4_gpio.c
 # Precompiled libraries, e.g. -lm for math functions

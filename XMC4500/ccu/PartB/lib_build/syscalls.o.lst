@@ -253,14 +253,14 @@
  162              		.file 7 "/usr/arm-none-eabi/include/sys/types.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 syscalls.c
-     /tmp/ccdX5xEr.s:21     .bss:0000000000000000 __dso_handle
-     /tmp/ccdX5xEr.s:18     .bss:0000000000000000 $d
-     /tmp/ccdX5xEr.s:24     .bss:0000000000000004 heap_ptr.5731
-     /tmp/ccdX5xEr.s:28     .text._sbrk:0000000000000000 $t
-     /tmp/ccdX5xEr.s:35     .text._sbrk:0000000000000000 _sbrk
-     /tmp/ccdX5xEr.s:113    .text._sbrk:000000000000005c $d
-     /tmp/ccdX5xEr.s:120    .text._init:0000000000000000 $t
-     /tmp/ccdX5xEr.s:127    .text._init:0000000000000000 _init
+     /tmp/ccXFr1FO.s:21     .bss:0000000000000000 __dso_handle
+     /tmp/ccXFr1FO.s:18     .bss:0000000000000000 $d
+     /tmp/ccXFr1FO.s:24     .bss:0000000000000004 heap_ptr.5731
+     /tmp/ccXFr1FO.s:28     .text._sbrk:0000000000000000 $t
+     /tmp/ccXFr1FO.s:35     .text._sbrk:0000000000000000 _sbrk
+     /tmp/ccXFr1FO.s:113    .text._sbrk:000000000000005c $d
+     /tmp/ccXFr1FO.s:120    .text._init:0000000000000000 $t
+     /tmp/ccXFr1FO.s:127    .text._init:0000000000000000 _init
                            .group:0000000000000000 wm4.0.7a9f4dea188ccacb7d502cdcabb040c1
                            .group:0000000000000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
                            .group:0000000000000000 wm4.features.h.33.5bd1eea2d80518b50f7af0b5ce6750e0

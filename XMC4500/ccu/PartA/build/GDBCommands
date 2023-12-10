@@ -1,6 +1,0 @@
-file build/main.elf
-target remote localhost:2331
-monitor reset
-load
-break main
-

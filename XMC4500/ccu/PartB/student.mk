@@ -5,6 +5,8 @@
 LD_NAME = PartB
 
 # Add lists of space separated source files
+# Header files for configuration
+HDRS = config.h
 # Own sources, e.g. main.c
 SRCS = PartB.c
 # Library sources, e.g. xmc_gpio.c

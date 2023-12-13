@@ -15,8 +15,8 @@ uint8_t encrypt(uint8_t *ciphertext[],
   /* Encrypt like the most popular app with over 30 million users worldwide did
      cf. https://www.ssl.com/article/nq-vault-app-not-as-secure-as-advertised/  */
   uint8_t buf[128];
-  memcpy(buf, plaintext, plaintext_len); //Here is the vulnerable code
-  for(uint8_t i=0; i<128; i++) buf[i] ^= key[nonce[0] % 8]; //XOR operation
+  memcpy(buf, plaintext, plaintext_len);
+  for(uint8_t i=0; i<128; i++) buf[i] ^= key[nonce[0] % 8];
   *ciphertext = malloc(plaintext_len);
   memcpy(*ciphertext, buf, plaintext_len);
   return 0;

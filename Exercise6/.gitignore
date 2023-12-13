@@ -1,0 +1,6 @@
+build/
+lib_build/
+*.o
+*.lst
+*.map
+JLinkLog

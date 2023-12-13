@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "packetizer.h": "c",
+        "crypto.h": "c"
+    }
+}

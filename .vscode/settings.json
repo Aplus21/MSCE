@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "packetizer.h": "c",
-        "crypto.h": "c"
+        "crypto.h": "c",
+        "virtualserial.h": "c"
     }
 }

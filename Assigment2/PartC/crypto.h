@@ -8,6 +8,7 @@
 #define CRYPTO_H
 
 #include <stdint.h>
+#include <stdio.h>
 
 #define CRYPTO_NONCE_BYTES ((size_t) (192/8))
 

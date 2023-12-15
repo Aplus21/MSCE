@@ -1,0 +1,1485 @@
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"base64url.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.base64_encode,"ax",%progbits
+  19              		.align	1
+  20              		.global	base64_encode
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	base64_encode:
+  26              	.LVL0:
+  27              	.LFB1:
+  28              		.file 1 "base64url.c"
+   1:base64url.c   **** /* base64url.c -- Encode binary data using printable characters.
+   2:base64url.c   ****    Copyright (C) 1999, 2000, 2001, 2004, 2005, 2006 Free Software
+   3:base64url.c   ****    Foundation, Inc.
+   4:base64url.c   **** 
+   5:base64url.c   ****    This program is free software; you can redistribute it and/or modify
+   6:base64url.c   ****    it under the terms of the GNU General Public License as published by
+   7:base64url.c   ****    the Free Software Foundation; either version 2, or (at your option)
+   8:base64url.c   ****    any later version.
+   9:base64url.c   **** 
+  10:base64url.c   ****    This program is distributed in the hope that it will be useful,
+  11:base64url.c   ****    but WITHOUT ANY WARRANTY; without even the implied warranty of
+  12:base64url.c   ****    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  13:base64url.c   ****    GNU General Public License for more details.
+  14:base64url.c   **** 
+  15:base64url.c   ****    You should have received a copy of the GNU General Public License
+  16:base64url.c   ****    along with this program; if not, write to the Free Software Foundation,
+  17:base64url.c   ****    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+  18:base64url.c   **** 
+  19:base64url.c   **** /* Written by Simon Josefsson.  Partially adapted from GNU MailUtils
+  20:base64url.c   ****  * (mailbox/filter_trans.c, as of 2004-11-28).  Improved by review
+  21:base64url.c   ****  * from Paul Eggert, Bruno Haible, and Stepan Kasal.
+  22:base64url.c   ****  *
+  23:base64url.c   ****  * See also RFC 3548 <http://www.ietf.org/rfc/rfc3548.txt>.
+  24:base64url.c   ****  *
+  25:base64url.c   ****  * Be careful with error checking.  Here is how you would typically
+  26:base64url.c   ****  * use these functions:
+  27:base64url.c   ****  *
+  28:base64url.c   ****  * bool ok = base64_decode_alloc (in, inlen, &out, &outlen);
+  29:base64url.c   ****  * if (!ok)
+  30:base64url.c   ****  *   FAIL: input was not valid base64
+  31:base64url.c   ****  * if (out == NULL)
+  32:base64url.c   ****  *   FAIL: memory allocation error
+  33:base64url.c   ****  * OK: data in OUT/OUTLEN
+  34:base64url.c   ****  *
+  35:base64url.c   ****  * size_t outlen = base64_encode_alloc (in, inlen, &out);
+  36:base64url.c   ****  * if (out == NULL && outlen == 0 && inlen != 0)
+  37:base64url.c   ****  *   FAIL: input too long
+  38:base64url.c   ****  * if (out == NULL)
+  39:base64url.c   ****  *   FAIL: memory allocation error
+  40:base64url.c   ****  * OK: data in OUT/OUTLEN.
+  41:base64url.c   ****  *
+  42:base64url.c   ****  */
+  43:base64url.c   **** 
+  44:base64url.c   **** /* Adapted to URL safe alphabet by Florian Wilde on 2017-12-04
+  45:base64url.c   ****  */
+  46:base64url.c   **** 
+  47:base64url.c   **** //#include <config.h>
+  48:base64url.c   **** #include <stdbool.h>
+  49:base64url.c   **** 
+  50:base64url.c   **** /* Get prototype. */
+  51:base64url.c   **** #include "base64url.h"
+  52:base64url.c   **** 
+  53:base64url.c   **** /* Get malloc. */
+  54:base64url.c   **** #include <stdlib.h>
+  55:base64url.c   **** 
+  56:base64url.c   **** /* Get UCHAR_MAX. */
+  57:base64url.c   **** #include <limits.h>
+  58:base64url.c   **** 
+  59:base64url.c   **** /* C89 compliant way to cast 'char' to 'unsigned char'. */
+  60:base64url.c   **** static inline unsigned char
+  61:base64url.c   **** to_uchar (char ch)
+  62:base64url.c   **** {
+  63:base64url.c   ****   return ch;
+  64:base64url.c   **** }
+  65:base64url.c   **** 
+  66:base64url.c   **** /* Base64 encode IN array of size INLEN into OUT array of size OUTLEN.
+  67:base64url.c   ****    If OUTLEN is less than BASE64_LENGTH(INLEN), write as many bytes as
+  68:base64url.c   ****    possible.  If OUTLEN is larger than BASE64_LENGTH(INLEN), also zero
+  69:base64url.c   ****    terminate the output buffer. */
+  70:base64url.c   **** void
+  71:base64url.c   **** base64_encode (const char *restrict in, size_t inlen,
+  72:base64url.c   **** 	       char *restrict out, size_t outlen)
+  73:base64url.c   **** {
+  29              		.loc 1 73 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  74:base64url.c   ****   static const char b64str[64] =
+  33              		.loc 1 74 3 view .LVU1
+  75:base64url.c   ****     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+  76:base64url.c   **** 
+  77:base64url.c   ****   while (inlen && outlen)
+  34              		.loc 1 77 3 view .LVU2
+  35              		.loc 1 77 9 view .LVU3
+  36 0000 0029     		cmp	r1, #0
+  37 0002 3ED0     		beq	.L2
+  73:base64url.c   ****   static const char b64str[64] =
+  38              		.loc 1 73 1 is_stmt 0 view .LVU4
+  39 0004 F0B5     		push	{r4, r5, r6, r7, lr}
+  40              	.LCFI0:
+  41              		.cfi_def_cfa_offset 20
+  42              		.cfi_offset 4, -20
+  43              		.cfi_offset 5, -16
+  44              		.cfi_offset 6, -12
+  45              		.cfi_offset 7, -8
+  46              		.cfi_offset 14, -4
+  47 0006 0D46     		mov	r5, r1
+  48              		.loc 1 77 16 view .LVU5
+  49 0008 002B     		cmp	r3, #0
+  50 000a 46D0     		beq	.L1
+  78:base64url.c   ****     {
+  79:base64url.c   ****       *out++ = b64str[(to_uchar (in[0]) >> 2) & 0x3f];
+  51              		.loc 1 79 7 is_stmt 1 view .LVU6
+  52              		.loc 1 79 24 is_stmt 0 view .LVU7
+  53 000c 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+  54              	.LVL1:
+  63:base64url.c   **** }
+  55              		.loc 1 63 3 is_stmt 1 view .LVU8
+  56              		.loc 1 79 47 is_stmt 0 view .LVU9
+  57 000e 8C08     		lsrs	r4, r1, #2
+  58              		.loc 1 79 14 view .LVU10
+  59 0010 274E     		ldr	r6, .L18
+  60 0012 345D     		ldrb	r4, [r6, r4]	@ zero_extendqisi2
+  61 0014 1470     		strb	r4, [r2]
+  80:base64url.c   ****       if (!--outlen)
+  62              		.loc 1 80 7 is_stmt 1 view .LVU11
+  63              	.LVL2:
+  64              		.loc 1 80 10 is_stmt 0 view .LVU12
+  65 0016 012B     		cmp	r3, #1
+  66 0018 3FD0     		beq	.L1
+  81:base64url.c   **** 	break;
+  82:base64url.c   ****       *out++ = b64str[((to_uchar (in[0]) << 4)
+  67              		.loc 1 82 22 view .LVU13
+  68 001a 3446     		mov	r4, r6
+  83:base64url.c   **** 		       + (--inlen ? to_uchar (in[1]) >> 4 : 0))
+  84:base64url.c   **** 		      & 0x3f];
+  85:base64url.c   ****       if (!--outlen)
+  86:base64url.c   **** 	break;
+  87:base64url.c   ****       *out++ =
+  69              		.loc 1 87 14 view .LVU14
+  70 001c 4FF03D0E 		mov	lr, #61
+  83:base64url.c   **** 		       + (--inlen ? to_uchar (in[1]) >> 4 : 0))
+  71              		.loc 1 83 45 view .LVU15
+  72 0020 4FF0000C 		mov	ip, #0
+  73 0024 07E0     		b	.L4
+  74              	.LVL3:
+  75              	.L8:
+  88:base64url.c   **** 	(inlen
+  89:base64url.c   **** 	 ? b64str[((to_uchar (in[1]) << 2)
+  90:base64url.c   **** 		   + (--inlen ? to_uchar (in[2]) >> 6 : 0))
+  91:base64url.c   **** 		  & 0x3f]
+  92:base64url.c   **** 	 : '=');
+  93:base64url.c   ****       if (!--outlen)
+  94:base64url.c   **** 	break;
+  95:base64url.c   ****       *out++ = inlen ? b64str[to_uchar (in[2]) & 0x3f] : '=';
+  96:base64url.c   ****       if (!--outlen)
+  97:base64url.c   **** 	break;
+  98:base64url.c   ****       if (inlen)
+  99:base64url.c   **** 	inlen--;
+ 100:base64url.c   ****       if (inlen)
+ 101:base64url.c   **** 	in += 3;
+  76              		.loc 1 101 2 is_stmt 1 view .LVU16
+  77:base64url.c   ****     {
+  77              		.loc 1 77 9 view .LVU17
+  79:base64url.c   ****       if (!--outlen)
+  78              		.loc 1 79 7 view .LVU18
+  79:base64url.c   ****       if (!--outlen)
+  79              		.loc 1 79 24 is_stmt 0 view .LVU19
+  80 0026 10F8031F 		ldrb	r1, [r0, #3]!	@ zero_extendqisi2
+  81              	.LVL4:
+  63:base64url.c   **** }
+  82              		.loc 1 63 3 is_stmt 1 view .LVU20
+  79:base64url.c   ****       if (!--outlen)
+  83              		.loc 1 79 47 is_stmt 0 view .LVU21
+  84 002a 8E08     		lsrs	r6, r1, #2
+  79:base64url.c   ****       if (!--outlen)
+  85              		.loc 1 79 14 view .LVU22
+  86 002c A65D     		ldrb	r6, [r4, r6]	@ zero_extendqisi2
+  87 002e 1670     		strb	r6, [r2]
+  80:base64url.c   **** 	break;
+  88              		.loc 1 80 7 is_stmt 1 view .LVU23
+  89              	.LVL5:
+  80:base64url.c   **** 	break;
+  90              		.loc 1 80 10 is_stmt 0 view .LVU24
+  91 0030 052B     		cmp	r3, #5
+  92 0032 32D0     		beq	.L1
+  96:base64url.c   **** 	break;
+  93              		.loc 1 96 10 view .LVU25
+  94 0034 3B46     		mov	r3, r7
+  95              	.LVL6:
+  96              	.L4:
+  82:base64url.c   **** 		       + (--inlen ? to_uchar (in[1]) >> 4 : 0))
+  97              		.loc 1 82 7 is_stmt 1 view .LVU26
+  63:base64url.c   **** }
+  98              		.loc 1 63 3 view .LVU27
+  82:base64url.c   **** 		       + (--inlen ? to_uchar (in[1]) >> 4 : 0))
+  99              		.loc 1 82 42 is_stmt 0 view .LVU28
+ 100 0036 0901     		lsls	r1, r1, #4
+ 101              	.LVL7:
+  83:base64url.c   **** 		      & 0x3f];
+ 102              		.loc 1 83 45 view .LVU29
+ 103 0038 012D     		cmp	r5, #1
+ 104 003a 2FD0     		beq	.L5
+ 105              	.LVL8:
+  63:base64url.c   **** }
+ 106              		.loc 1 63 3 is_stmt 1 discriminator 1 view .LVU30
+  83:base64url.c   **** 		      & 0x3f];
+ 107              		.loc 1 83 40 is_stmt 0 discriminator 1 view .LVU31
+ 108 003c 4678     		ldrb	r6, [r0, #1]	@ zero_extendqisi2
+  83:base64url.c   **** 		      & 0x3f];
+ 109              		.loc 1 83 10 discriminator 1 view .LVU32
+ 110 003e 01EB1611 		add	r1, r1, r6, lsr #4
+  84:base64url.c   ****       if (!--outlen)
+ 111              		.loc 1 84 9 discriminator 1 view .LVU33
+ 112 0042 01F03F01 		and	r1, r1, #63
+  82:base64url.c   **** 		       + (--inlen ? to_uchar (in[1]) >> 4 : 0))
+ 113              		.loc 1 82 14 discriminator 1 view .LVU34
+ 114 0046 615C     		ldrb	r1, [r4, r1]	@ zero_extendqisi2
+ 115 0048 5170     		strb	r1, [r2, #1]
+  85:base64url.c   **** 	break;
+ 116              		.loc 1 85 7 is_stmt 1 discriminator 1 view .LVU35
+ 117              	.LVL9:
+  85:base64url.c   **** 	break;
+ 118              		.loc 1 85 10 is_stmt 0 discriminator 1 view .LVU36
+ 119 004a 022B     		cmp	r3, #2
+ 120 004c 25D0     		beq	.L1
+ 121              	.LVL10:
+  63:base64url.c   **** }
+ 122              		.loc 1 63 3 is_stmt 1 view .LVU37
+  89:base64url.c   **** 		   + (--inlen ? to_uchar (in[2]) >> 6 : 0))
+ 123              		.loc 1 89 31 is_stmt 0 view .LVU38
+ 124 004e B100     		lsls	r1, r6, #2
+ 125              	.LVL11:
+  90:base64url.c   **** 		  & 0x3f]
+ 126              		.loc 1 90 41 view .LVU39
+ 127 0050 023D     		subs	r5, r5, #2
+ 128              	.LVL12:
+  63:base64url.c   **** }
+ 129              		.loc 1 63 3 is_stmt 1 view .LVU40
+  90:base64url.c   **** 		  & 0x3f]
+ 130              		.loc 1 90 36 is_stmt 0 view .LVU41
+ 131 0052 1ABF     		itte	ne
+ 132 0054 8678     		ldrbne	r6, [r0, #2]	@ zero_extendqisi2
+  90:base64url.c   **** 		  & 0x3f]
+ 133              		.loc 1 90 41 view .LVU42
+ 134 0056 B609     		lsrne	r6, r6, #6
+ 135 0058 6646     		moveq	r6, ip
+  90:base64url.c   **** 		  & 0x3f]
+ 136              		.loc 1 90 6 view .LVU43
+ 137 005a 3144     		add	r1, r1, r6
+  91:base64url.c   **** 	 : '=');
+ 138              		.loc 1 91 5 view .LVU44
+ 139 005c 01F03F01 		and	r1, r1, #63
+  87:base64url.c   **** 	(inlen
+ 140              		.loc 1 87 14 view .LVU45
+ 141 0060 615C     		ldrb	r1, [r4, r1]	@ zero_extendqisi2
+ 142              	.LVL13:
+ 143              	.L11:
+  87:base64url.c   **** 	(inlen
+ 144              		.loc 1 87 14 discriminator 3 view .LVU46
+ 145 0062 9170     		strb	r1, [r2, #2]
+  93:base64url.c   **** 	break;
+ 146              		.loc 1 93 7 is_stmt 1 discriminator 3 view .LVU47
+ 147              	.LVL14:
+  93:base64url.c   **** 	break;
+ 148              		.loc 1 93 10 is_stmt 0 discriminator 3 view .LVU48
+ 149 0064 032B     		cmp	r3, #3
+ 150 0066 18D0     		beq	.L1
+  95:base64url.c   ****       if (!--outlen)
+ 151              		.loc 1 95 7 is_stmt 1 view .LVU49
+  95:base64url.c   ****       if (!--outlen)
+ 152              		.loc 1 95 14 is_stmt 0 view .LVU50
+ 153 0068 7DB1     		cbz	r5, .L7
+ 154              	.LVL15:
+  63:base64url.c   **** }
+ 155              		.loc 1 63 3 is_stmt 1 discriminator 1 view .LVU51
+  63:base64url.c   **** }
+ 156              		.loc 1 63 3 is_stmt 0 discriminator 1 view .LVU52
+ 157 006a 0432     		adds	r2, r2, #4
+ 158              	.LVL16:
+  95:base64url.c   ****       if (!--outlen)
+ 159              		.loc 1 95 48 discriminator 1 view .LVU53
+ 160 006c 8178     		ldrb	r1, [r0, #2]	@ zero_extendqisi2
+ 161 006e 01F03F01 		and	r1, r1, #63
+  95:base64url.c   ****       if (!--outlen)
+ 162              		.loc 1 95 14 discriminator 1 view .LVU54
+ 163 0072 615C     		ldrb	r1, [r4, r1]	@ zero_extendqisi2
+ 164 0074 02F8011C 		strb	r1, [r2, #-1]
+  96:base64url.c   **** 	break;
+ 165              		.loc 1 96 7 is_stmt 1 discriminator 1 view .LVU55
+ 166              	.LVL17:
+  96:base64url.c   **** 	break;
+ 167              		.loc 1 96 10 is_stmt 0 discriminator 1 view .LVU56
+ 168 0078 1F1F     		subs	r7, r3, #4
+ 169              	.LVL18:
+  96:base64url.c   **** 	break;
+ 170              		.loc 1 96 10 discriminator 1 view .LVU57
+ 171 007a 0ED0     		beq	.L1
+  99:base64url.c   ****       if (inlen)
+ 172              		.loc 1 99 2 is_stmt 1 view .LVU58
+ 173              	.LVL19:
+ 100:base64url.c   **** 	in += 3;
+ 174              		.loc 1 100 7 view .LVU59
+ 100:base64url.c   **** 	in += 3;
+ 175              		.loc 1 100 10 is_stmt 0 view .LVU60
+ 176 007c 013D     		subs	r5, r5, #1
+ 177              	.LVL20:
+ 100:base64url.c   **** 	in += 3;
+ 178              		.loc 1 100 10 view .LVU61
+ 179 007e D2D1     		bne	.L8
+ 180 0080 09E0     		b	.L9
+ 181              	.LVL21:
+ 182              	.L2:
+ 183              	.LCFI1:
+ 184              		.cfi_def_cfa_offset 0
+ 185              		.cfi_restore 4
+ 186              		.cfi_restore 5
+ 187              		.cfi_restore 6
+ 188              		.cfi_restore 7
+ 189              		.cfi_restore 14
+ 102:base64url.c   ****     }
+ 103:base64url.c   **** 
+ 104:base64url.c   ****   if (outlen)
+ 190              		.loc 1 104 3 is_stmt 1 view .LVU62
+ 191              		.loc 1 104 6 is_stmt 0 view .LVU63
+ 192 0082 0BB1     		cbz	r3, .L15
+ 193              	.LVL22:
+ 105:base64url.c   ****     *out = '\0';
+ 194              		.loc 1 105 5 is_stmt 1 view .LVU64
+ 195              		.loc 1 105 10 is_stmt 0 view .LVU65
+ 196 0084 0023     		movs	r3, #0
+ 197 0086 1370     		strb	r3, [r2]
+ 198              	.L15:
+ 199              		.loc 1 105 10 view .LVU66
+ 200 0088 7047     		bx	lr
+ 201              	.LVL23:
+ 202              	.L7:
+ 203              	.LCFI2:
+ 204              		.cfi_def_cfa_offset 20
+ 205              		.cfi_offset 4, -20
+ 206              		.cfi_offset 5, -16
+ 207              		.cfi_offset 6, -12
+ 208              		.cfi_offset 7, -8
+ 209              		.cfi_offset 14, -4
+ 210              		.loc 1 105 10 view .LVU67
+ 211 008a 0432     		adds	r2, r2, #4
+ 212              	.LVL24:
+  95:base64url.c   ****       if (!--outlen)
+ 213              		.loc 1 95 14 view .LVU68
+ 214 008c 3D21     		movs	r1, #61
+ 215 008e 02F8011C 		strb	r1, [r2, #-1]
+  96:base64url.c   **** 	break;
+ 216              		.loc 1 96 7 is_stmt 1 view .LVU69
+ 217              	.LVL25:
+  96:base64url.c   **** 	break;
+ 218              		.loc 1 96 10 is_stmt 0 view .LVU70
+ 219 0092 042B     		cmp	r3, #4
+ 220 0094 01D0     		beq	.L1
+ 221              	.LVL26:
+ 222              	.L9:
+ 223              		.loc 1 105 5 is_stmt 1 view .LVU71
+ 224              		.loc 1 105 10 is_stmt 0 view .LVU72
+ 225 0096 0023     		movs	r3, #0
+ 226 0098 1370     		strb	r3, [r2]
+ 227              	.LVL27:
+ 228              	.L1:
+ 106:base64url.c   **** }
+ 229              		.loc 1 106 1 view .LVU73
+ 230 009a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 231              	.LVL28:
+ 232              	.L5:
+  84:base64url.c   ****       if (!--outlen)
+ 233              		.loc 1 84 9 view .LVU74
+ 234 009c 01F03F01 		and	r1, r1, #63
+  82:base64url.c   **** 		       + (--inlen ? to_uchar (in[1]) >> 4 : 0))
+ 235              		.loc 1 82 14 view .LVU75
+ 236 00a0 615C     		ldrb	r1, [r4, r1]	@ zero_extendqisi2
+ 237 00a2 5170     		strb	r1, [r2, #1]
+  85:base64url.c   **** 	break;
+ 238              		.loc 1 85 7 is_stmt 1 view .LVU76
+ 239              	.LVL29:
+  85:base64url.c   **** 	break;
+ 240              		.loc 1 85 10 is_stmt 0 view .LVU77
+ 241 00a4 022B     		cmp	r3, #2
+ 242 00a6 F8D0     		beq	.L1
+  87:base64url.c   **** 	(inlen
+ 243              		.loc 1 87 14 view .LVU78
+ 244 00a8 7146     		mov	r1, lr
+  83:base64url.c   **** 		      & 0x3f];
+ 245              		.loc 1 83 45 view .LVU79
+ 246 00aa 6546     		mov	r5, ip
+ 247              	.LVL30:
+  83:base64url.c   **** 		      & 0x3f];
+ 248              		.loc 1 83 45 view .LVU80
+ 249 00ac D9E7     		b	.L11
+ 250              	.L19:
+ 251 00ae 00BF     		.align	2
+ 252              	.L18:
+ 253 00b0 00000000 		.word	.LANCHOR0
+ 254              		.cfi_endproc
+ 255              	.LFE1:
+ 257              		.section	.text.base64_encode_alloc,"ax",%progbits
+ 258              		.align	1
+ 259              		.global	base64_encode_alloc
+ 260              		.syntax unified
+ 261              		.thumb
+ 262              		.thumb_func
+ 264              	base64_encode_alloc:
+ 265              	.LVL31:
+ 266              	.LFB2:
+ 107:base64url.c   **** 
+ 108:base64url.c   **** /* Allocate a buffer and store zero terminated base64 encoded data
+ 109:base64url.c   ****    from array IN of size INLEN, returning BASE64_LENGTH(INLEN), i.e.,
+ 110:base64url.c   ****    the length of the encoded data, excluding the terminating zero.  On
+ 111:base64url.c   ****    return, the OUT variable will hold a pointer to newly allocated
+ 112:base64url.c   ****    memory that must be deallocated by the caller.  If output string
+ 113:base64url.c   ****    length would overflow, 0 is returned and OUT is set to NULL.  If
+ 114:base64url.c   ****    memory allocation failed, OUT is set to NULL, and the return value
+ 115:base64url.c   ****    indicates length of the requested memory block, i.e.,
+ 116:base64url.c   ****    BASE64_LENGTH(inlen) + 1. */
+ 117:base64url.c   **** size_t
+ 118:base64url.c   **** base64_encode_alloc (const char *in, size_t inlen, char **out)
+ 119:base64url.c   **** {
+ 267              		.loc 1 119 1 is_stmt 1 view -0
+ 268              		.cfi_startproc
+ 269              		@ args = 0, pretend = 0, frame = 0
+ 270              		@ frame_needed = 0, uses_anonymous_args = 0
+ 271              		.loc 1 119 1 is_stmt 0 view .LVU82
+ 272 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 273              	.LCFI3:
+ 274              		.cfi_def_cfa_offset 24
+ 275              		.cfi_offset 4, -24
+ 276              		.cfi_offset 5, -20
+ 277              		.cfi_offset 6, -16
+ 278              		.cfi_offset 7, -12
+ 279              		.cfi_offset 8, -8
+ 280              		.cfi_offset 14, -4
+ 281 0004 1646     		mov	r6, r2
+ 120:base64url.c   ****   size_t outlen = 1 + BASE64_LENGTH (inlen);
+ 282              		.loc 1 120 3 is_stmt 1 view .LVU83
+ 283              		.loc 1 120 23 is_stmt 0 view .LVU84
+ 284 0006 8C1C     		adds	r4, r1, #2
+ 285 0008 0E4B     		ldr	r3, .L25
+ 286 000a A3FB0434 		umull	r3, r4, r3, r4
+ 287 000e 6408     		lsrs	r4, r4, #1
+ 288 0010 A400     		lsls	r4, r4, #2
+ 289              		.loc 1 120 10 view .LVU85
+ 290 0012 04F10108 		add	r8, r4, #1
+ 291              	.LVL32:
+ 121:base64url.c   **** 
+ 122:base64url.c   ****   /* Check for overflow in outlen computation.
+ 123:base64url.c   ****    *
+ 124:base64url.c   ****    * If there is no overflow, outlen >= inlen.
+ 125:base64url.c   ****    *
+ 126:base64url.c   ****    * If the operation (inlen + 2) overflows then it yields at most +1, so
+ 127:base64url.c   ****    * outlen is 0.
+ 128:base64url.c   ****    *
+ 129:base64url.c   ****    * If the multiplication overflows, we lose at least half of the
+ 130:base64url.c   ****    * correct value, so the result is < ((inlen + 2) / 3) * 2, which is
+ 131:base64url.c   ****    * less than (inlen + 2) * 0.66667, which is less than inlen as soon as
+ 132:base64url.c   ****    * (inlen > 4).
+ 133:base64url.c   ****    */
+ 134:base64url.c   ****   if (inlen > outlen)
+ 292              		.loc 1 134 3 is_stmt 1 view .LVU86
+ 293              		.loc 1 134 6 is_stmt 0 view .LVU87
+ 294 0016 4145     		cmp	r1, r8
+ 295 0018 04D9     		bls	.L21
+ 135:base64url.c   ****     {
+ 136:base64url.c   ****       *out = NULL;
+ 296              		.loc 1 136 7 is_stmt 1 view .LVU88
+ 297              		.loc 1 136 12 is_stmt 0 view .LVU89
+ 298 001a 0024     		movs	r4, #0
+ 299 001c 1460     		str	r4, [r2]
+ 137:base64url.c   ****       return 0;
+ 300              		.loc 1 137 7 is_stmt 1 view .LVU90
+ 301              	.LVL33:
+ 302              	.L20:
+ 138:base64url.c   ****     }
+ 139:base64url.c   **** 
+ 140:base64url.c   ****   *out = malloc (outlen);
+ 141:base64url.c   ****   if (!*out)
+ 142:base64url.c   ****     return outlen;
+ 143:base64url.c   **** 
+ 144:base64url.c   ****   base64_encode (in, inlen, *out, outlen);
+ 145:base64url.c   **** 
+ 146:base64url.c   ****   return outlen - 1;
+ 147:base64url.c   **** }
+ 303              		.loc 1 147 1 is_stmt 0 view .LVU91
+ 304 001e 2046     		mov	r0, r4
+ 305 0020 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 306              	.LVL34:
+ 307              	.L21:
+ 308              		.loc 1 147 1 view .LVU92
+ 309 0024 0746     		mov	r7, r0
+ 310 0026 0D46     		mov	r5, r1
+ 140:base64url.c   ****   if (!*out)
+ 311              		.loc 1 140 3 is_stmt 1 view .LVU93
+ 140:base64url.c   ****   if (!*out)
+ 312              		.loc 1 140 10 is_stmt 0 view .LVU94
+ 313 0028 4046     		mov	r0, r8
+ 314              	.LVL35:
+ 140:base64url.c   ****   if (!*out)
+ 315              		.loc 1 140 10 view .LVU95
+ 316 002a FFF7FEFF 		bl	malloc
+ 317              	.LVL36:
+ 140:base64url.c   ****   if (!*out)
+ 318              		.loc 1 140 10 view .LVU96
+ 319 002e 0246     		mov	r2, r0
+ 140:base64url.c   ****   if (!*out)
+ 320              		.loc 1 140 8 view .LVU97
+ 321 0030 3060     		str	r0, [r6]
+ 141:base64url.c   ****     return outlen;
+ 322              		.loc 1 141 3 is_stmt 1 view .LVU98
+ 141:base64url.c   ****     return outlen;
+ 323              		.loc 1 141 6 is_stmt 0 view .LVU99
+ 324 0032 28B1     		cbz	r0, .L23
+ 144:base64url.c   **** 
+ 325              		.loc 1 144 3 is_stmt 1 view .LVU100
+ 326 0034 4346     		mov	r3, r8
+ 327 0036 2946     		mov	r1, r5
+ 328 0038 3846     		mov	r0, r7
+ 329 003a FFF7FEFF 		bl	base64_encode
+ 330              	.LVL37:
+ 146:base64url.c   **** }
+ 331              		.loc 1 146 3 view .LVU101
+ 146:base64url.c   **** }
+ 332              		.loc 1 146 17 is_stmt 0 view .LVU102
+ 333 003e EEE7     		b	.L20
+ 334              	.L23:
+ 142:base64url.c   **** 
+ 335              		.loc 1 142 12 view .LVU103
+ 336 0040 4446     		mov	r4, r8
+ 337 0042 ECE7     		b	.L20
+ 338              	.L26:
+ 339              		.align	2
+ 340              	.L25:
+ 341 0044 ABAAAAAA 		.word	-1431655765
+ 342              		.cfi_endproc
+ 343              	.LFE2:
+ 345              		.section	.text.isbase64,"ax",%progbits
+ 346              		.align	1
+ 347              		.global	isbase64
+ 348              		.syntax unified
+ 349              		.thumb
+ 350              		.thumb_func
+ 352              	isbase64:
+ 353              	.LVL38:
+ 354              	.LFB3:
+ 148:base64url.c   **** 
+ 149:base64url.c   **** /* With this approach this file works independent of the charset used
+ 150:base64url.c   ****    (think EBCDIC).  However, it does assume that the characters in the
+ 151:base64url.c   ****    Base64url alphabet (A-Z,a-z,0-9,-,_) are encoded in 0..255.  POSIX
+ 152:base64url.c   ****    1003.1-2001 require that char and unsigned char are 8-bit
+ 153:base64url.c   ****    quantities, though, taking care of that problem.  But this may be a
+ 154:base64url.c   ****    potential problem on non-POSIX C99 platforms.
+ 155:base64url.c   **** 
+ 156:base64url.c   ****    IBM C V6 for AIX mishandles "#define B64(x) ...'x'...", so use "_"
+ 157:base64url.c   ****    as the formal parameter rather than "x".  */
+ 158:base64url.c   **** #define B64(_)					\
+ 159:base64url.c   ****   ((_) == 'A' ? 0				\
+ 160:base64url.c   ****    : (_) == 'B' ? 1				\
+ 161:base64url.c   ****    : (_) == 'C' ? 2				\
+ 162:base64url.c   ****    : (_) == 'D' ? 3				\
+ 163:base64url.c   ****    : (_) == 'E' ? 4				\
+ 164:base64url.c   ****    : (_) == 'F' ? 5				\
+ 165:base64url.c   ****    : (_) == 'G' ? 6				\
+ 166:base64url.c   ****    : (_) == 'H' ? 7				\
+ 167:base64url.c   ****    : (_) == 'I' ? 8				\
+ 168:base64url.c   ****    : (_) == 'J' ? 9				\
+ 169:base64url.c   ****    : (_) == 'K' ? 10				\
+ 170:base64url.c   ****    : (_) == 'L' ? 11				\
+ 171:base64url.c   ****    : (_) == 'M' ? 12				\
+ 172:base64url.c   ****    : (_) == 'N' ? 13				\
+ 173:base64url.c   ****    : (_) == 'O' ? 14				\
+ 174:base64url.c   ****    : (_) == 'P' ? 15				\
+ 175:base64url.c   ****    : (_) == 'Q' ? 16				\
+ 176:base64url.c   ****    : (_) == 'R' ? 17				\
+ 177:base64url.c   ****    : (_) == 'S' ? 18				\
+ 178:base64url.c   ****    : (_) == 'T' ? 19				\
+ 179:base64url.c   ****    : (_) == 'U' ? 20				\
+ 180:base64url.c   ****    : (_) == 'V' ? 21				\
+ 181:base64url.c   ****    : (_) == 'W' ? 22				\
+ 182:base64url.c   ****    : (_) == 'X' ? 23				\
+ 183:base64url.c   ****    : (_) == 'Y' ? 24				\
+ 184:base64url.c   ****    : (_) == 'Z' ? 25				\
+ 185:base64url.c   ****    : (_) == 'a' ? 26				\
+ 186:base64url.c   ****    : (_) == 'b' ? 27				\
+ 187:base64url.c   ****    : (_) == 'c' ? 28				\
+ 188:base64url.c   ****    : (_) == 'd' ? 29				\
+ 189:base64url.c   ****    : (_) == 'e' ? 30				\
+ 190:base64url.c   ****    : (_) == 'f' ? 31				\
+ 191:base64url.c   ****    : (_) == 'g' ? 32				\
+ 192:base64url.c   ****    : (_) == 'h' ? 33				\
+ 193:base64url.c   ****    : (_) == 'i' ? 34				\
+ 194:base64url.c   ****    : (_) == 'j' ? 35				\
+ 195:base64url.c   ****    : (_) == 'k' ? 36				\
+ 196:base64url.c   ****    : (_) == 'l' ? 37				\
+ 197:base64url.c   ****    : (_) == 'm' ? 38				\
+ 198:base64url.c   ****    : (_) == 'n' ? 39				\
+ 199:base64url.c   ****    : (_) == 'o' ? 40				\
+ 200:base64url.c   ****    : (_) == 'p' ? 41				\
+ 201:base64url.c   ****    : (_) == 'q' ? 42				\
+ 202:base64url.c   ****    : (_) == 'r' ? 43				\
+ 203:base64url.c   ****    : (_) == 's' ? 44				\
+ 204:base64url.c   ****    : (_) == 't' ? 45				\
+ 205:base64url.c   ****    : (_) == 'u' ? 46				\
+ 206:base64url.c   ****    : (_) == 'v' ? 47				\
+ 207:base64url.c   ****    : (_) == 'w' ? 48				\
+ 208:base64url.c   ****    : (_) == 'x' ? 49				\
+ 209:base64url.c   ****    : (_) == 'y' ? 50				\
+ 210:base64url.c   ****    : (_) == 'z' ? 51				\
+ 211:base64url.c   ****    : (_) == '0' ? 52				\
+ 212:base64url.c   ****    : (_) == '1' ? 53				\
+ 213:base64url.c   ****    : (_) == '2' ? 54				\
+ 214:base64url.c   ****    : (_) == '3' ? 55				\
+ 215:base64url.c   ****    : (_) == '4' ? 56				\
+ 216:base64url.c   ****    : (_) == '5' ? 57				\
+ 217:base64url.c   ****    : (_) == '6' ? 58				\
+ 218:base64url.c   ****    : (_) == '7' ? 59				\
+ 219:base64url.c   ****    : (_) == '8' ? 60				\
+ 220:base64url.c   ****    : (_) == '9' ? 61				\
+ 221:base64url.c   ****    : (_) == '-' ? 62				\
+ 222:base64url.c   ****    : (_) == '_' ? 63				\
+ 223:base64url.c   ****    : -1)
+ 224:base64url.c   **** 
+ 225:base64url.c   **** static const signed char b64[0x100] = {
+ 226:base64url.c   ****   B64 (0), B64 (1), B64 (2), B64 (3),
+ 227:base64url.c   ****   B64 (4), B64 (5), B64 (6), B64 (7),
+ 228:base64url.c   ****   B64 (8), B64 (9), B64 (10), B64 (11),
+ 229:base64url.c   ****   B64 (12), B64 (13), B64 (14), B64 (15),
+ 230:base64url.c   ****   B64 (16), B64 (17), B64 (18), B64 (19),
+ 231:base64url.c   ****   B64 (20), B64 (21), B64 (22), B64 (23),
+ 232:base64url.c   ****   B64 (24), B64 (25), B64 (26), B64 (27),
+ 233:base64url.c   ****   B64 (28), B64 (29), B64 (30), B64 (31),
+ 234:base64url.c   ****   B64 (32), B64 (33), B64 (34), B64 (35),
+ 235:base64url.c   ****   B64 (36), B64 (37), B64 (38), B64 (39),
+ 236:base64url.c   ****   B64 (40), B64 (41), B64 (42), B64 (43),
+ 237:base64url.c   ****   B64 (44), B64 (45), B64 (46), B64 (47),
+ 238:base64url.c   ****   B64 (48), B64 (49), B64 (50), B64 (51),
+ 239:base64url.c   ****   B64 (52), B64 (53), B64 (54), B64 (55),
+ 240:base64url.c   ****   B64 (56), B64 (57), B64 (58), B64 (59),
+ 241:base64url.c   ****   B64 (60), B64 (61), B64 (62), B64 (63),
+ 242:base64url.c   ****   B64 (64), B64 (65), B64 (66), B64 (67),
+ 243:base64url.c   ****   B64 (68), B64 (69), B64 (70), B64 (71),
+ 244:base64url.c   ****   B64 (72), B64 (73), B64 (74), B64 (75),
+ 245:base64url.c   ****   B64 (76), B64 (77), B64 (78), B64 (79),
+ 246:base64url.c   ****   B64 (80), B64 (81), B64 (82), B64 (83),
+ 247:base64url.c   ****   B64 (84), B64 (85), B64 (86), B64 (87),
+ 248:base64url.c   ****   B64 (88), B64 (89), B64 (90), B64 (91),
+ 249:base64url.c   ****   B64 (92), B64 (93), B64 (94), B64 (95),
+ 250:base64url.c   ****   B64 (96), B64 (97), B64 (98), B64 (99),
+ 251:base64url.c   ****   B64 (100), B64 (101), B64 (102), B64 (103),
+ 252:base64url.c   ****   B64 (104), B64 (105), B64 (106), B64 (107),
+ 253:base64url.c   ****   B64 (108), B64 (109), B64 (110), B64 (111),
+ 254:base64url.c   ****   B64 (112), B64 (113), B64 (114), B64 (115),
+ 255:base64url.c   ****   B64 (116), B64 (117), B64 (118), B64 (119),
+ 256:base64url.c   ****   B64 (120), B64 (121), B64 (122), B64 (123),
+ 257:base64url.c   ****   B64 (124), B64 (125), B64 (126), B64 (127),
+ 258:base64url.c   ****   B64 (128), B64 (129), B64 (130), B64 (131),
+ 259:base64url.c   ****   B64 (132), B64 (133), B64 (134), B64 (135),
+ 260:base64url.c   ****   B64 (136), B64 (137), B64 (138), B64 (139),
+ 261:base64url.c   ****   B64 (140), B64 (141), B64 (142), B64 (143),
+ 262:base64url.c   ****   B64 (144), B64 (145), B64 (146), B64 (147),
+ 263:base64url.c   ****   B64 (148), B64 (149), B64 (150), B64 (151),
+ 264:base64url.c   ****   B64 (152), B64 (153), B64 (154), B64 (155),
+ 265:base64url.c   ****   B64 (156), B64 (157), B64 (158), B64 (159),
+ 266:base64url.c   ****   B64 (160), B64 (161), B64 (162), B64 (163),
+ 267:base64url.c   ****   B64 (164), B64 (165), B64 (166), B64 (167),
+ 268:base64url.c   ****   B64 (168), B64 (169), B64 (170), B64 (171),
+ 269:base64url.c   ****   B64 (172), B64 (173), B64 (174), B64 (175),
+ 270:base64url.c   ****   B64 (176), B64 (177), B64 (178), B64 (179),
+ 271:base64url.c   ****   B64 (180), B64 (181), B64 (182), B64 (183),
+ 272:base64url.c   ****   B64 (184), B64 (185), B64 (186), B64 (187),
+ 273:base64url.c   ****   B64 (188), B64 (189), B64 (190), B64 (191),
+ 274:base64url.c   ****   B64 (192), B64 (193), B64 (194), B64 (195),
+ 275:base64url.c   ****   B64 (196), B64 (197), B64 (198), B64 (199),
+ 276:base64url.c   ****   B64 (200), B64 (201), B64 (202), B64 (203),
+ 277:base64url.c   ****   B64 (204), B64 (205), B64 (206), B64 (207),
+ 278:base64url.c   ****   B64 (208), B64 (209), B64 (210), B64 (211),
+ 279:base64url.c   ****   B64 (212), B64 (213), B64 (214), B64 (215),
+ 280:base64url.c   ****   B64 (216), B64 (217), B64 (218), B64 (219),
+ 281:base64url.c   ****   B64 (220), B64 (221), B64 (222), B64 (223),
+ 282:base64url.c   ****   B64 (224), B64 (225), B64 (226), B64 (227),
+ 283:base64url.c   ****   B64 (228), B64 (229), B64 (230), B64 (231),
+ 284:base64url.c   ****   B64 (232), B64 (233), B64 (234), B64 (235),
+ 285:base64url.c   ****   B64 (236), B64 (237), B64 (238), B64 (239),
+ 286:base64url.c   ****   B64 (240), B64 (241), B64 (242), B64 (243),
+ 287:base64url.c   ****   B64 (244), B64 (245), B64 (246), B64 (247),
+ 288:base64url.c   ****   B64 (248), B64 (249), B64 (250), B64 (251),
+ 289:base64url.c   ****   B64 (252), B64 (253), B64 (254), B64 (255)
+ 290:base64url.c   **** };
+ 291:base64url.c   **** 
+ 292:base64url.c   **** #if UCHAR_MAX == 255
+ 293:base64url.c   **** # define uchar_in_range(c) true
+ 294:base64url.c   **** #else
+ 295:base64url.c   **** # define uchar_in_range(c) ((c) <= 255)
+ 296:base64url.c   **** #endif
+ 297:base64url.c   **** 
+ 298:base64url.c   **** /* Return true if CH is a character from the Base64 alphabet, and
+ 299:base64url.c   ****    false otherwise.  Note that '=' is padding and not considered to be
+ 300:base64url.c   ****    part of the alphabet.  */
+ 301:base64url.c   **** bool
+ 302:base64url.c   **** isbase64 (char ch)
+ 303:base64url.c   **** {
+ 355              		.loc 1 303 1 is_stmt 1 view -0
+ 356              		.cfi_startproc
+ 357              		@ args = 0, pretend = 0, frame = 0
+ 358              		@ frame_needed = 0, uses_anonymous_args = 0
+ 359              		@ link register save eliminated.
+ 304:base64url.c   ****   return uchar_in_range (to_uchar (ch)) && 0 <= b64[to_uchar (ch)];
+ 360              		.loc 1 304 3 view .LVU105
+  63:base64url.c   **** }
+ 361              		.loc 1 63 3 view .LVU106
+ 362              		.loc 1 304 52 is_stmt 0 view .LVU107
+ 363 0000 034B     		ldr	r3, .L28
+ 364 0002 0344     		add	r3, r3, r0
+ 365              		.loc 1 304 41 view .LVU108
+ 366 0004 93F84000 		ldrb	r0, [r3, #64]	@ zero_extendqisi2
+ 367              	.LVL39:
+ 368              		.loc 1 304 41 view .LVU109
+ 369 0008 C043     		mvns	r0, r0
+ 305:base64url.c   **** }
+ 370              		.loc 1 305 1 view .LVU110
+ 371 000a C0F3C010 		ubfx	r0, r0, #7, #1
+ 372 000e 7047     		bx	lr
+ 373              	.L29:
+ 374              		.align	2
+ 375              	.L28:
+ 376 0010 00000000 		.word	.LANCHOR0
+ 377              		.cfi_endproc
+ 378              	.LFE3:
+ 380              		.section	.text.base64_decode,"ax",%progbits
+ 381              		.align	1
+ 382              		.global	base64_decode
+ 383              		.syntax unified
+ 384              		.thumb
+ 385              		.thumb_func
+ 387              	base64_decode:
+ 388              	.LVL40:
+ 389              	.LFB4:
+ 306:base64url.c   **** 
+ 307:base64url.c   **** /* Decode base64 encoded input array IN of length INLEN to output
+ 308:base64url.c   ****    array OUT that can hold *OUTLEN bytes.  Return true if decoding was
+ 309:base64url.c   ****    successful, i.e. if the input was valid base64 data, false
+ 310:base64url.c   ****    otherwise.  If *OUTLEN is too small, as many bytes as possible will
+ 311:base64url.c   ****    be written to OUT.  On return, *OUTLEN holds the length of decoded
+ 312:base64url.c   ****    bytes in OUT.  Note that as soon as any non-alphabet characters are
+ 313:base64url.c   ****    encountered, decoding is stopped and false is returned.  This means
+ 314:base64url.c   ****    that, when applicable, you must remove any line terminators that is
+ 315:base64url.c   ****    part of the data stream before calling this function.  */
+ 316:base64url.c   **** bool
+ 317:base64url.c   **** base64_decode (const char *restrict in, size_t inlen,
+ 318:base64url.c   **** 	       char *restrict out, size_t *outlen)
+ 319:base64url.c   **** {
+ 390              		.loc 1 319 1 is_stmt 1 view -0
+ 391              		.cfi_startproc
+ 392              		@ args = 0, pretend = 0, frame = 0
+ 393              		@ frame_needed = 0, uses_anonymous_args = 0
+ 394              		.loc 1 319 1 is_stmt 0 view .LVU112
+ 395 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 396              	.LCFI4:
+ 397              		.cfi_def_cfa_offset 20
+ 398              		.cfi_offset 4, -20
+ 399              		.cfi_offset 5, -16
+ 400              		.cfi_offset 6, -12
+ 401              		.cfi_offset 7, -8
+ 402              		.cfi_offset 14, -4
+ 320:base64url.c   ****   size_t outleft = *outlen;
+ 403              		.loc 1 320 3 is_stmt 1 view .LVU113
+ 404              		.loc 1 320 10 is_stmt 0 view .LVU114
+ 405 0002 1E68     		ldr	r6, [r3]
+ 406              	.LVL41:
+ 321:base64url.c   **** 
+ 322:base64url.c   ****   while (inlen >= 2)
+ 407              		.loc 1 322 3 is_stmt 1 view .LVU115
+ 408              		.loc 1 322 9 view .LVU116
+ 409 0004 0129     		cmp	r1, #1
+ 410 0006 53D9     		bls	.L39
+ 320:base64url.c   ****   size_t outleft = *outlen;
+ 411              		.loc 1 320 10 is_stmt 0 view .LVU117
+ 412 0008 3446     		mov	r4, r6
+ 413              	.LBB36:
+ 414              	.LBB37:
+ 304:base64url.c   **** }
+ 415              		.loc 1 304 52 view .LVU118
+ 416 000a 2A4D     		ldr	r5, .L45
+ 417 000c 12E0     		b	.L38
+ 418              	.LVL42:
+ 419              	.L43:
+ 304:base64url.c   **** }
+ 420              		.loc 1 304 52 view .LVU119
+ 421              	.LBE37:
+ 422              	.LBE36:
+ 323:base64url.c   ****     {
+ 324:base64url.c   ****       if (!isbase64 (in[0]) || !isbase64 (in[1]))
+ 325:base64url.c   **** 	break;
+ 326:base64url.c   **** 
+ 327:base64url.c   ****       if (outleft)
+ 328:base64url.c   **** 	{
+ 329:base64url.c   **** 	  *out++ = ((b64[to_uchar (in[0])] << 2)
+ 330:base64url.c   **** 		    | (b64[to_uchar (in[1])] >> 4));
+ 331:base64url.c   **** 	  outleft--;
+ 332:base64url.c   **** 	}
+ 333:base64url.c   **** 
+ 334:base64url.c   ****       if (inlen == 2)
+ 335:base64url.c   **** 	break;
+ 336:base64url.c   **** 
+ 337:base64url.c   ****       if (in[2] == '=')
+ 338:base64url.c   **** 	{
+ 339:base64url.c   **** 	  if (inlen != 4)
+ 423              		.loc 1 339 4 is_stmt 1 view .LVU120
+ 424              		.loc 1 339 7 is_stmt 0 view .LVU121
+ 425 000e 0429     		cmp	r1, #4
+ 426 0010 03D1     		bne	.L31
+ 340:base64url.c   **** 	    break;
+ 341:base64url.c   **** 
+ 342:base64url.c   **** 	  if (in[3] != '=')
+ 427              		.loc 1 342 4 is_stmt 1 view .LVU122
+ 428              		.loc 1 342 7 is_stmt 0 view .LVU123
+ 429 0012 C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
+ 430              	.LVL43:
+ 431              		.loc 1 342 7 view .LVU124
+ 432 0014 3D2A     		cmp	r2, #61
+ 433 0016 00D1     		bne	.L31
+ 434              	.L34:
+ 343:base64url.c   **** 	    break;
+ 344:base64url.c   **** 
+ 345:base64url.c   **** 	}
+ 346:base64url.c   ****       else
+ 347:base64url.c   **** 	{
+ 348:base64url.c   **** 	  if (!isbase64 (in[2]))
+ 349:base64url.c   **** 	    break;
+ 350:base64url.c   **** 
+ 351:base64url.c   **** 	  if (outleft)
+ 352:base64url.c   **** 	    {
+ 353:base64url.c   **** 	      *out++ = (((b64[to_uchar (in[1])] << 4) & 0xf0)
+ 354:base64url.c   **** 			| (b64[to_uchar (in[2])] >> 2));
+ 355:base64url.c   **** 	      outleft--;
+ 356:base64url.c   **** 	    }
+ 357:base64url.c   **** 
+ 358:base64url.c   **** 	  if (inlen == 3)
+ 359:base64url.c   **** 	    break;
+ 360:base64url.c   **** 
+ 361:base64url.c   **** 	  if (in[3] == '=')
+ 362:base64url.c   **** 	    {
+ 363:base64url.c   **** 	      if (inlen != 4)
+ 364:base64url.c   **** 		break;
+ 365:base64url.c   **** 	    }
+ 366:base64url.c   **** 	  else
+ 367:base64url.c   **** 	    {
+ 368:base64url.c   **** 	      if (!isbase64 (in[3]))
+ 369:base64url.c   **** 		break;
+ 370:base64url.c   **** 
+ 371:base64url.c   **** 	      if (outleft)
+ 372:base64url.c   **** 		{
+ 373:base64url.c   **** 		  *out++ = (((b64[to_uchar (in[2])] << 6) & 0xc0)
+ 374:base64url.c   **** 			    | b64[to_uchar (in[3])]);
+ 375:base64url.c   **** 		  outleft--;
+ 376:base64url.c   **** 		}
+ 377:base64url.c   **** 	    }
+ 378:base64url.c   **** 	}
+ 379:base64url.c   **** 
+ 380:base64url.c   ****       in += 4;
+ 435              		.loc 1 380 7 is_stmt 1 view .LVU125
+ 436              	.LVL44:
+ 381:base64url.c   ****       inlen -= 4;
+ 437              		.loc 1 381 7 view .LVU126
+ 438              		.loc 1 381 13 is_stmt 0 view .LVU127
+ 439 0018 0439     		subs	r1, r1, #4
+ 440              	.LVL45:
+ 322:base64url.c   ****     {
+ 441              		.loc 1 322 9 is_stmt 1 view .LVU128
+ 442              	.L31:
+ 382:base64url.c   ****     }
+ 383:base64url.c   **** 
+ 384:base64url.c   ****   *outlen -= outleft;
+ 443              		.loc 1 384 3 view .LVU129
+ 444              		.loc 1 384 11 is_stmt 0 view .LVU130
+ 445 001a 341B     		subs	r4, r6, r4
+ 446              	.LVL46:
+ 447              		.loc 1 384 11 view .LVU131
+ 448 001c 1C60     		str	r4, [r3]
+ 385:base64url.c   **** 
+ 386:base64url.c   ****   if (inlen != 0)
+ 449              		.loc 1 386 3 is_stmt 1 view .LVU132
+ 387:base64url.c   ****     return false;
+ 388:base64url.c   **** 
+ 389:base64url.c   ****   return true;
+ 390:base64url.c   **** }
+ 450              		.loc 1 390 1 is_stmt 0 view .LVU133
+ 451 001e B1FA81F0 		clz	r0, r1
+ 452 0022 4009     		lsrs	r0, r0, #5
+ 453 0024 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 454              	.LVL47:
+ 455              	.L44:
+ 363:base64url.c   **** 		break;
+ 456              		.loc 1 363 8 is_stmt 1 view .LVU134
+ 363:base64url.c   **** 		break;
+ 457              		.loc 1 363 11 is_stmt 0 view .LVU135
+ 458 0026 0429     		cmp	r1, #4
+ 459 0028 F6D0     		beq	.L34
+ 363:base64url.c   **** 		break;
+ 460              		.loc 1 363 11 view .LVU136
+ 461 002a F6E7     		b	.L31
+ 462              	.L37:
+ 380:base64url.c   ****       inlen -= 4;
+ 463              		.loc 1 380 7 is_stmt 1 view .LVU137
+ 464              	.LVL48:
+ 380:base64url.c   ****       inlen -= 4;
+ 465              		.loc 1 380 10 is_stmt 0 view .LVU138
+ 466 002c 0430     		adds	r0, r0, #4
+ 467              	.LVL49:
+ 381:base64url.c   ****     }
+ 468              		.loc 1 381 7 is_stmt 1 view .LVU139
+ 381:base64url.c   ****     }
+ 469              		.loc 1 381 13 is_stmt 0 view .LVU140
+ 470 002e 0439     		subs	r1, r1, #4
+ 471              	.LVL50:
+ 322:base64url.c   ****     {
+ 472              		.loc 1 322 9 is_stmt 1 view .LVU141
+ 473 0030 0129     		cmp	r1, #1
+ 474 0032 F2D9     		bls	.L31
+ 475              	.L38:
+ 324:base64url.c   **** 	break;
+ 476              		.loc 1 324 7 view .LVU142
+ 477              	.LVL51:
+ 478              	.LBB40:
+ 479              	.LBI36:
+ 302:base64url.c   **** {
+ 480              		.loc 1 302 1 view .LVU143
+ 481              	.LBB38:
+ 304:base64url.c   **** }
+ 482              		.loc 1 304 3 view .LVU144
+ 304:base64url.c   **** }
+ 483              		.loc 1 304 3 is_stmt 0 view .LVU145
+ 484              	.LBE38:
+ 485              	.LBE40:
+  63:base64url.c   **** }
+ 486              		.loc 1 63 3 is_stmt 1 view .LVU146
+ 487              	.LBB41:
+ 488              	.LBB39:
+ 304:base64url.c   **** }
+ 489              		.loc 1 304 53 is_stmt 0 view .LVU147
+ 490 0034 90F800C0 		ldrb	ip, [r0]	@ zero_extendqisi2
+ 304:base64url.c   **** }
+ 491              		.loc 1 304 52 view .LVU148
+ 492 0038 AC44     		add	ip, ip, r5
+ 493 003a 9CF94070 		ldrsb	r7, [ip, #64]
+ 494              	.LVL52:
+ 304:base64url.c   **** }
+ 495              		.loc 1 304 52 view .LVU149
+ 496              	.LBE39:
+ 497              	.LBE41:
+ 324:base64url.c   **** 	break;
+ 498              		.loc 1 324 10 view .LVU150
+ 499 003e 002F     		cmp	r7, #0
+ 500 0040 EBDB     		blt	.L31
+ 501              	.LVL53:
+ 502              	.LBB42:
+ 503              	.LBI42:
+ 302:base64url.c   **** {
+ 504              		.loc 1 302 1 is_stmt 1 discriminator 1 view .LVU151
+ 505              	.LBB43:
+ 304:base64url.c   **** }
+ 506              		.loc 1 304 3 discriminator 1 view .LVU152
+ 304:base64url.c   **** }
+ 507              		.loc 1 304 3 is_stmt 0 discriminator 1 view .LVU153
+ 508              	.LBE43:
+ 509              	.LBE42:
+  63:base64url.c   **** }
+ 510              		.loc 1 63 3 is_stmt 1 discriminator 1 view .LVU154
+ 511              	.LBB45:
+ 512              	.LBB44:
+ 304:base64url.c   **** }
+ 513              		.loc 1 304 53 is_stmt 0 discriminator 1 view .LVU155
+ 514 0042 90F801C0 		ldrb	ip, [r0, #1]	@ zero_extendqisi2
+ 304:base64url.c   **** }
+ 515              		.loc 1 304 52 discriminator 1 view .LVU156
+ 516 0046 AC44     		add	ip, ip, r5
+ 517 0048 9CF940E0 		ldrsb	lr, [ip, #64]
+ 518              	.LVL54:
+ 304:base64url.c   **** }
+ 519              		.loc 1 304 52 discriminator 1 view .LVU157
+ 520              	.LBE44:
+ 521              	.LBE45:
+ 324:base64url.c   **** 	break;
+ 522              		.loc 1 324 29 discriminator 1 view .LVU158
+ 523 004c BEF1000F 		cmp	lr, #0
+ 524 0050 E3DB     		blt	.L31
+ 327:base64url.c   **** 	{
+ 525              		.loc 1 327 7 is_stmt 1 view .LVU159
+ 327:base64url.c   **** 	{
+ 526              		.loc 1 327 10 is_stmt 0 view .LVU160
+ 527 0052 34B1     		cbz	r4, .L32
+ 329:base64url.c   **** 		    | (b64[to_uchar (in[1])] >> 4));
+ 528              		.loc 1 329 4 is_stmt 1 view .LVU161
+ 529              	.LVL55:
+  63:base64url.c   **** }
+ 530              		.loc 1 63 3 view .LVU162
+  63:base64url.c   **** }
+ 531              		.loc 1 63 3 view .LVU163
+ 330:base64url.c   **** 	  outleft--;
+ 532              		.loc 1 330 7 is_stmt 0 view .LVU164
+ 533 0054 4FEA2E1C 		asr	ip, lr, #4
+ 534 0058 4CEA8707 		orr	r7, ip, r7, lsl #2
+ 329:base64url.c   **** 		    | (b64[to_uchar (in[1])] >> 4));
+ 535              		.loc 1 329 11 view .LVU165
+ 536 005c 02F8017B 		strb	r7, [r2], #1
+ 537              	.LVL56:
+ 331:base64url.c   **** 	}
+ 538              		.loc 1 331 4 is_stmt 1 view .LVU166
+ 331:base64url.c   **** 	}
+ 539              		.loc 1 331 11 is_stmt 0 view .LVU167
+ 540 0060 013C     		subs	r4, r4, #1
+ 541              	.LVL57:
+ 542              	.L32:
+ 334:base64url.c   **** 	break;
+ 543              		.loc 1 334 7 is_stmt 1 view .LVU168
+ 334:base64url.c   **** 	break;
+ 544              		.loc 1 334 10 is_stmt 0 view .LVU169
+ 545 0062 0229     		cmp	r1, #2
+ 546 0064 D9D0     		beq	.L31
+ 337:base64url.c   **** 	{
+ 547              		.loc 1 337 7 is_stmt 1 view .LVU170
+ 337:base64url.c   **** 	{
+ 548              		.loc 1 337 13 is_stmt 0 view .LVU171
+ 549 0066 90F802C0 		ldrb	ip, [r0, #2]	@ zero_extendqisi2
+ 337:base64url.c   **** 	{
+ 550              		.loc 1 337 10 view .LVU172
+ 551 006a BCF13D0F 		cmp	ip, #61
+ 552 006e CED0     		beq	.L43
+ 348:base64url.c   **** 	    break;
+ 553              		.loc 1 348 4 is_stmt 1 view .LVU173
+ 554              	.LVL58:
+ 555              	.LBB46:
+ 556              	.LBI46:
+ 302:base64url.c   **** {
+ 557              		.loc 1 302 1 view .LVU174
+ 558              	.LBB47:
+ 304:base64url.c   **** }
+ 559              		.loc 1 304 3 view .LVU175
+ 304:base64url.c   **** }
+ 560              		.loc 1 304 3 is_stmt 0 view .LVU176
+ 561              	.LBE47:
+ 562              	.LBE46:
+  63:base64url.c   **** }
+ 563              		.loc 1 63 3 is_stmt 1 view .LVU177
+ 564              	.LBB49:
+ 565              	.LBB48:
+ 304:base64url.c   **** }
+ 566              		.loc 1 304 52 is_stmt 0 view .LVU178
+ 567 0070 AC44     		add	ip, ip, r5
+ 568              	.LVL59:
+ 304:base64url.c   **** }
+ 569              		.loc 1 304 52 view .LVU179
+ 570 0072 9CF940C0 		ldrsb	ip, [ip, #64]
+ 571              	.LVL60:
+ 304:base64url.c   **** }
+ 572              		.loc 1 304 52 view .LVU180
+ 573              	.LBE48:
+ 574              	.LBE49:
+ 348:base64url.c   **** 	    break;
+ 575              		.loc 1 348 7 view .LVU181
+ 576 0076 BCF1000F 		cmp	ip, #0
+ 577 007a CEDB     		blt	.L31
+ 351:base64url.c   **** 	    {
+ 578              		.loc 1 351 4 is_stmt 1 view .LVU182
+ 351:base64url.c   **** 	    {
+ 579              		.loc 1 351 7 is_stmt 0 view .LVU183
+ 580 007c 34B1     		cbz	r4, .L35
+ 353:base64url.c   **** 			| (b64[to_uchar (in[2])] >> 2));
+ 581              		.loc 1 353 8 is_stmt 1 view .LVU184
+ 582              	.LVL61:
+  63:base64url.c   **** }
+ 583              		.loc 1 63 3 view .LVU185
+  63:base64url.c   **** }
+ 584              		.loc 1 63 3 view .LVU186
+ 354:base64url.c   **** 	      outleft--;
+ 585              		.loc 1 354 4 is_stmt 0 view .LVU187
+ 586 007e 4FEAAC07 		asr	r7, ip, #2
+ 587 0082 47EA0E1E 		orr	lr, r7, lr, lsl #4
+ 353:base64url.c   **** 			| (b64[to_uchar (in[2])] >> 2));
+ 588              		.loc 1 353 15 view .LVU188
+ 589 0086 02F801EB 		strb	lr, [r2], #1
+ 590              	.LVL62:
+ 355:base64url.c   **** 	    }
+ 591              		.loc 1 355 8 is_stmt 1 view .LVU189
+ 355:base64url.c   **** 	    }
+ 592              		.loc 1 355 15 is_stmt 0 view .LVU190
+ 593 008a 013C     		subs	r4, r4, #1
+ 594              	.LVL63:
+ 595              	.L35:
+ 358:base64url.c   **** 	    break;
+ 596              		.loc 1 358 4 is_stmt 1 view .LVU191
+ 358:base64url.c   **** 	    break;
+ 597              		.loc 1 358 7 is_stmt 0 view .LVU192
+ 598 008c 0329     		cmp	r1, #3
+ 599 008e C4D0     		beq	.L31
+ 361:base64url.c   **** 	    {
+ 600              		.loc 1 361 4 is_stmt 1 view .LVU193
+ 361:base64url.c   **** 	    {
+ 601              		.loc 1 361 10 is_stmt 0 view .LVU194
+ 602 0090 C778     		ldrb	r7, [r0, #3]	@ zero_extendqisi2
+ 361:base64url.c   **** 	    {
+ 603              		.loc 1 361 7 view .LVU195
+ 604 0092 3D2F     		cmp	r7, #61
+ 605 0094 C7D0     		beq	.L44
+ 368:base64url.c   **** 		break;
+ 606              		.loc 1 368 8 is_stmt 1 view .LVU196
+ 607              	.LVL64:
+ 608              	.LBB50:
+ 609              	.LBI50:
+ 302:base64url.c   **** {
+ 610              		.loc 1 302 1 view .LVU197
+ 611              	.LBB51:
+ 304:base64url.c   **** }
+ 612              		.loc 1 304 3 view .LVU198
+ 304:base64url.c   **** }
+ 613              		.loc 1 304 3 is_stmt 0 view .LVU199
+ 614              	.LBE51:
+ 615              	.LBE50:
+  63:base64url.c   **** }
+ 616              		.loc 1 63 3 is_stmt 1 view .LVU200
+ 617              	.LBB53:
+ 618              	.LBB52:
+ 304:base64url.c   **** }
+ 619              		.loc 1 304 52 is_stmt 0 view .LVU201
+ 620 0096 2F44     		add	r7, r7, r5
+ 621              	.LVL65:
+ 304:base64url.c   **** }
+ 622              		.loc 1 304 52 view .LVU202
+ 623 0098 97F94070 		ldrsb	r7, [r7, #64]
+ 624              	.LVL66:
+ 304:base64url.c   **** }
+ 625              		.loc 1 304 52 view .LVU203
+ 626              	.LBE52:
+ 627              	.LBE53:
+ 368:base64url.c   **** 		break;
+ 628              		.loc 1 368 11 view .LVU204
+ 629 009c 002F     		cmp	r7, #0
+ 630 009e BCDB     		blt	.L31
+ 371:base64url.c   **** 		{
+ 631              		.loc 1 371 8 is_stmt 1 view .LVU205
+ 371:base64url.c   **** 		{
+ 632              		.loc 1 371 11 is_stmt 0 view .LVU206
+ 633 00a0 002C     		cmp	r4, #0
+ 634 00a2 C3D0     		beq	.L37
+ 373:base64url.c   **** 			    | b64[to_uchar (in[3])]);
+ 635              		.loc 1 373 5 is_stmt 1 view .LVU207
+ 636              	.LVL67:
+  63:base64url.c   **** }
+ 637              		.loc 1 63 3 view .LVU208
+  63:base64url.c   **** }
+ 638              		.loc 1 63 3 view .LVU209
+ 374:base64url.c   **** 		  outleft--;
+ 639              		.loc 1 374 8 is_stmt 0 view .LVU210
+ 640 00a4 47EA8C17 		orr	r7, r7, ip, lsl #6
+ 373:base64url.c   **** 			    | b64[to_uchar (in[3])]);
+ 641              		.loc 1 373 12 view .LVU211
+ 642 00a8 02F8017B 		strb	r7, [r2], #1
+ 643              	.LVL68:
+ 375:base64url.c   **** 		}
+ 644              		.loc 1 375 5 is_stmt 1 view .LVU212
+ 375:base64url.c   **** 		}
+ 645              		.loc 1 375 12 is_stmt 0 view .LVU213
+ 646 00ac 013C     		subs	r4, r4, #1
+ 647              	.LVL69:
+ 375:base64url.c   **** 		}
+ 648              		.loc 1 375 12 view .LVU214
+ 649 00ae BDE7     		b	.L37
+ 650              	.LVL70:
+ 651              	.L39:
+ 320:base64url.c   **** 
+ 652              		.loc 1 320 10 view .LVU215
+ 653 00b0 3446     		mov	r4, r6
+ 654 00b2 B2E7     		b	.L31
+ 655              	.L46:
+ 656              		.align	2
+ 657              	.L45:
+ 658 00b4 00000000 		.word	.LANCHOR0
+ 659              		.cfi_endproc
+ 660              	.LFE4:
+ 662              		.section	.text.base64_decode_alloc,"ax",%progbits
+ 663              		.align	1
+ 664              		.global	base64_decode_alloc
+ 665              		.syntax unified
+ 666              		.thumb
+ 667              		.thumb_func
+ 669              	base64_decode_alloc:
+ 670              	.LVL71:
+ 671              	.LFB5:
+ 391:base64url.c   **** 
+ 392:base64url.c   **** /* Allocate an output buffer in *OUT, and decode the base64 encoded
+ 393:base64url.c   ****    data stored in IN of size INLEN to the *OUT buffer.  On return, the
+ 394:base64url.c   ****    size of the decoded data is stored in *OUTLEN.  OUTLEN may be NULL,
+ 395:base64url.c   ****    if the caller is not interested in the decoded length.  *OUT may be
+ 396:base64url.c   ****    NULL to indicate an out of memory error, in which case *OUTLEN
+ 397:base64url.c   ****    contains the size of the memory block needed.  The function returns
+ 398:base64url.c   ****    true on successful decoding and memory allocation errors.  (Use the
+ 399:base64url.c   ****    *OUT and *OUTLEN parameters to differentiate between successful
+ 400:base64url.c   ****    decoding and memory error.)  The function returns false if the
+ 401:base64url.c   ****    input was invalid, in which case *OUT is NULL and *OUTLEN is
+ 402:base64url.c   ****    undefined. */
+ 403:base64url.c   **** bool
+ 404:base64url.c   **** base64_decode_alloc (const char *in, size_t inlen, char **out,
+ 405:base64url.c   **** 		     size_t *outlen)
+ 406:base64url.c   **** {
+ 672              		.loc 1 406 1 is_stmt 1 view -0
+ 673              		.cfi_startproc
+ 674              		@ args = 0, pretend = 0, frame = 8
+ 675              		@ frame_needed = 0, uses_anonymous_args = 0
+ 676              		.loc 1 406 1 is_stmt 0 view .LVU217
+ 677 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 678              	.LCFI5:
+ 679              		.cfi_def_cfa_offset 20
+ 680              		.cfi_offset 4, -20
+ 681              		.cfi_offset 5, -16
+ 682              		.cfi_offset 6, -12
+ 683              		.cfi_offset 7, -8
+ 684              		.cfi_offset 14, -4
+ 685 0002 83B0     		sub	sp, sp, #12
+ 686              	.LCFI6:
+ 687              		.cfi_def_cfa_offset 32
+ 688 0004 0746     		mov	r7, r0
+ 689 0006 0C46     		mov	r4, r1
+ 690 0008 1546     		mov	r5, r2
+ 691 000a 1E46     		mov	r6, r3
+ 407:base64url.c   ****   /* This may allocate a few bytes too much, depending on input,
+ 408:base64url.c   ****      but it's not worth the extra CPU time to compute the exact amount.
+ 409:base64url.c   ****      The exact amount is 3 * inlen / 4, minus 1 if the input ends
+ 410:base64url.c   ****      with "=" and minus another 1 if the input ends with "==".
+ 411:base64url.c   ****      Dividing before multiplying avoids the possibility of overflow.  */
+ 412:base64url.c   ****   size_t needlen = 3 * (inlen / 4) + 2;
+ 692              		.loc 1 412 3 is_stmt 1 view .LVU218
+ 693              		.loc 1 412 31 is_stmt 0 view .LVU219
+ 694 000c 4FEA910C 		lsr	ip, r1, #2
+ 695              		.loc 1 412 22 view .LVU220
+ 696 0010 0CEB4C0C 		add	ip, ip, ip, lsl #1
+ 697              		.loc 1 412 36 view .LVU221
+ 698 0014 0CF10200 		add	r0, ip, #2
+ 699              	.LVL72:
+ 700              		.loc 1 412 10 view .LVU222
+ 701 0018 0190     		str	r0, [sp, #4]
+ 413:base64url.c   **** 
+ 414:base64url.c   ****   *out = malloc (needlen);
+ 702              		.loc 1 414 3 is_stmt 1 view .LVU223
+ 703              		.loc 1 414 10 is_stmt 0 view .LVU224
+ 704 001a FFF7FEFF 		bl	malloc
+ 705              	.LVL73:
+ 706              		.loc 1 414 8 view .LVU225
+ 707 001e 2860     		str	r0, [r5]
+ 415:base64url.c   ****   if (!*out)
+ 708              		.loc 1 415 3 is_stmt 1 view .LVU226
+ 709              		.loc 1 415 6 is_stmt 0 view .LVU227
+ 710 0020 98B1     		cbz	r0, .L50
+ 711 0022 0246     		mov	r2, r0
+ 416:base64url.c   ****     return true;
+ 417:base64url.c   **** 
+ 418:base64url.c   ****   if (!base64_decode (in, inlen, *out, &needlen))
+ 712              		.loc 1 418 3 is_stmt 1 view .LVU228
+ 713              		.loc 1 418 8 is_stmt 0 view .LVU229
+ 714 0024 01AB     		add	r3, sp, #4
+ 715 0026 2146     		mov	r1, r4
+ 716 0028 3846     		mov	r0, r7
+ 717 002a FFF7FEFF 		bl	base64_decode
+ 718              	.LVL74:
+ 719              		.loc 1 418 6 view .LVU230
+ 720 002e 0446     		mov	r4, r0
+ 721              	.LVL75:
+ 722              		.loc 1 418 6 view .LVU231
+ 723 0030 28B1     		cbz	r0, .L52
+ 419:base64url.c   ****     {
+ 420:base64url.c   ****       free (*out);
+ 421:base64url.c   ****       *out = NULL;
+ 422:base64url.c   ****       return false;
+ 423:base64url.c   ****     }
+ 424:base64url.c   **** 
+ 425:base64url.c   ****   if (outlen)
+ 724              		.loc 1 425 3 is_stmt 1 view .LVU232
+ 725              		.loc 1 425 6 is_stmt 0 view .LVU233
+ 726 0032 0EB1     		cbz	r6, .L48
+ 426:base64url.c   ****     *outlen = needlen;
+ 727              		.loc 1 426 5 is_stmt 1 view .LVU234
+ 728              		.loc 1 426 13 is_stmt 0 view .LVU235
+ 729 0034 019B     		ldr	r3, [sp, #4]
+ 730 0036 3360     		str	r3, [r6]
+ 731              	.L48:
+ 427:base64url.c   **** 
+ 428:base64url.c   ****   return true;
+ 429:base64url.c   **** }
+ 732              		.loc 1 429 1 view .LVU236
+ 733 0038 2046     		mov	r0, r4
+ 734 003a 03B0     		add	sp, sp, #12
+ 735              	.LCFI7:
+ 736              		.cfi_remember_state
+ 737              		.cfi_def_cfa_offset 20
+ 738              		@ sp needed
+ 739 003c F0BD     		pop	{r4, r5, r6, r7, pc}
+ 740              	.LVL76:
+ 741              	.L52:
+ 742              	.LCFI8:
+ 743              		.cfi_restore_state
+ 420:base64url.c   ****       *out = NULL;
+ 744              		.loc 1 420 7 is_stmt 1 view .LVU237
+ 745 003e 2868     		ldr	r0, [r5]
+ 746 0040 FFF7FEFF 		bl	free
+ 747              	.LVL77:
+ 421:base64url.c   ****       return false;
+ 748              		.loc 1 421 7 view .LVU238
+ 421:base64url.c   ****       return false;
+ 749              		.loc 1 421 12 is_stmt 0 view .LVU239
+ 750 0044 0023     		movs	r3, #0
+ 751 0046 2B60     		str	r3, [r5]
+ 422:base64url.c   ****     }
+ 752              		.loc 1 422 7 is_stmt 1 view .LVU240
+ 422:base64url.c   ****     }
+ 753              		.loc 1 422 14 is_stmt 0 view .LVU241
+ 754 0048 F6E7     		b	.L48
+ 755              	.LVL78:
+ 756              	.L50:
+ 416:base64url.c   **** 
+ 757              		.loc 1 416 12 view .LVU242
+ 758 004a 0124     		movs	r4, #1
+ 759              	.LVL79:
+ 416:base64url.c   **** 
+ 760              		.loc 1 416 12 view .LVU243
+ 761 004c F4E7     		b	.L48
+ 762              		.cfi_endproc
+ 763              	.LFE5:
+ 765              		.section	.rodata
+ 766              		.align	2
+ 767              		.set	.LANCHOR0,. + 0
+ 770              	b64str.0:
+ 771 0000 41424344 		.ascii	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy"
+ 771      45464748 
+ 771      494A4B4C 
+ 771      4D4E4F50 
+ 771      51525354 
+ 772 0033 7A303132 		.ascii	"z0123456789-_"
+ 772      33343536 
+ 772      3738392D 
+ 772      5F
+ 775              	b64:
+ 776 0040 FFFFFFFF 		.ascii	"\377\377\377\377\377\377\377\377\377\377\377\377\377"
+ 776      FFFFFFFF 
+ 776      FFFFFFFF 
+ 776      FF
+ 777 004d FFFFFFFF 		.ascii	"\377\377\377\377\377\377\377\377\377\377\377\377\377"
+ 777      FFFFFFFF 
+ 777      FFFFFFFF 
+ 777      FF
+ 778 005a FFFFFFFF 		.ascii	"\377\377\377\377\377\377\377\377\377\377\377\377\377"
+ 778      FFFFFFFF 
+ 778      FFFFFFFF 
+ 778      FF
+ 779 0067 FFFFFFFF 		.ascii	"\377\377\377\377\377\377>\377\377456789:;<=\377\377"
+ 779      FFFF3EFF 
+ 779      FF343536 
+ 779      3738393A 
+ 779      3B3C3DFF 
+ 780 007c FFFFFFFF 		.ascii	"\377\377\377\377\377\000\001\002\003\004\005\006\007"
+ 780      FF000102 
+ 780      03040506 
+ 780      07
+ 781 0089 08090A0B 		.ascii	"\010\011\012\013\014\015\016\017\020\021\022\023\024"
+ 781      0C0D0E0F 
+ 781      10111213 
+ 781      14
+ 782 0096 15161718 		.ascii	"\025\026\027\030\031\377\377\377\377?\377\032\033\034"
+ 782      19FFFFFF 
+ 782      FF3FFF1A 
+ 782      1B1C
+ 783 00a4 1D1E1F20 		.ascii	"\035\036\037 !\"#$%&'()*+,-./0123\377\377\377\377\377"
+ 783      21222324 
+ 783      25262728 
+ 783      292A2B2C 
+ 783      2D2E2F30 
+ 784 00c0 FFFFFFFF 		.ascii	"\377\377\377\377\377\377\377\377\377\377\377\377\377"
+ 784      FFFFFFFF 
+ 784      FFFFFFFF 
+ 784      FF
+ 785 00cd FFFFFFFF 		.ascii	"\377\377\377\377\377\377\377\377\377\377\377\377\377"
+ 785      FFFFFFFF 
+ 785      FFFFFFFF 
+ 785      FF
+ 786 00da FFFFFFFF 		.ascii	"\377\377\377\377\377\377\377\377\377\377\377\377\377"
+ 786      FFFFFFFF 
+ 786      FFFFFFFF 
+ 786      FF
+ 787 00e7 FFFFFFFF 		.ascii	"\377\377\377\377\377\377\377\377\377\377\377\377\377"
+ 787      FFFFFFFF 
+ 787      FFFFFFFF 
+ 787      FF
+ 788 00f4 FFFFFFFF 		.ascii	"\377\377\377\377\377\377\377\377\377\377\377\377\377"
+ 788      FFFFFFFF 
+ 788      FFFFFFFF 
+ 788      FF
+ 789 0101 FFFFFFFF 		.ascii	"\377\377\377\377\377\377\377\377\377\377\377\377\377"
+ 789      FFFFFFFF 
+ 789      FFFFFFFF 
+ 789      FF
+ 790 010e FFFFFFFF 		.ascii	"\377\377\377\377\377\377\377\377\377\377\377\377\377"
+ 790      FFFFFFFF 
+ 790      FFFFFFFF 
+ 790      FF
+ 791 011b FFFFFFFF 		.ascii	"\377\377\377\377\377\377\377\377\377\377\377\377\377"
+ 791      FFFFFFFF 
+ 791      FFFFFFFF 
+ 791      FF
+ 792 0128 FFFFFFFF 		.ascii	"\377\377\377\377\377\377\377\377\377\377\377\377\377"
+ 792      FFFFFFFF 
+ 792      FFFFFFFF 
+ 792      FF
+ 793 0135 FFFFFFFF 		.ascii	"\377\377\377\377\377\377\377\377\377\377\377"
+ 793      FFFFFFFF 
+ 793      FFFFFF
+ 794              		.text
+ 795              	.Letext0:
+ 796              		.file 2 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/stdl
+ 797              		.file 3 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/lib/gcc/arm-none-eabi/10.3
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 base64url.c
+     /tmp/ccMRYaFb.s:19     .text.base64_encode:0000000000000000 $t
+     /tmp/ccMRYaFb.s:25     .text.base64_encode:0000000000000000 base64_encode
+     /tmp/ccMRYaFb.s:253    .text.base64_encode:00000000000000b0 $d
+     /tmp/ccMRYaFb.s:258    .text.base64_encode_alloc:0000000000000000 $t
+     /tmp/ccMRYaFb.s:264    .text.base64_encode_alloc:0000000000000000 base64_encode_alloc
+     /tmp/ccMRYaFb.s:341    .text.base64_encode_alloc:0000000000000044 $d
+     /tmp/ccMRYaFb.s:346    .text.isbase64:0000000000000000 $t
+     /tmp/ccMRYaFb.s:352    .text.isbase64:0000000000000000 isbase64
+     /tmp/ccMRYaFb.s:376    .text.isbase64:0000000000000010 $d
+     /tmp/ccMRYaFb.s:381    .text.base64_decode:0000000000000000 $t
+     /tmp/ccMRYaFb.s:387    .text.base64_decode:0000000000000000 base64_decode
+     /tmp/ccMRYaFb.s:658    .text.base64_decode:00000000000000b4 $d
+     /tmp/ccMRYaFb.s:663    .text.base64_decode_alloc:0000000000000000 $t
+     /tmp/ccMRYaFb.s:669    .text.base64_decode_alloc:0000000000000000 base64_decode_alloc
+     /tmp/ccMRYaFb.s:766    .rodata:0000000000000000 $d
+     /tmp/ccMRYaFb.s:770    .rodata:0000000000000000 b64str.0
+     /tmp/ccMRYaFb.s:775    .rodata:0000000000000040 b64
+                           .group:0000000000000000 wm4.0.718e8a15321e549965c6f9cbe0fa2c9d
+                           .group:0000000000000000 wm4.stdbool.h.29.07dce69c3b78884144b7f7bd19483461
+                           .group:0000000000000000 wm4.stddef.h.39.27677723d43e5b5a7afdf8d798429f1d
+                           .group:0000000000000000 wm4.base64url.h.26.ed1fee22e760dd991443f292d5830091
+                           .group:0000000000000000 wm4.ieeefp.h.77.c88535c35f465c05b101960cf0179075
+                           .group:0000000000000000 wm4._newlib_version.h.4.bfdf54b0af045d4a71376ae00f63a22c
+                           .group:0000000000000000 wm4.newlib.h.18.1c9fedb6b3cd797cff253cc0fd593ef2
+                           .group:0000000000000000 wm4.features.h.22.026edb2397769f4ae13f35900dbdb560
+                           .group:0000000000000000 wm4.config.h.224.c701144a7b0518c6ee9b9b5465b79f81
+                           .group:0000000000000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:0000000000000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:0000000000000000 wm4.stddef.h.155.ba788add86a0e365f264484f110c3c29
+                           .group:0000000000000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:0000000000000000 wm4.stddef.h.155.3588ebfdd1e8c7ede80509bb9c3b8009
+                           .group:0000000000000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:0000000000000000 wm4._types.h.127.34941de1b2539d59d5cac00e0dd27a45
+                           .group:0000000000000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:0000000000000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:0000000000000000 wm4.reent.h.77.dcd6129ff07fe81bd5636db29abe53b2
+                           .group:0000000000000000 wm4.cdefs.h.49.a54b2d5c07711bc7320a3fea9f12cb56
+                           .group:0000000000000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:0000000000000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
+                           .group:0000000000000000 wm4.syslimits.h.34.de5cbd310098bc5895998b6bde577ed2
+                           .group:0000000000000000 wm4.limits.h.9.70fb0ada6f71b16202a66baaa6d8ea70
+                           .group:0000000000000000 wm4.limits.h.60.56a1ae353e2028a24298ec6463b8b593
+
+UNDEFINED SYMBOLS
+malloc
+free

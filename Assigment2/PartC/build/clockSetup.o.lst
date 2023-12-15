@@ -1,0 +1,359 @@
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"clockSetup.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.SystemCoreClockSetup,"ax",%progbits
+  19              		.align	1
+  20              		.global	SystemCoreClockSetup
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	SystemCoreClockSetup:
+  26              	.LFB193:
+  27              		.file 1 "clockSetup.c"
+   1:clockSetup.c  **** /* Source file for clock setup for XMC projects using USB
+   2:clockSetup.c  ****  *
+   3:clockSetup.c  ****  * Copyright 2018 TUM
+   4:clockSetup.c  ****  * Created: 2018-11-15 Florian Wilde <florian.wilde@tum.de>
+   5:clockSetup.c  ****  **************************************************************************************************
+   6:clockSetup.c  **** 
+   7:clockSetup.c  **** #include "VirtualSerial.h"
+   8:clockSetup.c  **** #include "MPUeasy.h"
+   9:clockSetup.c  **** 
+  10:clockSetup.c  **** /* This function is only weakly declared in system_XMC4500.c so one can simply reimplement it if
+  11:clockSetup.c  ****    necessary. The values to use are copied from Infineon's VirtualSerial example. */
+  12:clockSetup.c  **** void SystemCoreClockSetup(void) {
+  28              		.loc 1 12 33 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 32
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 20
+  35              		.cfi_offset 4, -20
+  36              		.cfi_offset 5, -16
+  37              		.cfi_offset 6, -12
+  38              		.cfi_offset 7, -8
+  39              		.cfi_offset 14, -4
+  40 0002 89B0     		sub	sp, sp, #36
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_offset 56
+  13:clockSetup.c  ****   XMC_SCU_CLOCK_CONFIG_t clock_config = {
+  43              		.loc 1 13 3 view .LVU1
+  44              		.loc 1 13 26 is_stmt 0 view .LVU2
+  45 0004 0025     		movs	r5, #0
+  46 0006 0495     		str	r5, [sp, #16]
+  47 0008 0595     		str	r5, [sp, #20]
+  48 000a 5023     		movs	r3, #80
+  49 000c 8DF80C30 		strb	r3, [sp, #12]
+  50 0010 0227     		movs	r7, #2
+  51 0012 8DF80D70 		strb	r7, [sp, #13]
+  52 0016 0426     		movs	r6, #4
+  53 0018 8DF80E60 		strb	r6, [sp, #14]
+  54 001c 0124     		movs	r4, #1
+  55 001e 8DF80F40 		strb	r4, [sp, #15]
+  56 0022 8DF81240 		strb	r4, [sp, #18]
+  57 0026 4FF48033 		mov	r3, #65536
+  58 002a 0693     		str	r3, [sp, #24]
+  59 002c 8DF81C40 		strb	r4, [sp, #28]
+  60 0030 8DF81D40 		strb	r4, [sp, #29]
+  61 0034 8DF81E40 		strb	r4, [sp, #30]
+  62 0038 8DF81F40 		strb	r4, [sp, #31]
+  14:clockSetup.c  ****     .enable_oschp = true,
+  15:clockSetup.c  ****     .calibration_mode = XMC_SCU_CLOCK_FOFI_CALIBRATION_MODE_FACTORY,
+  16:clockSetup.c  ****     .syspll_config.p_div = 2,
+  17:clockSetup.c  ****     .syspll_config.n_div = 80,
+  18:clockSetup.c  ****     .syspll_config.k_div = 4,
+  19:clockSetup.c  ****     .syspll_config.mode = XMC_SCU_CLOCK_SYSPLL_MODE_NORMAL,
+  20:clockSetup.c  ****     .syspll_config.clksrc = XMC_SCU_CLOCK_SYSPLLCLKSRC_OSCHP,
+  21:clockSetup.c  ****     .fsys_clksrc = XMC_SCU_CLOCK_SYSCLKSRC_PLL,
+  22:clockSetup.c  ****     .fsys_clkdiv = 1,
+  23:clockSetup.c  ****     .fcpu_clkdiv = 1,
+  24:clockSetup.c  ****     .fccu_clkdiv = 1,
+  25:clockSetup.c  ****     .fperipheral_clkdiv = 1
+  26:clockSetup.c  ****     };
+  27:clockSetup.c  **** 
+  28:clockSetup.c  ****   /* General setup of clock tree with recommended default values, see above */
+  29:clockSetup.c  ****   XMC_SCU_CLOCK_Init(&clock_config);
+  63              		.loc 1 29 3 is_stmt 1 view .LVU3
+  64 003c 03A8     		add	r0, sp, #12
+  65 003e FFF7FEFF 		bl	XMC_SCU_CLOCK_Init
+  66              	.LVL0:
+  30:clockSetup.c  **** 
+  31:clockSetup.c  ****   /* Enable clock to USB peripheral */
+  32:clockSetup.c  ****   XMC_SCU_CLOCK_EnableUsbPll();
+  67              		.loc 1 32 3 view .LVU4
+  68 0042 FFF7FEFF 		bl	XMC_SCU_CLOCK_EnableUsbPll
+  69              	.LVL1:
+  33:clockSetup.c  ****   XMC_SCU_CLOCK_StartUsbPll(2, 64);
+  70              		.loc 1 33 3 view .LVU5
+  71 0046 4021     		movs	r1, #64
+  72 0048 3846     		mov	r0, r7
+  73 004a FFF7FEFF 		bl	XMC_SCU_CLOCK_StartUsbPll
+  74              	.LVL2:
+  34:clockSetup.c  ****   XMC_SCU_CLOCK_SetUsbClockDivider(4);
+  75              		.loc 1 34 3 view .LVU6
+  76 004e 3046     		mov	r0, r6
+  77 0050 FFF7FEFF 		bl	XMC_SCU_CLOCK_SetUsbClockDivider
+  78              	.LVL3:
+  35:clockSetup.c  ****   XMC_SCU_CLOCK_SetUsbClockSource(XMC_SCU_CLOCK_USBCLKSRC_USBPLL);
+  79              		.loc 1 35 3 view .LVU7
+  80 0054 2846     		mov	r0, r5
+  81 0056 FFF7FEFF 		bl	XMC_SCU_CLOCK_SetUsbClockSource
+  82              	.LVL4:
+  36:clockSetup.c  ****   XMC_SCU_CLOCK_EnableClock(XMC_SCU_CLOCK_USB);
+  83              		.loc 1 36 3 view .LVU8
+  84 005a 2046     		mov	r0, r4
+  85 005c FFF7FEFF 		bl	XMC_SCU_CLOCK_EnableClock
+  86              	.LVL5:
+  37:clockSetup.c  **** 
+  38:clockSetup.c  ****   /* Update clock status information */
+  39:clockSetup.c  ****   SystemCoreClockUpdate();
+  87              		.loc 1 39 3 view .LVU9
+  88 0060 FFF7FEFF 		bl	SystemCoreClockUpdate
+  89              	.LVL6:
+  40:clockSetup.c  **** 
+  41:clockSetup.c  ****   /* Secretly activate MPU without calling any function with telltale name */
+  42:clockSetup.c  ****   MPUconfig_t Stack = \
+  90              		.loc 1 42 3 view .LVU10
+  91              		.loc 1 42 15 is_stmt 0 view .LVU11
+  92 0064 094A     		ldr	r2, .L3
+  93 0066 6B46     		mov	r3, sp
+  94 0068 07CA     		ldm	r2, {r0, r1, r2}
+  95 006a 83E80700 		stm	r3, {r0, r1, r2}
+  43:clockSetup.c  ****     {.baseAddress=(void *) 0x10000000, .size=16, .priority=1, \
+  44:clockSetup.c  ****      .permissions=MPUeasyENABLEREGION | MPUeasyXN | MPUeasy_RW_RW};
+  45:clockSetup.c  ****   configMPU(Stack);
+  96              		.loc 1 45 3 is_stmt 1 view .LVU12
+  97 006e FFF7FEFF 		bl	configMPU
+  98              	.LVL7:
+  46:clockSetup.c  ****   enableMPU(1);
+  99              		.loc 1 46 3 view .LVU13
+ 100 0072 2046     		mov	r0, r4
+ 101 0074 FFF7FEFF 		bl	enableMPU
+ 102              	.LVL8:
+  47:clockSetup.c  **** 
+  48:clockSetup.c  ****   /* Pull P2.10 low to allow the ESS control board to recognize if a system reset was initiated. */
+  49:clockSetup.c  ****   *((uint32_t *) (0x48028200+0x18)) |= 0x18<<19; /* set P2.10 as open-drain output */
+ 103              		.loc 1 49 3 view .LVU14
+ 104              		.loc 1 49 37 is_stmt 0 view .LVU15
+ 105 0078 054A     		ldr	r2, .L3+4
+ 106 007a D2F81832 		ldr	r3, [r2, #536]
+ 107 007e 43F44003 		orr	r3, r3, #12582912
+ 108 0082 C2F81832 		str	r3, [r2, #536]
+  50:clockSetup.c  **** }
+ 109              		.loc 1 50 1 view .LVU16
+ 110 0086 09B0     		add	sp, sp, #36
+ 111              	.LCFI2:
+ 112              		.cfi_def_cfa_offset 20
+ 113              		@ sp needed
+ 114 0088 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 115              	.L4:
+ 116 008a 00BF     		.align	2
+ 117              	.L3:
+ 118 008c 00000000 		.word	.LANCHOR0
+ 119 0090 00800248 		.word	1208123392
+ 120              		.cfi_endproc
+ 121              	.LFE193:
+ 123              		.section	.text.HardFault_Handler,"ax",%progbits
+ 124              		.align	1
+ 125              		.global	HardFault_Handler
+ 126              		.syntax unified
+ 127              		.thumb
+ 128              		.thumb_func
+ 130              	HardFault_Handler:
+ 131              	.LFB194:
+  51:clockSetup.c  **** 
+  52:clockSetup.c  **** /* Add individual handlers so students can recognize in which exception they are trapped */
+  53:clockSetup.c  **** void HardFault_Handler(void) {
+ 132              		.loc 1 53 30 is_stmt 1 view -0
+ 133              		.cfi_startproc
+ 134              		@ Volatile: function does not return.
+ 135              		@ args = 0, pretend = 0, frame = 0
+ 136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137              		@ link register save eliminated.
+ 138              	.L6:
+  54:clockSetup.c  ****   while(1);
+ 139              		.loc 1 54 3 discriminator 1 view .LVU18
+ 140              		.loc 1 54 11 discriminator 1 view .LVU19
+ 141              		.loc 1 54 8 discriminator 1 view .LVU20
+ 142 0000 FEE7     		b	.L6
+ 143              		.cfi_endproc
+ 144              	.LFE194:
+ 146              		.section	.text.BusFault_Handler,"ax",%progbits
+ 147              		.align	1
+ 148              		.global	BusFault_Handler
+ 149              		.syntax unified
+ 150              		.thumb
+ 151              		.thumb_func
+ 153              	BusFault_Handler:
+ 154              	.LFB195:
+  55:clockSetup.c  **** }
+  56:clockSetup.c  **** 
+  57:clockSetup.c  **** void BusFault_Handler(void) {
+ 155              		.loc 1 57 29 view -0
+ 156              		.cfi_startproc
+ 157              		@ Volatile: function does not return.
+ 158              		@ args = 0, pretend = 0, frame = 0
+ 159              		@ frame_needed = 0, uses_anonymous_args = 0
+ 160              		@ link register save eliminated.
+ 161              	.L8:
+  58:clockSetup.c  ****   while(1);
+ 162              		.loc 1 58 3 discriminator 1 view .LVU22
+ 163              		.loc 1 58 11 discriminator 1 view .LVU23
+ 164              		.loc 1 58 8 discriminator 1 view .LVU24
+ 165 0000 FEE7     		b	.L8
+ 166              		.cfi_endproc
+ 167              	.LFE195:
+ 169              		.section	.text.UsageFault_Handler,"ax",%progbits
+ 170              		.align	1
+ 171              		.global	UsageFault_Handler
+ 172              		.syntax unified
+ 173              		.thumb
+ 174              		.thumb_func
+ 176              	UsageFault_Handler:
+ 177              	.LFB196:
+  59:clockSetup.c  **** }
+  60:clockSetup.c  **** 
+  61:clockSetup.c  **** void UsageFault_Handler(void) {
+ 178              		.loc 1 61 31 view -0
+ 179              		.cfi_startproc
+ 180              		@ Volatile: function does not return.
+ 181              		@ args = 0, pretend = 0, frame = 0
+ 182              		@ frame_needed = 0, uses_anonymous_args = 0
+ 183              		@ link register save eliminated.
+ 184              	.L10:
+  62:clockSetup.c  ****   while(1);
+ 185              		.loc 1 62 3 discriminator 1 view .LVU26
+ 186              		.loc 1 62 11 discriminator 1 view .LVU27
+ 187              		.loc 1 62 8 discriminator 1 view .LVU28
+ 188 0000 FEE7     		b	.L10
+ 189              		.cfi_endproc
+ 190              	.LFE196:
+ 192              		.section	.rodata
+ 193              		.align	2
+ 194              		.set	.LANCHOR0,. + 0
+ 195              	.LC0:
+ 196 0000 00000010 		.word	268435456
+ 197 0004 93000000 		.word	147
+ 198 0008 10       		.byte	16
+ 199 0009 01       		.byte	1
+ 200 000a 0000     		.space	2
+ 201              		.text
+ 202              	.Letext0:
+ 203              		.file 2 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/mach
+ 204              		.file 3 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/
+ 205              		.file 4 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc4_scu.h"
+ 206              		.file 5 "MPUeasy.h"
+ 207              		.file 6 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_scu.h"
+ 208              		.file 7 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/system_X
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 clockSetup.c
+     /tmp/ccuxC6Iw.s:19     .text.SystemCoreClockSetup:0000000000000000 $t
+     /tmp/ccuxC6Iw.s:25     .text.SystemCoreClockSetup:0000000000000000 SystemCoreClockSetup
+     /tmp/ccuxC6Iw.s:118    .text.SystemCoreClockSetup:000000000000008c $d
+     /tmp/ccuxC6Iw.s:124    .text.HardFault_Handler:0000000000000000 $t
+     /tmp/ccuxC6Iw.s:130    .text.HardFault_Handler:0000000000000000 HardFault_Handler
+     /tmp/ccuxC6Iw.s:147    .text.BusFault_Handler:0000000000000000 $t
+     /tmp/ccuxC6Iw.s:153    .text.BusFault_Handler:0000000000000000 BusFault_Handler
+     /tmp/ccuxC6Iw.s:170    .text.UsageFault_Handler:0000000000000000 $t
+     /tmp/ccuxC6Iw.s:176    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
+     /tmp/ccuxC6Iw.s:193    .rodata:0000000000000000 $d
+                           .group:0000000000000000 wm4.0.718e8a15321e549965c6f9cbe0fa2c9d
+                           .group:0000000000000000 wm4.USB.h.376.cfdb9ecb25c70fec676f585dede264a7
+                           .group:0000000000000000 wm4.Common.h.60.c2f00e237f5994003db83c2422602b22
+                           .group:0000000000000000 wm4._newlib_version.h.4.bfdf54b0af045d4a71376ae00f63a22c
+                           .group:0000000000000000 wm4.features.h.33.5bd1eea2d80518b50f7af0b5ce6750e0
+                           .group:0000000000000000 wm4._default_types.h.15.247e5cd201eca3442cbf5404108c4935
+                           .group:0000000000000000 wm4._intsup.h.10.48bafbb683905c4daa4565a85aeeb264
+                           .group:0000000000000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:0000000000000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:0000000000000000 wm4.stdbool.h.29.07dce69c3b78884144b7f7bd19483461
+                           .group:0000000000000000 wm4.newlib.h.8.7cb3972cd43265932d4782d5eb589854
+                           .group:0000000000000000 wm4.ieeefp.h.77.c88535c35f465c05b101960cf0179075
+                           .group:0000000000000000 wm4.config.h.224.c701144a7b0518c6ee9b9b5465b79f81
+                           .group:0000000000000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:0000000000000000 wm4.stddef.h.39.27677723d43e5b5a7afdf8d798429f1d
+                           .group:0000000000000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:0000000000000000 wm4.stddef.h.155.3588ebfdd1e8c7ede80509bb9c3b8009
+                           .group:0000000000000000 wm4._types.h.127.34941de1b2539d59d5cac00e0dd27a45
+                           .group:0000000000000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:0000000000000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:0000000000000000 wm4.reent.h.77.dcd6129ff07fe81bd5636db29abe53b2
+                           .group:0000000000000000 wm4.cdefs.h.49.a54b2d5c07711bc7320a3fea9f12cb56
+                           .group:0000000000000000 wm4.string.h.15.dab3980bf35408a4c507182805e2de3a
+                           .group:0000000000000000 wm4.stddef.h.155.ba788add86a0e365f264484f110c3c29
+                           .group:0000000000000000 wm4.BoardTypes.h.52.ca64813ccee737bcc2115eab5e075fdb
+                           .group:0000000000000000 wm4.CompilerSpecific.h.55.4a5e5ff77cd35e49c89cf2115251aee0
+                           .group:0000000000000000 wm4.Attributes.h.56.73b3ee26b0836c2dec569a5fa6f1b355
+                           .group:0000000000000000 wm4.xmc_device.h.61.ba2d082e12f51240746cffdd60d42b81
+                           .group:0000000000000000 wm4.XMC4500.h.55.9aa45b9b5790506b2dcb963e4e7adeaf
+                           .group:0000000000000000 wm4.core_cm4.h.32.6c6eb1c8daeca23ce7ba79c8e8120d52
+                           .group:0000000000000000 wm4.cmsis_gcc.h.26.91b63349961c35637933e4fba51b867b
+                           .group:0000000000000000 wm4.core_cm4.h.172.fdd5a388a160bb6ff767b7d7ee212268
+                           .group:0000000000000000 wm4.system_XMC4500.h.42.99124977c10ca8844a71949adbeabd70
+                           .group:0000000000000000 wm4.XMC4500.h.208.b340195df97f067735c4c769ba59985a
+                           .group:0000000000000000 wm4.xmc_device.h.1460.8860499b404961ffcfbb8d1fefcb2146
+                           .group:0000000000000000 wm4.xmc_common.h.92.3f4336a80569affab05a81145b87c2fc
+                           .group:0000000000000000 wm4.Endianness.h.57.3ac00c5468f4b91b806a0e6dba047e9c
+                           .group:0000000000000000 wm4.Common.h.105.4b937a9cc9dcdb26c3f07541b0b763a8
+                           .group:0000000000000000 wm4.USBController.h.49.cbfc73805155b6fff6267400af3f4eec
+                           .group:0000000000000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:0000000000000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:0000000000000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
+                           .group:0000000000000000 wm4.xmc_usbd_regs.h.80.57c6c85fa0ecbc9f8327ce445aebb9bc
+                           .group:0000000000000000 wm4.xmc4_scu.h.83.0449f5880ac071460ec1a8072311ea51
+                           .group:0000000000000000 wm4.xmc_usbd.h.122.ce57a9e6a9da48ee33ece02813c49593
+                           .group:0000000000000000 wm4.USBController_XMC4000.h.71.902f2653e09cb8b25245faa82cc6b907
+                           .group:0000000000000000 wm4.StdDescriptors.h.73.7d17e8be7a73b855fc0f8827303b7597
+                           .group:0000000000000000 wm4.Endpoint.h.73.3734de3e84ab23fb43d81f41fba620ec
+                           .group:0000000000000000 wm4.Device_XMC4000.h.86.6803bdd99d84e764a570256c87a24d0a
+                           .group:0000000000000000 wm4.StdRequestType.h.50.461dce94a3ee1fa9ff31ec5f28bd9699
+                           .group:0000000000000000 wm4.ConfigDescriptors.h.51.0d67ebf453774188abf5a503ba8f6735
+                           .group:0000000000000000 wm4.CDCClass.h.61.0d41ba255f7ce6f076fd610d8396dd1f
+                           .group:0000000000000000 wm4.CDCClassCommon.h.72.14ca578d8547e19a8a0c0d2d328483bd
+                           .group:0000000000000000 wm4.stdio.h.27.3fc80220048df77954e38daec3bb9670
+                           .group:0000000000000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:0000000000000000 wm4.types.h.40.8b6acba56cefbb11746718204edc8f5e
+                           .group:0000000000000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:0000000000000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:0000000000000000 wm4._timeval.h.32.bec3221fa7a9bb0bdde696c9c57e47d2
+                           .group:0000000000000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:0000000000000000 wm4.select.h.19.40cd3f2bfc456b193b790c2754690ebf
+                           .group:0000000000000000 wm4.types.h.51.5571ec98f267d17d3c670b7a3ba33afa
+                           .group:0000000000000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:0000000000000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:0000000000000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:0000000000000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:0000000000000000 wm4.HIDClass.h.62.6bb32c59177b21a83b8e65c5a1b0a615
+                           .group:0000000000000000 wm4.HIDReportData.h.47.f13f4956396e0bec70835fe634fcc24d
+                           .group:0000000000000000 wm4.HIDParser.h.88.4b86fe94cb8d01713592cdd0391b606b
+                           .group:0000000000000000 wm4.HIDClassCommon.h.71.a60cdf9d7cd69289f43dde215b509193
+                           .group:0000000000000000 wm4.MassStorageClass.h.61.e9235f3bd090b77f36343f082ef93107
+                           .group:0000000000000000 wm4.MassStorageClassCommon.h.51.6aefecf288eb3c3c6c9bde61e26dd765
+                           .group:0000000000000000 wm4.Descriptors.h.44.84a4fd312957d0d42fb6aaa001850ba4
+                           .group:0000000000000000 wm4.MPUeasy.h.9.38db277834aa83585a0ea3fb277de25f
+
+UNDEFINED SYMBOLS
+XMC_SCU_CLOCK_Init
+XMC_SCU_CLOCK_EnableUsbPll
+XMC_SCU_CLOCK_StartUsbPll
+XMC_SCU_CLOCK_SetUsbClockDivider
+XMC_SCU_CLOCK_SetUsbClockSource
+XMC_SCU_CLOCK_EnableClock
+SystemCoreClockUpdate
+configMPU
+enableMPU

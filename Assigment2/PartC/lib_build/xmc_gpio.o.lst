@@ -1,0 +1,237 @@
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"xmc_gpio.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.XMC_GPIO_SetMode,"ax",%progbits
+  19              		.align	1
+  20              		.global	XMC_GPIO_SetMode
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	XMC_GPIO_SetMode:
+  26              	.LVL0:
+  27              	.LFB138:
+  28              		.file 1 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c"
+   1:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** /**
+   2:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * @file xmc_gpio.c
+   3:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * @date 2015-06-20
+   4:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *
+   5:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * @cond
+   6:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  **************************************************************************************************
+   7:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * XMClib v2.1.16 - XMC Peripheral Driver Library 
+   8:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *
+   9:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * Copyright (c) 2015-2017, Infineon Technologies AG
+  10:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * All rights reserved.                        
+  11:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *                                             
+  12:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * Redistribution and use in source and binary forms, with or without modification,are permitted pr
+  13:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * following conditions are met:   
+  14:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *                                                                              
+  15:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * Redistributions of source code must retain the above copyright notice, this list of conditions a
+  16:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * disclaimer.                        
+  17:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * 
+  18:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * Redistributions in binary form must reproduce the above copyright notice, this list of condition
+  19:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * disclaimer in the documentation and/or other materials provided with the distribution.          
+  20:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * 
+  21:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * Neither the name of the copyright holders nor the names of its contributors may be used to endor
+  22:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * products derived from this software without specific prior written permission.                  
+  23:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *                                                                              
+  24:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR I
+  25:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTI
+  26:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, IN
+  27:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBS
+  28:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THE
+  29:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
+  30:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                            
+  31:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *                                                                              
+  32:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * To improve the quality of the software, users are encouraged to share modifications, enhancement
+  33:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * Infineon Technologies AG dave@infineon.com).                                                    
+  34:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  **************************************************************************************************
+  35:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *
+  36:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * Change History
+  37:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * --------------
+  38:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *
+  39:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * 2015-02-20:
+  40:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *     - Initial draft <br>
+  41:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *      
+  42:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * 2015-06-20:
+  43:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *     - Removed version macros and declaration of GetDriverVersion API
+  44:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *
+  45:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * @endcond
+  46:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *
+  47:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  */
+  48:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** 
+  49:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** /*******************************************************************************
+  50:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * HEADER FILES
+  51:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *******************************************************************************/
+  52:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** 
+  53:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** #include <xmc_gpio.h>
+  54:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** 
+  55:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** /*******************************************************************************
+  56:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * MACROS
+  57:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *******************************************************************************/
+  58:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** 
+  59:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** #define PORT_HWSEL_Msk PORT0_HWSEL_HW0_Msk
+  60:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** 
+  61:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** /*******************************************************************************
+  62:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  * API IMPLEMENTATION
+  63:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****  *******************************************************************************/
+  64:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** 
+  65:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** void XMC_GPIO_SetMode(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_GPIO_MODE_t mode)
+  66:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** {
+  29              		.loc 1 66 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  67:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****   XMC_ASSERT("XMC_GPIO_SetMode: Invalid port", XMC_GPIO_CHECK_PORT(port));
+  34              		.loc 1 67 3 view .LVU1
+  35              		.loc 1 67 74 view .LVU2
+  68:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****   XMC_ASSERT("XMC_GPIO_SetMode: Invalid mode", XMC_GPIO_IsModeValid(mode));
+  36              		.loc 1 68 3 view .LVU3
+  37              		.loc 1 68 75 view .LVU4
+  69:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** 
+  70:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****   port->IOCR[(uint32_t)pin >> 2U] &= ~(uint32_t)((uint32_t)PORT_IOCR_PC_Msk << ((uint32_t)PORT_IOCR
+  38              		.loc 1 70 3 view .LVU5
+  39 0000 01F0FC03 		and	r3, r1, #252
+  40 0004 1844     		add	r0, r0, r3
+  41              	.LVL1:
+  42              		.loc 1 70 35 is_stmt 0 view .LVU6
+  43 0006 0369     		ldr	r3, [r0, #16]
+  44              		.loc 1 70 126 view .LVU7
+  45 0008 01F00301 		and	r1, r1, #3
+  46              	.LVL2:
+  47              		.loc 1 70 109 view .LVU8
+  48 000c C900     		lsls	r1, r1, #3
+  49              		.loc 1 70 39 view .LVU9
+  50 000e 4FF0F80C 		mov	ip, #248
+  51 0012 0CFA01FC 		lsl	ip, ip, r1
+  52              		.loc 1 70 35 view .LVU10
+  53 0016 23EA0C03 		bic	r3, r3, ip
+  54 001a 0361     		str	r3, [r0, #16]
+  71:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****   port->IOCR[(uint32_t)pin >> 2U] |= (uint32_t)mode << ((uint32_t)PORT_IOCR_PC_Size * ((uint32_t)pi
+  55              		.loc 1 71 3 is_stmt 1 view .LVU11
+  56              		.loc 1 71 35 is_stmt 0 view .LVU12
+  57 001c 0369     		ldr	r3, [r0, #16]
+  58              		.loc 1 71 53 view .LVU13
+  59 001e 02FA01F1 		lsl	r1, r2, r1
+  60              		.loc 1 71 35 view .LVU14
+  61 0022 1943     		orrs	r1, r1, r3
+  62 0024 0161     		str	r1, [r0, #16]
+  72:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** }
+  63              		.loc 1 72 1 view .LVU15
+  64 0026 7047     		bx	lr
+  65              		.cfi_endproc
+  66              	.LFE138:
+  68              		.section	.text.XMC_GPIO_SetHardwareControl,"ax",%progbits
+  69              		.align	1
+  70              		.global	XMC_GPIO_SetHardwareControl
+  71              		.syntax unified
+  72              		.thumb
+  73              		.thumb_func
+  75              	XMC_GPIO_SetHardwareControl:
+  76              	.LVL3:
+  77              	.LFB139:
+  73:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** 
+  74:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** void XMC_GPIO_SetHardwareControl(XMC_GPIO_PORT_t *const port, const uint8_t pin, const XMC_GPIO_HWC
+  75:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** {
+  78              		.loc 1 75 1 is_stmt 1 view -0
+  79              		.cfi_startproc
+  80              		@ args = 0, pretend = 0, frame = 0
+  81              		@ frame_needed = 0, uses_anonymous_args = 0
+  82              		@ link register save eliminated.
+  76:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****   XMC_ASSERT("XMC_GPIO_SetHardwareControl: Invalid port", XMC_GPIO_CHECK_PORT(port));
+  83              		.loc 1 76 3 view .LVU17
+  84              		.loc 1 76 85 view .LVU18
+  77:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****   XMC_ASSERT("XMC_GPIO_SetHardwareControl: Invalid hwctrl", XMC_GPIO_CHECK_HWCTRL(hwctrl));
+  85              		.loc 1 77 3 view .LVU19
+  86              		.loc 1 77 91 view .LVU20
+  78:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** 
+  79:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****   port->HWSEL &= ~(uint32_t)((uint32_t)PORT_HWSEL_Msk << ((uint32_t)pin << 1U));
+  87              		.loc 1 79 3 view .LVU21
+  88              		.loc 1 79 15 is_stmt 0 view .LVU22
+  89 0000 436F     		ldr	r3, [r0, #116]
+  90              		.loc 1 79 73 view .LVU23
+  91 0002 4900     		lsls	r1, r1, #1
+  92              	.LVL4:
+  93              		.loc 1 79 19 view .LVU24
+  94 0004 4FF0030C 		mov	ip, #3
+  95 0008 0CFA01FC 		lsl	ip, ip, r1
+  96              		.loc 1 79 15 view .LVU25
+  97 000c 23EA0C03 		bic	r3, r3, ip
+  98 0010 4367     		str	r3, [r0, #116]
+  80:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c ****   port->HWSEL |= (uint32_t)hwctrl << ((uint32_t)pin << 1U);
+  99              		.loc 1 80 3 is_stmt 1 view .LVU26
+ 100              		.loc 1 80 15 is_stmt 0 view .LVU27
+ 101 0012 436F     		ldr	r3, [r0, #116]
+ 102              		.loc 1 80 35 view .LVU28
+ 103 0014 8A40     		lsls	r2, r2, r1
+ 104              	.LVL5:
+ 105              		.loc 1 80 15 view .LVU29
+ 106 0016 1A43     		orrs	r2, r2, r3
+ 107 0018 4267     		str	r2, [r0, #116]
+  81:/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/src/xmc_gpio.c **** }
+ 108              		.loc 1 81 1 view .LVU30
+ 109 001a 7047     		bx	lr
+ 110              		.cfi_endproc
+ 111              	.LFE139:
+ 113              		.text
+ 114              	.Letext0:
+ 115              		.file 2 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/mach
+ 116              		.file 3 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/
+ 117              		.file 4 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc_gpio.h"
+ 118              		.file 5 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/XMCLib/inc/xmc4_gpio.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 xmc_gpio.c
+     /tmp/cc7ZVfHf.s:19     .text.XMC_GPIO_SetMode:0000000000000000 $t
+     /tmp/cc7ZVfHf.s:25     .text.XMC_GPIO_SetMode:0000000000000000 XMC_GPIO_SetMode
+     /tmp/cc7ZVfHf.s:69     .text.XMC_GPIO_SetHardwareControl:0000000000000000 $t
+     /tmp/cc7ZVfHf.s:75     .text.XMC_GPIO_SetHardwareControl:0000000000000000 XMC_GPIO_SetHardwareControl
+                           .group:0000000000000000 wm4.0.718e8a15321e549965c6f9cbe0fa2c9d
+                           .group:0000000000000000 wm4.stddef.h.39.27677723d43e5b5a7afdf8d798429f1d
+                           .group:0000000000000000 wm4._newlib_version.h.4.bfdf54b0af045d4a71376ae00f63a22c
+                           .group:0000000000000000 wm4.features.h.33.5bd1eea2d80518b50f7af0b5ce6750e0
+                           .group:0000000000000000 wm4._default_types.h.15.247e5cd201eca3442cbf5404108c4935
+                           .group:0000000000000000 wm4._intsup.h.10.48bafbb683905c4daa4565a85aeeb264
+                           .group:0000000000000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:0000000000000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:0000000000000000 wm4.stdbool.h.29.07dce69c3b78884144b7f7bd19483461
+                           .group:0000000000000000 wm4.newlib.h.8.7cb3972cd43265932d4782d5eb589854
+                           .group:0000000000000000 wm4.ieeefp.h.77.c88535c35f465c05b101960cf0179075
+                           .group:0000000000000000 wm4.config.h.224.c701144a7b0518c6ee9b9b5465b79f81
+                           .group:0000000000000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:0000000000000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:0000000000000000 wm4.stddef.h.155.3588ebfdd1e8c7ede80509bb9c3b8009
+                           .group:0000000000000000 wm4._types.h.127.34941de1b2539d59d5cac00e0dd27a45
+                           .group:0000000000000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:0000000000000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:0000000000000000 wm4.reent.h.77.dcd6129ff07fe81bd5636db29abe53b2
+                           .group:0000000000000000 wm4.cdefs.h.49.a54b2d5c07711bc7320a3fea9f12cb56
+                           .group:0000000000000000 wm4.string.h.15.dab3980bf35408a4c507182805e2de3a
+                           .group:0000000000000000 wm4.stddef.h.155.ba788add86a0e365f264484f110c3c29
+                           .group:0000000000000000 wm4.xmc_device.h.61.ba2d082e12f51240746cffdd60d42b81
+                           .group:0000000000000000 wm4.XMC4500.h.55.9aa45b9b5790506b2dcb963e4e7adeaf
+                           .group:0000000000000000 wm4.core_cm4.h.32.6c6eb1c8daeca23ce7ba79c8e8120d52
+                           .group:0000000000000000 wm4.cmsis_gcc.h.26.91b63349961c35637933e4fba51b867b
+                           .group:0000000000000000 wm4.core_cm4.h.172.fdd5a388a160bb6ff767b7d7ee212268
+                           .group:0000000000000000 wm4.system_XMC4500.h.42.99124977c10ca8844a71949adbeabd70
+                           .group:0000000000000000 wm4.XMC4500.h.208.b340195df97f067735c4c769ba59985a
+                           .group:0000000000000000 wm4.xmc_device.h.1460.8860499b404961ffcfbb8d1fefcb2146
+                           .group:0000000000000000 wm4.xmc_common.h.92.3f4336a80569affab05a81145b87c2fc
+                           .group:0000000000000000 wm4.xmc_gpio.h.97.fa6a2e1be6030a75d960293cc3bbbd6b
+                           .group:0000000000000000 wm4.xmc4_gpio_map.h.74.66e9110cf801b78826ef5354da51c32f
+                           .group:0000000000000000 wm4.xmc4_gpio.h.79.ce6c49508b5a7769c66e7e3c21dcdfe4
+
+NO UNDEFINED SYMBOLS

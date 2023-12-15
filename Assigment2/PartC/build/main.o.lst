@@ -1,0 +1,448 @@
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"main.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.main,"ax",%progbits
+  19              		.align	1
+  20              		.global	main
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	main:
+  26              	.LFB193:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* Main source file for assignment 2 part A, which implements shitty homebrewn crypto together with
+   2:main.c        ****  * a nasty little stack based buffer overflow
+   3:main.c        ****  *
+   4:main.c        ****  * Copyright 2018 TUM
+   5:main.c        ****  * Created: 2018-11-15 Florian Wilde <florian.wilde@tum.de>
+   6:main.c        ****  **************************************************************************************************
+   7:main.c        **** #include "packetizer.h"
+   8:main.c        **** #include "randombytes_salsa20XMC_random.h"
+   9:main.c        **** #include "sodium.h"
+  10:main.c        **** #include "VirtualSerial.h"
+  11:main.c        **** 
+  12:main.c        **** int main(void) {
+  28              		.loc 1 12 16 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 56
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 70B5     		push	{r4, r5, r6, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 16
+  35              		.cfi_offset 4, -16
+  36              		.cfi_offset 5, -12
+  37              		.cfi_offset 6, -8
+  38              		.cfi_offset 14, -4
+  39 0002 90B0     		sub	sp, sp, #64
+  40              	.LCFI1:
+  41              		.cfi_def_cfa_offset 80
+  42              		.loc 1 12 16 is_stmt 0 view .LVU1
+  43 0004 284B     		ldr	r3, .L12
+  44 0006 1B68     		ldr	r3, [r3]
+  45 0008 0F93     		str	r3, [sp, #60]
+  46 000a 4FF00003 		mov	r3, #0
+  13:main.c        ****   uint8_t key[32] = {
+  47              		.loc 1 13 3 is_stmt 1 view .LVU2
+  48              		.loc 1 13 11 is_stmt 0 view .LVU3
+  49 000e 07AC     		add	r4, sp, #28
+  50 0010 264D     		ldr	r5, .L12+4
+  51 0012 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+  52 0014 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+  53 0016 95E80F00 		ldm	r5, {r0, r1, r2, r3}
+  54 001a 84E80F00 		stm	r4, {r0, r1, r2, r3}
+  14:main.c        ****     0xc1,    0x00,    0x8a,    0x0c,    0x14,    0x80,    0x32,    0xeb,
+  15:main.c        ****     0x82,    0x06,   0x00,    0x10,    0x0a,    0x00,    0x00,    0x00,  //Unique chip id
+  16:main.c        ****     0xc1,    0x00,    0x8a,    0x0c,    0x14,    0x80,    0x32,    0xeb,
+  17:main.c        ****     0x82,    0x06,    0x00,    0x10,    0x0a,    0x00,    0x00,    0x00,
+  18:main.c        ****   };
+  19:main.c        **** 
+  20:main.c        **** pt_s plaintext = { 0 };
+  55              		.loc 1 20 1 is_stmt 1 view .LVU4
+  56              		.loc 1 20 6 is_stmt 0 view .LVU5
+  57 001e 0023     		movs	r3, #0
+  58 0020 0493     		str	r3, [sp, #16]
+  59 0022 0593     		str	r3, [sp, #20]
+  60 0024 0693     		str	r3, [sp, #24]
+  21:main.c        **** ct_s ciphertext = { 0 };
+  61              		.loc 1 21 1 is_stmt 1 view .LVU6
+  62              		.loc 1 21 6 is_stmt 0 view .LVU7
+  63 0026 0293     		str	r3, [sp, #8]
+  64 0028 0393     		str	r3, [sp, #12]
+  22:main.c        **** 
+  23:main.c        ****   USB_Init();
+  65              		.loc 1 23 3 is_stmt 1 view .LVU8
+  66 002a FFF7FEFF 		bl	USB_Init
+  67              	.LVL0:
+  24:main.c        **** 
+  25:main.c        ****   randombytes_set_implementation(&randombytes_salsa20XMC_implementation);
+  68              		.loc 1 25 3 view .LVU9
+  69 002e 2048     		ldr	r0, .L12+8
+  70 0030 FFF7FEFF 		bl	randombytes_set_implementation
+  71              	.LVL1:
+  26:main.c        **** 
+  27:main.c        ****   if (sodium_init() < 0) {
+  72              		.loc 1 27 3 view .LVU10
+  73              		.loc 1 27 7 is_stmt 0 view .LVU11
+  74 0034 FFF7FEFF 		bl	sodium_init
+  75              	.LVL2:
+  28:main.c        ****       /* panic! the library couldn't be initialized; it is not safe to use */
+  29:main.c        ****   }
+  30:main.c        **** 
+  31:main.c        ****   while(1) {
+  32:main.c        ****     // Consumes incoming data and parses it until we received a valid packet.
+  33:main.c        ****     //If so, it will fill the plaintextJob struct with the appropriate information. 
+  34:main.c        ****     if(packetizerReceive(&plaintext) == 0) {
+  35:main.c        ****       // If the sender did not sent a nonce, generate one 
+  36:main.c        ****       if(plaintext.nonce == NULL) {
+  37:main.c        ****         plaintext.nonce = malloc(CRYPTO_NONCE_BYTES);
+  76              		.loc 1 37 27 view .LVU12
+  77 0038 1826     		movs	r6, #24
+  38:main.c        ****         for(size_t i = 0; i < CRYPTO_NONCE_BYTES; i++) {
+  39:main.c        ****           plaintext.nonce[i] = rand() & UINT8_MAX;
+  40:main.c        ****         }
+  41:main.c        ****       }
+  42:main.c        ****       // Now encrypt the plaintext
+  43:main.c        ****       ciphertext.text = malloc(crypto_secretbox_MACBYTES + plaintext.textLen);
+  44:main.c        ****       if(crypto_secretbox_easy(ciphertext.text, plaintext.text, plaintext.textLen, plaintext.nonce,
+  78              		.loc 1 44 10 view .LVU13
+  79 003a 0025     		movs	r5, #0
+  80 003c 14E0     		b	.L2
+  81              	.L11:
+  37:main.c        ****         for(size_t i = 0; i < CRYPTO_NONCE_BYTES; i++) {
+  82              		.loc 1 37 9 is_stmt 1 view .LVU14
+  37:main.c        ****         for(size_t i = 0; i < CRYPTO_NONCE_BYTES; i++) {
+  83              		.loc 1 37 27 is_stmt 0 view .LVU15
+  84 003e 3046     		mov	r0, r6
+  85 0040 FFF7FEFF 		bl	malloc
+  86              	.LVL3:
+  37:main.c        ****         for(size_t i = 0; i < CRYPTO_NONCE_BYTES; i++) {
+  87              		.loc 1 37 25 view .LVU16
+  88 0044 0690     		str	r0, [sp, #24]
+  38:main.c        ****         for(size_t i = 0; i < CRYPTO_NONCE_BYTES; i++) {
+  89              		.loc 1 38 9 is_stmt 1 view .LVU17
+  90              	.LBB2:
+  38:main.c        ****         for(size_t i = 0; i < CRYPTO_NONCE_BYTES; i++) {
+  91              		.loc 1 38 13 view .LVU18
+  92              	.LVL4:
+  38:main.c        ****         for(size_t i = 0; i < CRYPTO_NONCE_BYTES; i++) {
+  93              		.loc 1 38 27 view .LVU19
+  38:main.c        ****         for(size_t i = 0; i < CRYPTO_NONCE_BYTES; i++) {
+  94              		.loc 1 38 20 is_stmt 0 view .LVU20
+  95 0046 0024     		movs	r4, #0
+  96              	.LVL5:
+  97              	.L4:
+  39:main.c        ****         }
+  98              		.loc 1 39 11 is_stmt 1 discriminator 3 view .LVU21
+  39:main.c        ****         }
+  99              		.loc 1 39 32 is_stmt 0 discriminator 3 view .LVU22
+ 100 0048 FFF7FEFF 		bl	rand
+ 101              	.LVL6:
+  39:main.c        ****         }
+ 102              		.loc 1 39 30 discriminator 3 view .LVU23
+ 103 004c 069B     		ldr	r3, [sp, #24]
+ 104 004e 1855     		strb	r0, [r3, r4]
+  38:main.c        ****         for(size_t i = 0; i < CRYPTO_NONCE_BYTES; i++) {
+ 105              		.loc 1 38 51 is_stmt 1 discriminator 3 view .LVU24
+  38:main.c        ****         for(size_t i = 0; i < CRYPTO_NONCE_BYTES; i++) {
+ 106              		.loc 1 38 52 is_stmt 0 discriminator 3 view .LVU25
+ 107 0050 0134     		adds	r4, r4, #1
+ 108              	.LVL7:
+  38:main.c        ****         for(size_t i = 0; i < CRYPTO_NONCE_BYTES; i++) {
+ 109              		.loc 1 38 27 is_stmt 1 discriminator 3 view .LVU26
+  38:main.c        ****         for(size_t i = 0; i < CRYPTO_NONCE_BYTES; i++) {
+ 110              		.loc 1 38 9 is_stmt 0 discriminator 3 view .LVU27
+ 111 0052 182C     		cmp	r4, #24
+ 112 0054 F8D1     		bne	.L4
+ 113 0056 0FE0     		b	.L3
+ 114              	.LVL8:
+ 115              	.L5:
+  38:main.c        ****         for(size_t i = 0; i < CRYPTO_NONCE_BYTES; i++) {
+ 116              		.loc 1 38 9 discriminator 3 view .LVU28
+ 117              	.LBE2:
+  45:main.c        ****                  key) == 0) {
+  46:main.c        ****         ciphertext.textLen = crypto_secretbox_MACBYTES + plaintext.textLen;
+  47:main.c        ****         //Finally, if encryption was successful, send ciphertext back in a packet 
+  48:main.c        ****         packetizerSend(&ciphertext);
+  49:main.c        ****       }
+  50:main.c        ****       // Free all buffers that were allocated in the meantime 
+  51:main.c        ****       free(plaintext.text);
+ 118              		.loc 1 51 7 is_stmt 1 view .LVU29
+ 119 0058 0498     		ldr	r0, [sp, #16]
+ 120 005a FFF7FEFF 		bl	free
+ 121              	.LVL9:
+  52:main.c        ****       plaintext.text = NULL;
+ 122              		.loc 1 52 7 view .LVU30
+ 123              		.loc 1 52 22 is_stmt 0 view .LVU31
+ 124 005e 0495     		str	r5, [sp, #16]
+  53:main.c        ****       free(ciphertext.text);
+ 125              		.loc 1 53 7 is_stmt 1 view .LVU32
+ 126 0060 0298     		ldr	r0, [sp, #8]
+ 127 0062 FFF7FEFF 		bl	free
+ 128              	.LVL10:
+  54:main.c        ****       ciphertext.text = NULL;
+ 129              		.loc 1 54 7 view .LVU33
+ 130              		.loc 1 54 23 is_stmt 0 view .LVU34
+ 131 0066 0295     		str	r5, [sp, #8]
+ 132              	.L2:
+  29:main.c        **** 
+ 133              		.loc 1 29 3 is_stmt 1 view .LVU35
+  31:main.c        ****     // Consumes incoming data and parses it until we received a valid packet.
+ 134              		.loc 1 31 3 view .LVU36
+  34:main.c        ****       // If the sender did not sent a nonce, generate one 
+ 135              		.loc 1 34 5 view .LVU37
+  34:main.c        ****       // If the sender did not sent a nonce, generate one 
+ 136              		.loc 1 34 8 is_stmt 0 view .LVU38
+ 137 0068 04A8     		add	r0, sp, #16
+ 138 006a FFF7FEFF 		bl	packetizerReceive
+ 139              	.LVL11:
+  34:main.c        ****       // If the sender did not sent a nonce, generate one 
+ 140              		.loc 1 34 7 view .LVU39
+ 141 006e 0028     		cmp	r0, #0
+ 142 0070 FAD1     		bne	.L2
+  36:main.c        ****         plaintext.nonce = malloc(CRYPTO_NONCE_BYTES);
+ 143              		.loc 1 36 7 is_stmt 1 view .LVU40
+  36:main.c        ****         plaintext.nonce = malloc(CRYPTO_NONCE_BYTES);
+ 144              		.loc 1 36 9 is_stmt 0 view .LVU41
+ 145 0072 069B     		ldr	r3, [sp, #24]
+ 146 0074 002B     		cmp	r3, #0
+ 147 0076 E2D0     		beq	.L11
+ 148              	.L3:
+  43:main.c        ****       if(crypto_secretbox_easy(ciphertext.text, plaintext.text, plaintext.textLen, plaintext.nonce,
+ 149              		.loc 1 43 7 is_stmt 1 view .LVU42
+  43:main.c        ****       if(crypto_secretbox_easy(ciphertext.text, plaintext.text, plaintext.textLen, plaintext.nonce,
+ 150              		.loc 1 43 69 is_stmt 0 view .LVU43
+ 151 0078 059C     		ldr	r4, [sp, #20]
+  43:main.c        ****       if(crypto_secretbox_easy(ciphertext.text, plaintext.text, plaintext.textLen, plaintext.nonce,
+ 152              		.loc 1 43 25 view .LVU44
+ 153 007a 04F11000 		add	r0, r4, #16
+ 154 007e FFF7FEFF 		bl	malloc
+ 155              	.LVL12:
+  43:main.c        ****       if(crypto_secretbox_easy(ciphertext.text, plaintext.text, plaintext.textLen, plaintext.nonce,
+ 156              		.loc 1 43 23 view .LVU45
+ 157 0082 0290     		str	r0, [sp, #8]
+  44:main.c        ****                  key) == 0) {
+ 158              		.loc 1 44 7 is_stmt 1 view .LVU46
+  44:main.c        ****                  key) == 0) {
+ 159              		.loc 1 44 10 is_stmt 0 view .LVU47
+ 160 0084 07AB     		add	r3, sp, #28
+ 161 0086 0193     		str	r3, [sp, #4]
+ 162 0088 069B     		ldr	r3, [sp, #24]
+ 163 008a 0093     		str	r3, [sp]
+ 164 008c 2246     		mov	r2, r4
+ 165 008e 2B46     		mov	r3, r5
+ 166 0090 0499     		ldr	r1, [sp, #16]
+ 167 0092 FFF7FEFF 		bl	crypto_secretbox_easy
+ 168              	.LVL13:
+  44:main.c        ****                  key) == 0) {
+ 169              		.loc 1 44 9 view .LVU48
+ 170 0096 0028     		cmp	r0, #0
+ 171 0098 DED1     		bne	.L5
+  46:main.c        ****         //Finally, if encryption was successful, send ciphertext back in a packet 
+ 172              		.loc 1 46 9 is_stmt 1 view .LVU49
+  46:main.c        ****         //Finally, if encryption was successful, send ciphertext back in a packet 
+ 173              		.loc 1 46 56 is_stmt 0 view .LVU50
+ 174 009a 059B     		ldr	r3, [sp, #20]
+ 175 009c 1033     		adds	r3, r3, #16
+  46:main.c        ****         //Finally, if encryption was successful, send ciphertext back in a packet 
+ 176              		.loc 1 46 28 view .LVU51
+ 177 009e 0393     		str	r3, [sp, #12]
+  48:main.c        ****       }
+ 178              		.loc 1 48 9 is_stmt 1 view .LVU52
+ 179 00a0 02A8     		add	r0, sp, #8
+ 180 00a2 FFF7FEFF 		bl	packetizerSend
+ 181              	.LVL14:
+ 182 00a6 D7E7     		b	.L5
+ 183              	.L13:
+ 184              		.align	2
+ 185              	.L12:
+ 186 00a8 00000000 		.word	__stack_chk_guard
+ 187 00ac 00000000 		.word	.LANCHOR0
+ 188 00b0 00000000 		.word	randombytes_salsa20XMC_implementation
+ 189              		.cfi_endproc
+ 190              	.LFE193:
+ 192              		.section	.rodata
+ 193              		.align	2
+ 194              		.set	.LANCHOR0,. + 0
+ 195              	.LC0:
+ 196 0000 C1008A0C 		.ascii	"\301\000\212\014\024\2002\353\202\006\000\020\012\000"
+ 196      148032EB 
+ 196      82060010 
+ 196      0A00
+ 197 000e 0000C100 		.ascii	"\000\000\301\000\212\014\024\2002\353\202\006\000\020"
+ 197      8A0C1480 
+ 197      32EB8206 
+ 197      0010
+ 198 001c 0A000000 		.ascii	"\012\000\000\000"
+ 199              		.text
+ 200              	.Letext0:
+ 201              		.file 2 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/mach
+ 202              		.file 3 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/
+ 203              		.file 4 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/lib/gcc/arm-none-eabi/10.3
+ 204              		.file 5 "packetizer.h"
+ 205              		.file 6 "sodium/include/sodium/randombytes.h"
+ 206              		.file 7 "/nas/ei/share/tools/gcc/gcc-arm/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/stdl
+ 207              		.file 8 "VirtualSerial.h"
+ 208              		.file 9 "sodium/include/sodium/core.h"
+ 209              		.file 10 "sodium/include/sodium/crypto_secretbox.h"
+ 210              		.file 11 "randombytes_salsa20XMC_random.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main.c
+     /tmp/ccJAP75u.s:19     .text.main:0000000000000000 $t
+     /tmp/ccJAP75u.s:25     .text.main:0000000000000000 main
+     /tmp/ccJAP75u.s:186    .text.main:00000000000000a8 $d
+     /tmp/ccJAP75u.s:193    .rodata:0000000000000000 $d
+                           .group:0000000000000000 wm4.0.718e8a15321e549965c6f9cbe0fa2c9d
+                           .group:0000000000000000 wm4._newlib_version.h.4.bfdf54b0af045d4a71376ae00f63a22c
+                           .group:0000000000000000 wm4.features.h.33.5bd1eea2d80518b50f7af0b5ce6750e0
+                           .group:0000000000000000 wm4._default_types.h.15.247e5cd201eca3442cbf5404108c4935
+                           .group:0000000000000000 wm4._intsup.h.10.48bafbb683905c4daa4565a85aeeb264
+                           .group:0000000000000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:0000000000000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:0000000000000000 wm4.newlib.h.8.7cb3972cd43265932d4782d5eb589854
+                           .group:0000000000000000 wm4.ieeefp.h.77.c88535c35f465c05b101960cf0179075
+                           .group:0000000000000000 wm4.config.h.224.c701144a7b0518c6ee9b9b5465b79f81
+                           .group:0000000000000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:0000000000000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:0000000000000000 wm4.stddef.h.181.c3f52a3b0f4c288bddb5dda1562858e2
+                           .group:0000000000000000 wm4.cdefs.h.49.a54b2d5c07711bc7320a3fea9f12cb56
+                           .group:0000000000000000 wm4.stddef.h.39.c161261b198ee3a963897077fd6fa59f
+                           .group:0000000000000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:0000000000000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:0000000000000000 wm4.stddef.h.155.3588ebfdd1e8c7ede80509bb9c3b8009
+                           .group:0000000000000000 wm4._types.h.127.34941de1b2539d59d5cac00e0dd27a45
+                           .group:0000000000000000 wm4.reent.h.17.e292bf8b0bec6c96e131a54347145a30
+                           .group:0000000000000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:0000000000000000 wm4.reent.h.77.dcd6129ff07fe81bd5636db29abe53b2
+                           .group:0000000000000000 wm4.types.h.40.8b6acba56cefbb11746718204edc8f5e
+                           .group:0000000000000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:0000000000000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:0000000000000000 wm4._timeval.h.32.bec3221fa7a9bb0bdde696c9c57e47d2
+                           .group:0000000000000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:0000000000000000 wm4.select.h.19.40cd3f2bfc456b193b790c2754690ebf
+                           .group:0000000000000000 wm4.types.h.51.5571ec98f267d17d3c670b7a3ba33afa
+                           .group:0000000000000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:0000000000000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:0000000000000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:0000000000000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:0000000000000000 wm4.base64url.h.26.ed1fee22e760dd991443f292d5830091
+                           .group:0000000000000000 wm4.packetizer.h.44.8cfee869db25400923a603e5cc82ed56
+                           .group:0000000000000000 wm4.export.h.3.069642e50a739d7e8bd572e0f5b91055
+                           .group:0000000000000000 wm4.randombytes.h.28.d92c4e5a57bf52557a9782c27b663a62
+                           .group:0000000000000000 wm4.randombytes_salsa20XMC_random.h.30.c255d9afffd6579bce6c1fffc9331283
+                           .group:0000000000000000 wm4.version.h.3.4a24f5078e732201fe64ecedc79d1740
+                           .group:0000000000000000 wm4.crypto_aead_aes256gcm.h.37.f06c3a2a9916b28d25ce521d8b6d30e4
+                           .group:0000000000000000 wm4.crypto_aead_chacha20poly1305.h.16.67f32ece6ebd6cc049f0715e6b0e69ad
+                           .group:0000000000000000 wm4.crypto_aead_xchacha20poly1305.h.14.207cc4aaabdc929ff2099eb0d69ab920
+                           .group:0000000000000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:0000000000000000 wm4.stddef.h.155.ba788add86a0e365f264484f110c3c29
+                           .group:0000000000000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:0000000000000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
+                           .group:0000000000000000 wm4.crypto_auth_hmacsha512.h.15.eff7eeeca3f76c97d40891c6c26e8d71
+                           .group:0000000000000000 wm4.crypto_auth_hmacsha512256.h.15.b6821f43a6086964daa3251b570bc8c2
+                           .group:0000000000000000 wm4.crypto_auth.h.16.9400a02c736a8b1e08e491366cd27257
+                           .group:0000000000000000 wm4.crypto_auth_hmacsha256.h.15.0077d2e439598abd38aec2ace6d6cdd5
+                           .group:0000000000000000 wm4.crypto_stream_xsalsa20.h.23.33c3ee5c33e5737b167c543228736927
+                           .group:0000000000000000 wm4.crypto_box_curve25519xsalsa20poly1305.h.15.47fdbfcdf23b14f859f1ab73a31d81d2
+                           .group:0000000000000000 wm4.crypto_box.h.23.36db1a3020b3ecbf502815296470a53b
+                           .group:0000000000000000 wm4.crypto_core_hsalsa20.h.11.6f5bd4777af7294e0d853efc87225dec
+                           .group:0000000000000000 wm4.crypto_core_hchacha20.h.11.2c628b8667ba9d0d71939f1e8d47caaa
+                           .group:0000000000000000 wm4.crypto_core_salsa20.h.11.7ce30578633b77708df2486e23cf2d41
+                           .group:0000000000000000 wm4.crypto_core_salsa2012.h.11.c0d7428a1384f8b0cbb03fb392196513
+                           .group:0000000000000000 wm4.crypto_core_salsa208.h.11.2c518617446b00e93a2e8c0c6a2cb17d
+                           .group:0000000000000000 wm4.crypto_generichash_blake2b.h.38.4b6d675038c455959c90c43a75693d35
+                           .group:0000000000000000 wm4.crypto_generichash.h.16.771391b6badc9219de7753c54a91592a
+                           .group:0000000000000000 wm4.crypto_hash.h.23.c22d9cbc719debf3450c41dc1cb030f6
+                           .group:0000000000000000 wm4.crypto_kdf_blake2b.h.17.2fdb3afa142f0f4e2d520a0f2ed3aac9
+                           .group:0000000000000000 wm4.crypto_kdf.h.17.5c8c60d3d3b88115f88aea210415241a
+                           .group:0000000000000000 wm4.crypto_kx.h.15.b446ee9d39f22111a7b84c74adc80539
+                           .group:0000000000000000 wm4.crypto_onetimeauth_poly1305.h.2.97bcf3b0ea5506ed126bc3828081b2c6
+                           .group:0000000000000000 wm4.crypto_onetimeauth.h.21.dab310d1ac5639131792e5f80761f399
+                           .group:0000000000000000 wm4.syslimits.h.34.de5cbd310098bc5895998b6bde577ed2
+                           .group:0000000000000000 wm4.limits.h.9.70fb0ada6f71b16202a66baaa6d8ea70
+                           .group:0000000000000000 wm4.limits.h.60.56a1ae353e2028a24298ec6463b8b593
+                           .group:0000000000000000 wm4.crypto_pwhash_argon2i.h.17.7efc8566fd80d0aa25a92905ba299d17
+                           .group:0000000000000000 wm4.crypto_pwhash_argon2id.h.17.3776a3d43da07ec2a2ce4f641491ac5c
+                           .group:0000000000000000 wm4.crypto_pwhash.h.17.e54c9eb9913f339a6ab67545d97d3cb6
+                           .group:0000000000000000 wm4.crypto_scalarmult_curve25519.h.12.a04608b0d5b783eeaeea57e826f42071
+                           .group:0000000000000000 wm4.crypto_scalarmult.h.13.4b20e331e974ed3d97708f65e3d09ff7
+                           .group:0000000000000000 wm4.crypto_secretbox_xsalsa20poly1305.h.15.c9d857dc1ea465bb2950509a5d6827a2
+                           .group:0000000000000000 wm4.crypto_secretbox.h.16.74468d3816cf4274cae7e8825a2ac49f
+                           .group:0000000000000000 wm4.crypto_stream_chacha20.h.23.7f39f7dfc92696b60601f2c683245511
+                           .group:0000000000000000 wm4.crypto_secretstream_xchacha20poly1305.h.17.979cddb9e5bdd495ebbc5568661cf9c5
+                           .group:0000000000000000 wm4.crypto_shorthash_siphash24.h.16.818ac93010098b15c9530c60724e71cf
+                           .group:0000000000000000 wm4.crypto_shorthash.h.16.cf5f829a6555012edb52b2ee5653a691
+                           .group:0000000000000000 wm4.crypto_sign_ed25519.h.22.07782bf1d908046d9a70e5cf10af901c
+                           .group:0000000000000000 wm4.crypto_sign.h.28.a3247a8a761034c27bfcc3699825dc31
+                           .group:0000000000000000 wm4.crypto_stream.h.24.5deb85fa59e80e8dc0f5f7ac9213cae8
+                           .group:0000000000000000 wm4.crypto_stream_salsa20.h.23.fc01df25aec77276d8dd631cf7c6b2db
+                           .group:0000000000000000 wm4.utils.h.17.31ca9da2b3c3d17cb1ce98c0f528b530
+                           .group:0000000000000000 wm4.crypto_stream_xchacha20.h.23.1c98e48d07b332b3e5362ddf35d6f170
+                           .group:0000000000000000 wm4.crypto_box_curve25519xchacha20poly1305.h.16.c730b274b2e8e0087c78faa13784b0ca
+                           .group:0000000000000000 wm4.crypto_secretbox_xchacha20poly1305.h.15.79de7bec24244041b03221fe64a1405a
+                           .group:0000000000000000 wm4.crypto_pwhash_scryptsalsa208sha256.h.17.3af592158e8339e18e48fc8487319250
+                           .group:0000000000000000 wm4.crypto_stream_salsa2012.h.22.08bdb7be901746f92b3b3e7fcdc77e17
+                           .group:0000000000000000 wm4.crypto_stream_salsa208.h.22.9a5ceb273178e4c72d667eeaa8da7b04
+                           .group:0000000000000000 wm4.USB.h.376.cfdb9ecb25c70fec676f585dede264a7
+                           .group:0000000000000000 wm4.Common.h.60.c2f00e237f5994003db83c2422602b22
+                           .group:0000000000000000 wm4.stdbool.h.29.07dce69c3b78884144b7f7bd19483461
+                           .group:0000000000000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:0000000000000000 wm4.BoardTypes.h.52.ca64813ccee737bcc2115eab5e075fdb
+                           .group:0000000000000000 wm4.CompilerSpecific.h.55.4a5e5ff77cd35e49c89cf2115251aee0
+                           .group:0000000000000000 wm4.Attributes.h.56.73b3ee26b0836c2dec569a5fa6f1b355
+                           .group:0000000000000000 wm4.xmc_device.h.61.ba2d082e12f51240746cffdd60d42b81
+                           .group:0000000000000000 wm4.XMC4500.h.55.9aa45b9b5790506b2dcb963e4e7adeaf
+                           .group:0000000000000000 wm4.core_cm4.h.32.6c6eb1c8daeca23ce7ba79c8e8120d52
+                           .group:0000000000000000 wm4.cmsis_gcc.h.26.91b63349961c35637933e4fba51b867b
+                           .group:0000000000000000 wm4.core_cm4.h.172.fdd5a388a160bb6ff767b7d7ee212268
+                           .group:0000000000000000 wm4.system_XMC4500.h.42.99124977c10ca8844a71949adbeabd70
+                           .group:0000000000000000 wm4.XMC4500.h.208.b340195df97f067735c4c769ba59985a
+                           .group:0000000000000000 wm4.xmc_device.h.1460.8860499b404961ffcfbb8d1fefcb2146
+                           .group:0000000000000000 wm4.xmc_common.h.92.3f4336a80569affab05a81145b87c2fc
+                           .group:0000000000000000 wm4.Endianness.h.57.3ac00c5468f4b91b806a0e6dba047e9c
+                           .group:0000000000000000 wm4.Common.h.105.4b937a9cc9dcdb26c3f07541b0b763a8
+                           .group:0000000000000000 wm4.USBController.h.49.cbfc73805155b6fff6267400af3f4eec
+                           .group:0000000000000000 wm4.xmc_usbd_regs.h.80.57c6c85fa0ecbc9f8327ce445aebb9bc
+                           .group:0000000000000000 wm4.xmc4_scu.h.83.0449f5880ac071460ec1a8072311ea51
+                           .group:0000000000000000 wm4.xmc_usbd.h.122.ce57a9e6a9da48ee33ece02813c49593
+                           .group:0000000000000000 wm4.USBController_XMC4000.h.71.902f2653e09cb8b25245faa82cc6b907
+                           .group:0000000000000000 wm4.StdDescriptors.h.73.7d17e8be7a73b855fc0f8827303b7597
+                           .group:0000000000000000 wm4.Endpoint.h.73.3734de3e84ab23fb43d81f41fba620ec
+                           .group:0000000000000000 wm4.Device_XMC4000.h.86.6803bdd99d84e764a570256c87a24d0a
+                           .group:0000000000000000 wm4.StdRequestType.h.50.461dce94a3ee1fa9ff31ec5f28bd9699
+                           .group:0000000000000000 wm4.ConfigDescriptors.h.51.0d67ebf453774188abf5a503ba8f6735
+                           .group:0000000000000000 wm4.CDCClass.h.61.0d41ba255f7ce6f076fd610d8396dd1f
+                           .group:0000000000000000 wm4.CDCClassCommon.h.72.14ca578d8547e19a8a0c0d2d328483bd
+                           .group:0000000000000000 wm4.HIDClass.h.62.6bb32c59177b21a83b8e65c5a1b0a615
+                           .group:0000000000000000 wm4.HIDReportData.h.47.f13f4956396e0bec70835fe634fcc24d
+                           .group:0000000000000000 wm4.HIDParser.h.88.4b86fe94cb8d01713592cdd0391b606b
+                           .group:0000000000000000 wm4.HIDClassCommon.h.71.a60cdf9d7cd69289f43dde215b509193
+                           .group:0000000000000000 wm4.MassStorageClass.h.61.e9235f3bd090b77f36343f082ef93107
+                           .group:0000000000000000 wm4.MassStorageClassCommon.h.51.6aefecf288eb3c3c6c9bde61e26dd765
+                           .group:0000000000000000 wm4.Descriptors.h.44.84a4fd312957d0d42fb6aaa001850ba4
+
+UNDEFINED SYMBOLS
+USB_Init
+randombytes_set_implementation
+sodium_init
+malloc
+rand
+free
+packetizerReceive
+crypto_secretbox_easy
+packetizerSend
+__stack_chk_guard
+randombytes_salsa20XMC_implementation

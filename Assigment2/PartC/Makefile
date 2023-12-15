@@ -23,6 +23,7 @@ endif
 BUILDDIR = build
 LIB_BUILDDIR = lib_build
 USB_LIBDIR = $(XMC_LIBDIR)/ThirdPartyLibraries/USBlib/USB
+SODIUM_LIBDIR = sodium
 
 # Specify device
 XMC_SERIES=4500
@@ -45,6 +46,8 @@ CFLAGS += -I$(USB_LIBDIR)/Class/Device
 CFLAGS += -I$(USB_LIBDIR)/Common
 CFLAGS += -I$(USB_LIBDIR)/Core
 CFLAGS += -I$(USB_LIBDIR)/Core/XMC4000
+CFLAGS += -I$(SODIUM_LIBDIR)/include
+
 # Which device
 CFLAGS += -DXMC$(XMC_SERIES)_$(XMC_PACKAGE)x$(XMC_SIZE)
 # Which core architecture
@@ -70,6 +73,7 @@ SFLAGS += -x assembler-with-cpp
 LFLAGS  = -T$(BUILDDIR)/$(LD_NAME).ld -nostartfiles
 # Where to find the precompiled math libraries
 LFLAGS += -L$(XMC_LIBDIR)/CMSIS/Lib/GCC/
+LFLAGS += -L$(SODIUM_LIBDIR)/lib
 # Create a map file
 LFLAGS += -Wl,-Map,"$@.map"
 # Also tell the linker core architecture

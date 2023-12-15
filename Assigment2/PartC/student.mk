@@ -6,14 +6,13 @@ LD_NAME = Assignment2C
 
 # Add lists of space separated source files
 # Own sources, e.g. main.c
-SRCS = main.c clockSetup.c VirtualSerial.c Descriptors.c packetizer.c crypto.c base64url.c MPUeasy.c stack_protector.c
+SRCS = main.c crypto.c clockSetup.c VirtualSerial.c Descriptors.c packetizer.c base64url.c MPUeasy.c stack_protector.c
 # Header files for configuration. Adding the header file will  make make compile on changes.
-HDRS = system_XMC4500.h VirtualSerial.h Descriptors.h packetizer.h crypto.h base64url.h sodium.h
+HDRS = VirtualSerial.h Descriptors.h crypto.h packetizer.h base64url.h randombytes_salsa20XMC_random.h 
 # Library sources, e.g. xmc_gpio.c
-LIBSRCS = USBController_XMC4000.c xmc_usbd.c CDCClassDevice.c USBTask.c Endpoint_XMC4000.c xmc4_scu.c EndpointStream_XMC4000.c memcpy.c xmc_gpio.c xmc4_gpio.c xmc_ccu4.c
+LIBSRCS = randombytes_salsa20XMC_random.c USBController_XMC4000.c xmc_usbd.c CDCClassDevice.c USBTask.c Endpoint_XMC4000.c xmc4_scu.c EndpointStream_XMC4000.c memcpy.c xmc_gpio.c xmc4_gpio.c xmc_ccu4.c
 # Precompiled libraries, e.g. -lm for math functions
-LIBLNK = 
-
+LIBLNK = -lsodium
 # Change this line if the path to your XMC-Library differs, it will be overwritten before grading to
 # match the system the grading is performed on.
 XMC_LIBDIR = /opt/XMClib/XMC_Peripheral_Library_v2.1.16

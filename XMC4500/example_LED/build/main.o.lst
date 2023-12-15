@@ -1,0 +1,360 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"main.c"
+  13              		.text
+  14              	.Ltext0:
+  15              		.cfi_sections	.debug_frame
+  16              		.section	.text.startup.main,"ax",%progbits
+  17              		.align	1
+  18              		.p2align 2,,3
+  19              		.global	main
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	main:
+  26              	.LFB128:
+  27              		.file 1 "main.c"
+   1:main.c        ****  # include <xmc_common.h>
+   2:main.c        **** void initCCU4 ( void ) ;
+   3:main.c        **** void connectLED ( void ) ;
+   4:main.c        **** 
+   5:main.c        **** int main ( void ) {
+  28              		.loc 1 5 0
+  29              		.cfi_startproc
+  30              		@ Volatile: function does not return.
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              	.LBB8:
+  35              	.LBB9:
+   6:main.c        ****     initCCU4 () ;
+   7:main.c        ****     while (1) ;
+   8:main.c        ****     return 0;
+   9:main.c        **** }
+  10:main.c        **** 
+  11:main.c        **** void initCCU4 () {
+  12:main.c        ****  /* Release CCU4 instance 0 from reset ( manual 22.6.1 step 2) */
+  13:main.c        ****   *(volatile uint32_t *)0x50004414 = 0x1<<2;
+  36              		.loc 1 13 0
+  37 0000 0F4E     		ldr	r6, .L4
+  14:main.c        ****   /* Enable clock to CCUs ( manual 22.6.1 step 3) */
+  15:main.c        ****     *(volatile uint32_t *)0x50004604 = SCU_CLK_CLKSET_CCUCEN_Msk ;
+  38              		.loc 1 15 0
+  39 0002 104B     		ldr	r3, .L4+4
+  16:main.c        ****  /* Enable prescaler in CCU4 instance 0 ( manual 22.6.1 step 4) */
+  17:main.c        ****     *(volatile uint32_t *)0x4000C00C = CCU4_GIDLC_SPRB_Msk ;
+  40              		.loc 1 17 0
+  41 0004 104A     		ldr	r2, .L4+8
+  18:main.c        ****  /* Configure period and compare in CCU4 instance 0 slice 2 ( manual »
+  19:main.c        **** 2.6.1 step 6) */
+  20:main.c        ****    *(volatile uint32_t *)0x4000C134 = 0xFFFF;
+  42              		.loc 1 20 0
+  43 0006 114D     		ldr	r5, .L4+12
+  21:main.c        ****    *(volatile uint32_t *)0x4000C13C = (1 - 0.99) * 0xFFFF;
+  44              		.loc 1 21 0
+  45 0008 1148     		ldr	r0, .L4+16
+  22:main.c        ****  /* Request shadow transfer for CCU4 instance 0 slice 2 ( manual »
+  23:main.c        **** 2.6.1 step 6) */
+  24:main.c        ****     *(volatile uint32_t *)0x4000C010 = CCU4_GCSS_S2SE_Msk ;
+  46              		.loc 1 24 0
+  47 000a 124C     		ldr	r4, .L4+20
+  13:main.c        ****   /* Enable clock to CCUs ( manual 22.6.1 step 3) */
+  48              		.loc 1 13 0
+  49 000c 0421     		movs	r1, #4
+  50 000e 3160     		str	r1, [r6]
+  15:main.c        ****  /* Enable prescaler in CCU4 instance 0 ( manual 22.6.1 step 4) */
+  51              		.loc 1 15 0
+  52 0010 1026     		movs	r6, #16
+  53 0012 1E60     		str	r6, [r3]
+  17:main.c        ****  /* Configure period and compare in CCU4 instance 0 slice 2 ( manual »
+  54              		.loc 1 17 0
+  55 0014 4FF48073 		mov	r3, #256
+  20:main.c        ****    *(volatile uint32_t *)0x4000C13C = (1 - 0.99) * 0xFFFF;
+  56              		.loc 1 20 0
+  57 0018 4FF6FF76 		movw	r6, #65535
+  17:main.c        ****  /* Configure period and compare in CCU4 instance 0 slice 2 ( manual »
+  58              		.loc 1 17 0
+  59 001c 1360     		str	r3, [r2]
+  20:main.c        ****    *(volatile uint32_t *)0x4000C13C = (1 - 0.99) * 0xFFFF;
+  60              		.loc 1 20 0
+  61 001e 2E60     		str	r6, [r5]
+  21:main.c        ****  /* Request shadow transfer for CCU4 instance 0 slice 2 ( manual »
+  62              		.loc 1 21 0
+  63 0020 40F28F25 		movw	r5, #655
+  64 0024 0560     		str	r5, [r0]
+  65              	.LBB10:
+  66              	.LBB11:
+  25:main.c        ****  /* Connect LED1 to CCU40 . OUT2 */
+  26:main.c        ****     connectLED () ;
+  27:main.c        ****  /* Enable timer slice 2 in CCU4 instance 0 ( manual 22.6.1 step 8) */
+  28:main.c        ****     *(volatile uint32_t *)0x4000C00C = CCU4_GIDLC_CS2I_Msk;
+  29:main.c        ****  /* Start slice 2 in CCU4 instance 0 by setting run bit ( manual »
+  30:main.c        **** 2.6.1 step 9) */
+  31:main.c        ****     CCU40_CC42 -> TCSET = CCU4_CC4_TCSET_TRBS_Msk;
+  32:main.c        ****  }
+  33:main.c        **** 
+  34:main.c        ****  void connectLED () {
+  35:main.c        ****  /* Bit mask for alternate function 3 with push - pull output */
+  36:main.c        ****  static const uint8_t PP_ALT3 = 0b10011;
+  37:main.c        ****  PORT1 -> IOCR0 = ( PORT1 -> IOCR0 & ~0x1f<<11 ) | ( PP_ALT3 << 11 );
+  67              		.loc 1 37 0
+  68 0026 0C48     		ldr	r0, .L4+24
+  69              	.LBE11:
+  70              	.LBE10:
+  24:main.c        ****  /* Connect LED1 to CCU40 . OUT2 */
+  71              		.loc 1 24 0
+  72 0028 2360     		str	r3, [r4]
+  73              	.LBB14:
+  74              	.LBB12:
+  75              		.loc 1 37 0
+  76 002a 0369     		ldr	r3, [r0, #16]
+  77 002c 1B0C     		lsrs	r3, r3, #16
+  78 002e 1B04     		lsls	r3, r3, #16
+  79 0030 43F41843 		orr	r3, r3, #38912
+  80              	.LBE12:
+  81              	.LBE14:
+  31:main.c        ****  }
+  82              		.loc 1 31 0
+  83 0034 0125     		movs	r5, #1
+  84              	.LBB15:
+  85              	.LBB13:
+  86              		.loc 1 37 0
+  87 0036 0361     		str	r3, [r0, #16]
+  88              	.LBE13:
+  89              	.LBE15:
+  28:main.c        ****  /* Start slice 2 in CCU4 instance 0 by setting run bit ( manual »
+  90              		.loc 1 28 0
+  91 0038 1160     		str	r1, [r2]
+  31:main.c        ****  }
+  92              		.loc 1 31 0
+  93 003a C4F8FC52 		str	r5, [r4, #764]
+  94              	.L2:
+  95 003e FEE7     		b	.L2
+  96              	.L5:
+  97              		.align	2
+  98              	.L4:
+  99 0040 14440050 		.word	1342194708
+ 100 0044 04460050 		.word	1342195204
+ 101 0048 0CC00040 		.word	1073790988
+ 102 004c 34C10040 		.word	1073791284
+ 103 0050 3CC10040 		.word	1073791292
+ 104 0054 10C00040 		.word	1073790992
+ 105 0058 00810248 		.word	1208123648
+ 106              	.LBE9:
+ 107              	.LBE8:
+ 108              		.cfi_endproc
+ 109              	.LFE128:
+ 111              		.section	.text.initCCU4,"ax",%progbits
+ 112              		.align	1
+ 113              		.p2align 2,,3
+ 114              		.global	initCCU4
+ 115              		.syntax unified
+ 116              		.thumb
+ 117              		.thumb_func
+ 118              		.fpu fpv4-sp-d16
+ 120              	initCCU4:
+ 121              	.LFB129:
+  11:main.c        ****  /* Release CCU4 instance 0 from reset ( manual 22.6.1 step 2) */
+ 122              		.loc 1 11 0
+ 123              		.cfi_startproc
+ 124              		@ args = 0, pretend = 0, frame = 0
+ 125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 126              		@ link register save eliminated.
+ 127 0000 70B4     		push	{r4, r5, r6}
+ 128              	.LCFI0:
+ 129              		.cfi_def_cfa_offset 12
+ 130              		.cfi_offset 4, -12
+ 131              		.cfi_offset 5, -8
+ 132              		.cfi_offset 6, -4
+  13:main.c        ****   /* Enable clock to CCUs ( manual 22.6.1 step 3) */
+ 133              		.loc 1 13 0
+ 134 0002 104E     		ldr	r6, .L8
+  15:main.c        ****  /* Enable prescaler in CCU4 instance 0 ( manual 22.6.1 step 4) */
+ 135              		.loc 1 15 0
+ 136 0004 104B     		ldr	r3, .L8+4
+  17:main.c        ****  /* Configure period and compare in CCU4 instance 0 slice 2 ( manual »
+ 137              		.loc 1 17 0
+ 138 0006 114A     		ldr	r2, .L8+8
+  20:main.c        ****    *(volatile uint32_t *)0x4000C13C = (1 - 0.99) * 0xFFFF;
+ 139              		.loc 1 20 0
+ 140 0008 114D     		ldr	r5, .L8+12
+  21:main.c        ****  /* Request shadow transfer for CCU4 instance 0 slice 2 ( manual »
+ 141              		.loc 1 21 0
+ 142 000a 1248     		ldr	r0, .L8+16
+  24:main.c        ****  /* Connect LED1 to CCU40 . OUT2 */
+ 143              		.loc 1 24 0
+ 144 000c 124C     		ldr	r4, .L8+20
+  13:main.c        ****   /* Enable clock to CCUs ( manual 22.6.1 step 3) */
+ 145              		.loc 1 13 0
+ 146 000e 0421     		movs	r1, #4
+ 147 0010 3160     		str	r1, [r6]
+  15:main.c        ****  /* Enable prescaler in CCU4 instance 0 ( manual 22.6.1 step 4) */
+ 148              		.loc 1 15 0
+ 149 0012 1026     		movs	r6, #16
+ 150 0014 1E60     		str	r6, [r3]
+  17:main.c        ****  /* Configure period and compare in CCU4 instance 0 slice 2 ( manual »
+ 151              		.loc 1 17 0
+ 152 0016 4FF48073 		mov	r3, #256
+  20:main.c        ****    *(volatile uint32_t *)0x4000C13C = (1 - 0.99) * 0xFFFF;
+ 153              		.loc 1 20 0
+ 154 001a 4FF6FF76 		movw	r6, #65535
+  17:main.c        ****  /* Configure period and compare in CCU4 instance 0 slice 2 ( manual »
+ 155              		.loc 1 17 0
+ 156 001e 1360     		str	r3, [r2]
+  20:main.c        ****    *(volatile uint32_t *)0x4000C13C = (1 - 0.99) * 0xFFFF;
+ 157              		.loc 1 20 0
+ 158 0020 2E60     		str	r6, [r5]
+  21:main.c        ****  /* Request shadow transfer for CCU4 instance 0 slice 2 ( manual »
+ 159              		.loc 1 21 0
+ 160 0022 40F28F25 		movw	r5, #655
+ 161 0026 0560     		str	r5, [r0]
+ 162              	.LBB16:
+ 163              	.LBB17:
+ 164              		.loc 1 37 0
+ 165 0028 0C48     		ldr	r0, .L8+24
+ 166              	.LBE17:
+ 167              	.LBE16:
+  24:main.c        ****  /* Connect LED1 to CCU40 . OUT2 */
+ 168              		.loc 1 24 0
+ 169 002a 2360     		str	r3, [r4]
+ 170              	.LBB20:
+ 171              	.LBB18:
+ 172              		.loc 1 37 0
+ 173 002c 0369     		ldr	r3, [r0, #16]
+ 174 002e 1B0C     		lsrs	r3, r3, #16
+ 175 0030 1B04     		lsls	r3, r3, #16
+ 176              	.LBE18:
+ 177              	.LBE20:
+  31:main.c        ****  }
+ 178              		.loc 1 31 0
+ 179 0032 0125     		movs	r5, #1
+ 180              	.LBB21:
+ 181              	.LBB19:
+ 182              		.loc 1 37 0
+ 183 0034 43F41843 		orr	r3, r3, #38912
+ 184 0038 0361     		str	r3, [r0, #16]
+ 185              	.LBE19:
+ 186              	.LBE21:
+  28:main.c        ****  /* Start slice 2 in CCU4 instance 0 by setting run bit ( manual »
+ 187              		.loc 1 28 0
+ 188 003a 1160     		str	r1, [r2]
+  31:main.c        ****  }
+ 189              		.loc 1 31 0
+ 190 003c C4F8FC52 		str	r5, [r4, #764]
+  32:main.c        **** 
+ 191              		.loc 1 32 0
+ 192 0040 70BC     		pop	{r4, r5, r6}
+ 193              	.LCFI1:
+ 194              		.cfi_restore 6
+ 195              		.cfi_restore 5
+ 196              		.cfi_restore 4
+ 197              		.cfi_def_cfa_offset 0
+ 198 0042 7047     		bx	lr
+ 199              	.L9:
+ 200              		.align	2
+ 201              	.L8:
+ 202 0044 14440050 		.word	1342194708
+ 203 0048 04460050 		.word	1342195204
+ 204 004c 0CC00040 		.word	1073790988
+ 205 0050 34C10040 		.word	1073791284
+ 206 0054 3CC10040 		.word	1073791292
+ 207 0058 10C00040 		.word	1073790992
+ 208 005c 00810248 		.word	1208123648
+ 209              		.cfi_endproc
+ 210              	.LFE129:
+ 212              		.section	.text.connectLED,"ax",%progbits
+ 213              		.align	1
+ 214              		.p2align 2,,3
+ 215              		.global	connectLED
+ 216              		.syntax unified
+ 217              		.thumb
+ 218              		.thumb_func
+ 219              		.fpu fpv4-sp-d16
+ 221              	connectLED:
+ 222              	.LFB130:
+  34:main.c        ****  /* Bit mask for alternate function 3 with push - pull output */
+ 223              		.loc 1 34 0
+ 224              		.cfi_startproc
+ 225              		@ args = 0, pretend = 0, frame = 0
+ 226              		@ frame_needed = 0, uses_anonymous_args = 0
+ 227              		@ link register save eliminated.
+ 228              		.loc 1 37 0
+ 229 0000 034A     		ldr	r2, .L11
+ 230 0002 1369     		ldr	r3, [r2, #16]
+ 231 0004 1B0C     		lsrs	r3, r3, #16
+ 232 0006 1B04     		lsls	r3, r3, #16
+ 233 0008 43F41843 		orr	r3, r3, #38912
+ 234 000c 1361     		str	r3, [r2, #16]
+  38:main.c        **** }...
+ 235              		.loc 1 38 0
+ 236 000e 7047     		bx	lr
+ 237              	.L12:
+ 238              		.align	2
+ 239              	.L11:
+ 240 0010 00810248 		.word	1208123648
+ 241              		.cfi_endproc
+ 242              	.LFE130:
+ 244              		.text
+ 245              	.Letext0:
+ 246              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 247              		.file 3 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 248              		.file 4 "/usr/arm-none-eabi/include/sys/lock.h"
+ 249              		.file 5 "/usr/arm-none-eabi/include/sys/_types.h"
+ 250              		.file 6 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
+ 251              		.file 7 "/usr/arm-none-eabi/include/sys/reent.h"
+ 252              		.file 8 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Include/core_cm4.h"
+ 253              		.file 9 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/system_X
+ 254              		.file 10 "/opt/XMClib/XMC_Peripheral_Library_v2.1.16/CMSIS/Infineon/XMC4500_series/Include/XMC4500
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main.c
+     /tmp/ccLZEEHI.s:17     .text.startup.main:0000000000000000 $t
+     /tmp/ccLZEEHI.s:25     .text.startup.main:0000000000000000 main
+     /tmp/ccLZEEHI.s:99     .text.startup.main:0000000000000040 $d
+     /tmp/ccLZEEHI.s:112    .text.initCCU4:0000000000000000 $t
+     /tmp/ccLZEEHI.s:120    .text.initCCU4:0000000000000000 initCCU4
+     /tmp/ccLZEEHI.s:202    .text.initCCU4:0000000000000044 $d
+     /tmp/ccLZEEHI.s:213    .text.connectLED:0000000000000000 $t
+     /tmp/ccLZEEHI.s:221    .text.connectLED:0000000000000000 connectLED
+     /tmp/ccLZEEHI.s:240    .text.connectLED:0000000000000010 $d
+                           .group:0000000000000000 wm4.0.33cb493f6332016dc29bb220a2be3d23
+                           .group:0000000000000000 wm4.stddef.h.39.99b5021e28f91cdb161c889e07266673
+                           .group:0000000000000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:0000000000000000 wm4.features.h.33.5bd1eea2d80518b50f7af0b5ce6750e0
+                           .group:0000000000000000 wm4._default_types.h.15.247e5cd201eca3442cbf5404108c4935
+                           .group:0000000000000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:0000000000000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:0000000000000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:0000000000000000 wm4.stdbool.h.29.07dce69c3b78884144b7f7bd19483461
+                           .group:0000000000000000 wm4.newlib.h.8.f6e543eac3f2f65163ba2ffe3b04987b
+                           .group:0000000000000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:0000000000000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:0000000000000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:0000000000000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:0000000000000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:0000000000000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:0000000000000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:0000000000000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:0000000000000000 wm4.cdefs.h.47.14fad0b327eb9dcf106599b738d85132
+                           .group:0000000000000000 wm4.string.h.15.dab3980bf35408a4c507182805e2de3a
+                           .group:0000000000000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:0000000000000000 wm4.xmc_device.h.61.ba2d082e12f51240746cffdd60d42b81
+                           .group:0000000000000000 wm4.XMC4500.h.55.9aa45b9b5790506b2dcb963e4e7adeaf
+                           .group:0000000000000000 wm4.core_cm4.h.32.6c6eb1c8daeca23ce7ba79c8e8120d52
+                           .group:0000000000000000 wm4.cmsis_gcc.h.26.91b63349961c35637933e4fba51b867b
+                           .group:0000000000000000 wm4.core_cm4.h.172.fdd5a388a160bb6ff767b7d7ee212268
+                           .group:0000000000000000 wm4.system_XMC4500.h.42.99124977c10ca8844a71949adbeabd70
+                           .group:0000000000000000 wm4.XMC4500.h.208.b340195df97f067735c4c769ba59985a
+                           .group:0000000000000000 wm4.xmc_device.h.1460.8860499b404961ffcfbb8d1fefcb2146
+                           .group:0000000000000000 wm4.xmc_common.h.92.3f4336a80569affab05a81145b87c2fc
+
+NO UNDEFINED SYMBOLS

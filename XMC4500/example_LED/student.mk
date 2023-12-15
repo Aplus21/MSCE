@@ -2,17 +2,17 @@
 # Change this file to match your requirements
 
 # Name of your project
-LD_NAME = Assignment2C
+LD_NAME = example_LED
 
 # Add lists of space separated source files
 # Own sources, e.g. main.c
-SRCS = main.c clockSetup.c VirtualSerial.c Descriptors.c packetizer.c crypto.c base64url.c MPUeasy.c stack_protector.c
+SRCS = main.c
 # Header files for configuration. Adding the header file will  make make compile on changes.
-HDRS = system_XMC4500.h VirtualSerial.h Descriptors.h packetizer.h crypto.h base64url.h sodium.h
+HDRS = system_XMC4500.h
 # Library sources, e.g. xmc_gpio.c
-LIBSRCS = USBController_XMC4000.c xmc_usbd.c CDCClassDevice.c USBTask.c Endpoint_XMC4000.c xmc4_scu.c EndpointStream_XMC4000.c memcpy.c xmc_gpio.c xmc4_gpio.c xmc_ccu4.c
+LIBSRCS = xmc_gpio.c xmc4_gpio.c
 # Precompiled libraries, e.g. -lm for math functions
-LIBLNK = 
+LIBLNK =
 
 # Change this line if the path to your XMC-Library differs, it will be overwritten before grading to
 # match the system the grading is performed on.
@@ -22,10 +22,10 @@ XMC_LIBDIR = /opt/XMClib/XMC_Peripheral_Library_v2.1.16
 SCFLAGS  = -std=gnu99
 # Optimization level, remember that enabling optimization will stirr up the assembly code and thus
 # debugging is more difficult
-SCFLAGS += -O1
+SCFLAGS += -O2
 # If you like, you can enable even more warnings, e.g. -Wextra, but for grading -Wall will be used
 # You can also add any other compiler flag here if either necessary or you find it appropriate
-SCFLAGS += -fstack-protector
+SCFLAGS +=
 
 # If set to true, GDB will not provide a welcome message
 GDB_QUIET = true

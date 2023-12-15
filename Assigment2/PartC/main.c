@@ -12,7 +12,7 @@
 int main(void) {
   uint8_t key[32] = {
     0xc1,    0x00,    0x8a,    0x0c,    0x14,    0x80,    0x32,    0xeb,
-    0x82,    0x06,   0x00,    0x10,    0x0a,    0x00,    0x00,    0x00,  //Unique chip id
+    0x82,    0x06,   0x00,    0x10,    0x0a,    0x00,    0x00,    0x00,  //Unique chip id g_chip
     0xc1,    0x00,    0x8a,    0x0c,    0x14,    0x80,    0x32,    0xeb,
     0x82,    0x06,    0x00,    0x10,    0x0a,    0x00,    0x00,    0x00,
   };
@@ -55,17 +55,3 @@ ct_s ciphertext = { 0 };
     }
   }
 }
-
-/*
-  #define MESSAGE ((const unsigned char *) "MARBLE_CMD_LIFT_UP")
-  #define MESSAGE_LEN 18
-  #define CIPHERTEXT_LEN (crypto_secretbox_MACBYTES + MESSAGE_LEN)
-
-  // unsigned char key[crypto_secretbox_KEYBYTES];
-  unsigned char nonce[CRYPTO_NONCE_BYTES+8] = "XFP1i_KmxCY4HsLlF2_TgWYpNLaPKvdv ";
-  unsigned char ciphertext[CIPHERTEXT_LEN];
-
-  // crypto_secretbox_keygen(key);
-  // randombytes_buf(nonce, sizeof nonce);
-  crypto_secretbox_easy(ciphertext, MESSAGE, MESSAGE_LEN, nonce, key);
-  return 0;*/
